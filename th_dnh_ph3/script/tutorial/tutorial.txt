@@ -2,7 +2,7 @@
 #ScriptVersion[3]
 #Title["First Script"]
 #Text["Code by Cyvo[r]First Bullet"]
-#BGM["./PaRappa the Rapper 2- Toasty Buns.mp3"] 
+//#BGM["./PaRappa the Rapper 2- Toasty Buns.mp3"] 
 #include "script/default_system/Default_ShotConst.txt"
 
 let objBoss;
@@ -77,27 +77,31 @@ task movement{
 
 task fireA{
     while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){
-        let angleT=GetAngleToPlayer(objBoss);
-        loop(13){
-            ascent(i in 0..3){
-                CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 2.5 - i/3, angleT, DS_BALL_S_RED + i, 5);
-            }
-            angleT += 360/13;
+        loop(15){
+            let obj = CreateShotA2(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 3, GetAngleToPlayer(objBoss), -0.05, 0, 1, 0);
+            BulletCommands(obj);
         }
-        wait(30);
+        wait(60);
     }
 }
 
 task fireB{
     while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) > 0){
         let angleT=GetAngleToPlayer(objBoss);
-        ascent(i in -1..2){
-            ascent(j in 0..3){
-                CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 3 - j/6, angleT + i*15, DS_RICE_M_SKY, 5);
-            }
-        }
-        wait(120);
+        CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 3, angleT, 57, 5);
+        wait(10);
     }
+}
+
+task BulletCommands(obj){
+    while(ObjMove_GetSpeed(obj) >0){yield;}
+    wait(30);
+    let angleT = rand(0,360);
+    loop(12){
+        CreateShotA1(ObjMove_GetX(obj), ObjMove_GetY(obj), 2, angleT, 162, 0);
+        angleT += 360/5;
+    }
+    Obj_Delete(obj);
 }
 
 function GetCenterX(){
