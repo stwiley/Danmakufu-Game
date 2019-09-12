@@ -59,6 +59,7 @@ task MainTask{
     movement;
     fireA;
     fireB;
+    fireC;
 }
 
 task TDrawLoop{
@@ -93,6 +94,15 @@ task fireB{
     }
 }
 
+task fireC{
+    while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){
+        ascent(i in 0..12){
+            SpawnNDLaser(i);
+        }
+        wait(20);
+    }
+}
+
 task BulletCommands(obj){
     while(ObjMove_GetSpeed(obj) >0){yield;}
     wait(30);
@@ -102,6 +112,17 @@ task BulletCommands(obj){
         angleT += 360/5;
     }
     Obj_Delete(obj);
+}
+
+task SpawnNDLaser(ID){
+    let objcount =0;
+    let obj = CreateStraightLaserA1(ObjMove_GetX(objBoss) + 60*cos(ID*30), ObjMove_GetY(objBoss) + 60*sin(ID*30), ID*30, 512, 24, 300, 153, 60);
+    while(!Obj_IsDeleted(obj)){
+        ObjMove_SetPosition(obj, ObjMove_GetX(objBoss) + 60*cos(ID*30 + objcount), ObjMove_GetY(objBoss) + 60*sin(ID*30 + objcount));
+        ObjStLaser_SetAngle(obj, ID*30 + objcount);
+        objcount++;
+        yield;
+    }
 }
 
 function GetCenterX(){
