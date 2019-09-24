@@ -57,9 +57,10 @@ task TFinalize{
 task MainTask{
     wait(120);
     movement;
-    fireA;
-    fireB;
-    fireC;
+    //fireA;
+    //fireB;
+    //fireC;
+    fireD;
 }
 
 task TDrawLoop{
@@ -100,6 +101,28 @@ task fireC{
             SpawnNDLaser(i);
         }
         wait(20);
+    }
+}
+
+task fireD{
+        ascent(i in 0..12){
+                let obj = CreateCurveLaserA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 4, 
+                GetAngleToPlayer(objBoss) + i*360/12, 60, 18, 9, 10);
+                SnakePattern(obj, 1);
+            }
+        wait(60);
+        ascent(i in 0..12){
+                let obj = CreateCurveLaserA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 4, 
+                GetAngleToPlayer(objBoss) + i*360/12, 60, 18, 54, 10);
+                SnakePattern(obj, -1);
+        }
+}
+
+task SnakePattern(obj, dir){
+    let wvel =1 * dir;
+    ascent(i in 0..12){
+        ObjMove_AddPatternA2(obj, i*30, 4, NO_CHANGE, NO_CHANGE, wvel, 5);
+        wvel *=-1;
     }
 }
 
