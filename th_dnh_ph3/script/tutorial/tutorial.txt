@@ -55,12 +55,18 @@ task TFinalize{
 }
 
 task MainTask{
-    wait(120);
-    movement;
-    //fireA;
-    //fireB;
-    //fireC;
-    fireD;
+    while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){
+        wait(120);
+        movement;
+        //fireA;
+        //fireB;
+        //fireC;
+        //fireD;
+        while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) <400){
+            fireE;
+            wait(120);
+        }
+    }
 }
 
 task TDrawLoop{
@@ -77,6 +83,7 @@ task movement{
     }
 }
 
+//Grenade shot
 task fireA{
     while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){
         loop(15){
@@ -87,6 +94,7 @@ task fireA{
     }
 }
 
+//Continuously firing line of bullets at the player
 task fireB{
     while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) > 0){
         let angleT=GetAngleToPlayer(objBoss);
@@ -95,6 +103,7 @@ task fireB{
     }
 }
 
+//Spawning lasers- VERY JANKY
 task fireC{
     while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){
         ascent(i in 0..12){
@@ -104,6 +113,7 @@ task fireC{
     }
 }
 
+//Snake Pattern firing
 task fireD{
         ascent(i in 0..12){
                 let obj = CreateCurveLaserA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 4, 
@@ -116,6 +126,15 @@ task fireD{
                 GetAngleToPlayer(objBoss) + i*360/12, 60, 18, 54, 10);
                 SnakePattern(obj, -1);
         }
+}
+
+//Parametric equations
+task fireE{
+    let angleT= rand(0, 360);
+    loop(60){
+        CreateShotA1(ObjMove_GetX(objBoss) + -35*cos(angleT)+65*cos(-0.35*angleT), ObjMove_GetY(objBoss) + -35*sin(angleT)-65*sin(-0.35*angleT), 2, angleT, 1, 0);
+        angleT += 360/60;
+    }
 }
 
 task SnakePattern(obj, dir){
