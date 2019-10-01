@@ -1,0 +1,20 @@
+#TouhouDanmakufu[Plural]
+#ScriptVersion[3]
+#Title["Plural Tutorial File"]
+#Text["Code by Cyvo[r]A script to hold experiments with plurals"]
+
+@Event{
+}
+
+@Initialize{
+    TPlural;
+}
+
+@MainLoop{
+    yield;
+}
+
+task TPlural{
+    let dir = GetCurrentScriptDirectory();
+    let obj = ObjEnemyBossScene_Create();
+}
