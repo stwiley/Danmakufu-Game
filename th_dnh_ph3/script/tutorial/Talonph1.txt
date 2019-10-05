@@ -58,7 +58,11 @@ task MainTask{
     movement;
     while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){
         let angleT=GetAngleToPlayer(objBoss);
+        let RShellSpeedX = rand(-3, 3);
+        let RShellAccX= rand(-0.1, 0.1);
         CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 3, angleT, 57, 5);
+        CreateShotB2(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 3, -3, RShellAccX, 0.1, RShellSpeedX, 3, 2, 5);
+        CreateShotB2(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), -3, -3, RShellAccX, 0.1, RShellSpeedX, 3, 2, 5);
         wait(10);
     }
 }
