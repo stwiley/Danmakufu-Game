@@ -58,9 +58,22 @@ task MainTask{
     movement;
     while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){
         let angleT= rand (0, 180);
-        let bomb = CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 3, angleT, 57, 5);
+        let bombDist = rand (3, 9);
+        let bomb = CreateShotA2(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), bombDist, angleT, -0.1, 0, 57, 5);
+        ExplodeBomb(bomb);
         wait(30);
     }
+}
+
+task ExplodeBomb(bomb){
+    while(ObjMove_GetSpeed(bomb) >0){yield;}
+        wait(30);
+        let angleT = rand(0,360);
+        loop(12){
+            CreateShotA1(ObjMove_GetX(bomb), ObjMove_GetY(bomb), 2, angleT, 162, 0);
+            angleT += 360/12;
+        }
+        Obj_Delete(bomb);
 }
 
 task TDrawLoop{
