@@ -17,4 +17,12 @@
 task TPlural{
     let dir = GetCurrentScriptDirectory();
     let obj = ObjEnemyBossScene_Create();
+    ObjEnemyBossScene_Add(obj, 0 ,dir ~ "./Talonph1.txt");
+    ObjEnemyBossScene_Add(obj, 1, dir ~ "./Talonph2.txt");
+    ObjEnemyBossScene_LoadInThread(obj);
+    ObjEnemyBossScene_Regist(obj);
+    while(!Obj_IsDeleted(obj)){
+        yield;
+    }
+    CloseScript(GetOwnScriptID());
 }
