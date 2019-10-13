@@ -42,10 +42,6 @@ let objScene= GetEnemyBossSceneObjectID();
 
 task TFinalize{
     while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){yield;}
-    if(ObjEnemyBossScene_GetInfo(objScene, INFO_PLAYER_SHOOTDOWN_COUNT)
-            +ObjEnemyBossScene_GetInfo(objScene, INFO_PLAYER_SPELL_COUNT) == 0){
-        AddScore(ObjEnemyBossScene_GetInfo(objScene, INFO_SPELL_SCORE));    
-    }
     Obj_Delete(objBoss);
     DeleteShotAll(TYPE_ALL, TYPE_IMMEDIATE);
     SetAutoDeleteObject(true);
