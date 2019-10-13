@@ -59,13 +59,15 @@ task MainTask{
     while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){
         let angleT=rand_int(0,360);
         let count = 0;
+        let randX= rand(-40, 40);
+        let randY= rand(-20, 20);
         loop(10){
             ascent(i in 0..4){
-                CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 2.5-i/4, angleT, 162 , 5);
+                CreateShotA1(ObjMove_GetX(objBoss)+randX, ObjMove_GetY(objBoss)+randY, 2.5-i/4, angleT, 162 , 5);
             }
             angleT += 360/10;
         }
-        wait(10);
+        wait(20);
     }
 }
 
