@@ -58,7 +58,6 @@ task MainTask{
     movement;
     while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){
         let angleT=rand_int(0,360);
-        let count = 0;
         let randX= rand(-40, 40);
         let randY= rand(-20, 20);
         loop(10){
