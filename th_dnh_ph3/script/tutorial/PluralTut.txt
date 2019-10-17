@@ -2,6 +2,7 @@
 #ScriptVersion[3]
 #Title["Plural Tutorial File"]
 #Text["Code by Cyvo[r]A script to hold experiments with plurals"]
+#include "./lib/lib_general.dnh"
 
 @Event{
 }
@@ -10,6 +11,7 @@
     TPlural;
     CreateTrack();
     RenderBG;
+    BossName;
 }
 
 @MainLoop{
@@ -50,4 +52,12 @@ function CreateTrack{
     ObjSound_SetVolumeRate(obj, 40);
     ObjSound_Play(obj);
     return obj;
+}
+
+task BossName{
+    let objText = ObjText_Create();
+	ObjText_SetText(objText, "Talon");
+	ObjText_SetFontSize(objText, 16);
+	ObjText_SetMaxWidth(objText, 100);
+	ObjRender_SetY(objText,15);
 }
