@@ -8,6 +8,7 @@
 
 @Initialize{
     TPlural;
+    CreateTrack();
     RenderBG;
 }
 
@@ -39,4 +40,14 @@ task RenderBG{
     ObjSprite2D_SetDestRect(obj, 0, 0, 384, 448);
     ObjRender_SetPosition(obj, 0, 0, 1);
     Obj_SetRenderPriorityI(obj, 20)
+}
+
+function CreateTrack{
+    let obj = ObjSound_Create();
+    ObjSound_Load(obj, GetCurrentScriptDirectory() ~ "./Meta Crystal - Super Smash Bros.ogg");
+    ObjSound_SetSoundDivision(obj, SOUND_BGM);
+    ObjSound_SetLoopEnable(obj, true);
+    ObjSound_SetVolumeRate(obj, 40);
+    ObjSound_Play(obj);
+    return obj;
 }
