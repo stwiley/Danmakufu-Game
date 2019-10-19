@@ -3,6 +3,7 @@
 #Title["Talon Phase 2 Spell"]
 #Text["Code by Cyvo[r]Talon boss phase 2 spell"]
 #include "script/default_system/Default_ShotConst.txt"
+#include "./lib/lib_general.dnh"
 
 let objBoss;
 let objScene= GetEnemyBossSceneObjectID();
@@ -11,7 +12,7 @@ let objScene= GetEnemyBossSceneObjectID();
 @Event{
 	alternative(GetEventType())
 	case(EV_REQUEST_LIFE){
-        SetScriptResult(500);
+        SetScriptResult(2000);
     }
     case(EV_REQUEST_TIMER){
         SetScriptResult(60);
@@ -90,17 +91,4 @@ task movement{
         ObjMove_SetDestAtFrame(objBoss, rand(GetCenterX() + 90, GetCenterX() - 90), 45, 60);
         wait(240);
     }
-}
-
-function rand_int(min, max){
-    return truncate(rand(min, max+1));
-}
-function GetCenterX(){
-    return GetStgFrameWidth() / 2;
-}
-function GetCenterY(){
-    return GetStgFrameHeight() / 2;
-}
-function wait(n){
-    loop(n){yield;}
 }
