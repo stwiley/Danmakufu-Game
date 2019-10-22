@@ -3,15 +3,19 @@
 #Title["Plural Tutorial File"]
 #Text["Code by Cyvo[r]A script to hold experiments with plurals"]
 #include "./lib/lib_general.dnh"
+#Background["./../tutorial/system/Default_Background_IceMountain.txt"]
 #System["./../tutorial/system/Default_System.txt"]
 
 @Event{
 }
 
 @Initialize{
+    SetPauseScriptPath(GetCurrentScriptDirectory() ~ "./system/Default_Pause.txt");
+    SetEndSceneScriptPath(GetCurrentScriptDirectory() ~ "./system/Default_EndScene.txt");
+    SetReplaySaveSceneScriptPath(GetCurrentScriptDirectory() ~ "./system/Default_ReplaySaveScene.txt");
     TPlural;
     CreateTrack();
-    RenderBG;
+    //RenderBG;
     BossName;
 }
 

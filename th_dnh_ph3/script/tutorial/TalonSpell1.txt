@@ -4,7 +4,9 @@
 #Text["Code by Cyvo[r]Talon boss phase 2 spell"]
 #include "script/default_system/Default_ShotConst.txt"
 #include "./lib/lib_general.dnh"
-#System["./../system/Default_System.txt"]
+#Background["./../tutorial/system/Default_Background_IceMountain.txt"]
+#System["./../tutorial/system/Default_System.txt"]
+
 
 let objBoss;
 let objScene= GetEnemyBossSceneObjectID();
@@ -28,6 +30,9 @@ let objScene= GetEnemyBossSceneObjectID();
     objBoss= ObjEnemy_Create(OBJ_ENEMY_BOSS);
     ObjEnemy_Regist(objBoss);
     ObjMove_SetDestAtFrame(objBoss, GetCenterX(), 60, 60);
+    SetPauseScriptPath(GetCurrentScriptDirectory() ~ "./system/Default_Pause.txt");
+    SetEndSceneScriptPath(GetCurrentScriptDirectory() ~ "./system/Default_EndScene.txt");
+    SetReplaySaveSceneScriptPath(GetCurrentScriptDirectory() ~ "./system/Default_ReplaySaveScene.txt");
     
     ObjEnemyBossScene_StartSpell(objScene);
     
