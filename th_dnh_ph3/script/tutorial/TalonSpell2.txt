@@ -83,8 +83,21 @@ task explodeSides{
             CreateShotA1(randArr, randY, 2, angleT, 162, 5);
             angleT += 360/10;
         }
+        ScreenShake(10, 10);
         wait(60);
     }
+}
+
+task ScreenShake(frames, intensity){
+    while(frames > 0){
+        Set2DCameraFocusX(GetStgFrameWidth/2 + rand(-intensity, intensity));
+        Set2DCameraFocusY(GetStgFrameHeight/2 + rand(-intensity, intensity));
+        frames--;
+        yield;
+    }
+    Set2DCameraFocusX(GetStgFrameWidth/2);
+    Set2DCameraFocusY(GetStgFrameHeight/2);
+    yield;
 }
 
 task TDrawLoop{
