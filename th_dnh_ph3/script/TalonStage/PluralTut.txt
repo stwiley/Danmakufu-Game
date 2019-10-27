@@ -15,7 +15,6 @@
     SetReplaySaveSceneScriptPath(GetCurrentScriptDirectory() ~ "./system/Default_ReplaySaveScene.txt");
     TPlural;
     CreateTrack();
-    //RenderBG;
     BossName;
 }
 

@@ -1,0 +1,58 @@
+#TouhouDanmakufu[Stage]
+#ScriptVersion[3]
+#Title["Talon Stage/Tut File"]
+#Text["Code by Cyvo[r]A script to hold experiments with stages"]
+#include "./lib/lib_general.dnh"
+#Background["./../tutorial/system/Default_Background_IceMountain.txt"]
+#System["./../tutorial/system/Default_System.txt"]
+
+@Event{
+}
+
+@Initialize{
+    SetPauseScriptPath(GetCurrentScriptDirectory() ~ "./system/Default_Pause.txt");
+    SetEndSceneScriptPath(GetCurrentScriptDirectory() ~ "./system/Default_EndScene.txt");
+    SetReplaySaveSceneScriptPath(GetCurrentScriptDirectory() ~ "./system/Default_ReplaySaveScene.txt");
+    TStage;
+}
+
+@MainLoop{
+    yield;
+}
+
+task TStage{
+    let dir = GetCurrentScriptDirectory();
+    let path = dir ~ "PluralTut.txt";
+    let idscript = LoadScriptInThread(path);
+    loop(60){
+        yield;
+    }
+    StartScript(idscript);
+    
+    while(!IsCloseScript(idscript) && GetPlayerState() != STATE_END){
+        yield;
+    }
+    
+    loop(240){
+        yield;
+    }
+    CloseStgScene();
+}
+
+function CreateTrack{
+    let obj = ObjSound_Create();
+    ObjSound_Load(obj, GetCurrentScriptDirectory() ~ "./Meta Crystal - Super Smash Bros.ogg");
+    ObjSound_SetSoundDivision(obj, SOUND_BGM);
+    ObjSound_SetLoopEnable(obj, true);
+    ObjSound_SetVolumeRate(obj, 40);
+    ObjSound_Play(obj);
+    return obj;
+}
+
+task BossName{
+    let objText = ObjText_Create();
+	ObjText_SetText(objText, "Talon");
+	ObjText_SetFontSize(objText, 16);
+	ObjText_SetMaxWidth(objText, 100);
+	ObjRender_SetY(objText,15);
+}
