@@ -6,7 +6,28 @@
 #Background["./../tutorial/system/Default_Background_IceMountain.txt"]
 #System["./../tutorial/system/Default_System.txt"]
 
+let stagepart = 0;
+let bgm;
+let bgm2;
+
 @Event{
+    alternative(GetEventType())
+    case(EV_PAUSE_ENTER){
+        if(stagepart == 0){
+            ObjSound_Stop(bgm);
+        }
+        if(stagepart == 1){
+            ObjSound_Stop(bgm2);
+        }
+    }
+    case(EV_PAUSE_LEAVE){
+        if(stagepart == 0){
+            ObjSound_Play(bgm);
+        }
+        if(stagepart == 1){
+            ObjSound_Play(bgm2);
+        }
+    }
 }
 
 @Initialize{
@@ -21,9 +42,26 @@
 }
 
 task TStage{
+    stagepart = 1;
     let dir = GetCurrentScriptDirectory();
     let path = dir ~ "PluralTut.txt";
     let idscript = LoadScriptInThread(path);
+    
+    SetForbidPlayerSpell(true);
+    SetForbidPlayerShot(true);
+    SetPlayerSpeed(0,0);
+    SetStageDifficulty();
+    
+    bgm2 = ObjSound_Create();
+    ObjSound_Load(bgm2, dir ~ "metacrys.ogg");
+    StageBGM(bgm2, 2);
+    
+    bgm= ObjSound_Create();
+    ObjSound_Load(bgm, dir~ "whatuneed.ogg");
+    StageBGM(bgm, 1);
+    
+    ObjSound_Play(bgm2);
+    
     loop(60){
         yield;
     }
@@ -39,14 +77,85 @@ task TStage{
     CloseStgScene();
 }
 
-function CreateTrack{
-    let obj = ObjSound_Create();
-    ObjSound_Load(obj, GetCurrentScriptDirectory() ~ "./Meta Crystal - Super Smash Bros.ogg");
+function StageBGM(obj, ID){
     ObjSound_SetSoundDivision(obj, SOUND_BGM);
+    ObjSound_SetRestartEnable(obj, true);
     ObjSound_SetLoopEnable(obj, true);
-    ObjSound_SetVolumeRate(obj, 40);
-    ObjSound_Play(obj);
+    ObjSound_SetLoopTime(obj, 0, 300);
+    if(ID == 1){
+        ObjSound_SetLoopTime(obj, 0, 299);
+        ObjSound_SetVolumeRate(obj, 40);
+    }
+    if(ID == 2){
+        ObjSound_SetLoopTime(obj, 0, 166);
+        ObjSound_SetVolumeRate(obj, 40);
+        
+    }
     return obj;
+}
+
+function SetStageDifficulty{
+    let selection =0;
+    let sdiff = 0;
+    let TextObjects = [];
+    let TextNames = ["Normal", "Hard"];
+    
+    let diffs = [1,2];
+    
+    let Center = [GetStgFrameWidth()/2, GetStgFrameHeight/2];
+    ascent(i in 0..length(TextNames)){
+        TextObjects = TextObjects ~ [DrawSubMenuText(TextNames[i])];
+        let locText = TextObjects[i];
+        ObjText_SetHorizontalAlignment(locText, ALIGNMENT_CENTER);
+        ObjRender_SetPosition(locText, Center[0] - 100, Center[1] - 150 + i*25, 0);
+        ObjText_SetMaxWidth(locText, 200);
+        ObjText_SetFontSize(locText, 16);
+        ObjText_SetFontType(locText, "Helvetica");
+        ObjText_SetFontBorderColor(locText, 16, 16, 16);
+    }
+    
+    loop{
+        if(GetVirtualKeyState(VK_UP) == KEY_PUSH){selection--;}
+        if(GetVirtualKeyState(VK_DOWN) == KEY_PUSH){selection++;}
+        if(selection < 0){selection = 1;}
+        if(selection > 1){selection = 0;}
+        
+        ascent(i in 0..length(TextObjects)){
+            if (selection == i){
+                ObjText_SetFontColorTop(TextObjects[i], 255, 127, 40);
+                ObjText_SetFontColorBottom(TextObjects[i], 255/1.5, 127/1.5, 40/1.5);
+            } else{
+                ObjText_SetFontColorTop(TextObjects[i], 255/1.75, 127/1.75, 40/1.75);
+                ObjText_SetFontColorBottom(TextObjects[i], 255/2.25, 127/2.25, 40/2.25);
+            }
+        }
+        
+        if(GetVirtualKeyState(VK_SHOT) == KEY_PUSH){
+            sdiff = diffs[selection];
+            SetCommonData("Difficulty", sdiff);
+            break;
+        }
+        
+        yield;
+    }
+    
+    SetForbidPlayerSpell(false);
+    SetPlayerSpeed(4,1.6);
+    
+    ascent(i in 0..length(TextObjects)){
+        Obj_Delete(TextObjects[i]);
+    }
+    wait(60);
+    SetForbidPlayerShot(false);
+}
+
+function DrawSubMenuText(string){
+    let objMText = ObjText_Create();
+    ObjText_SetText(objMText, string);
+    ObjText_SetFontSize(objMText, 16);
+    ObjText_SetFontType(objMText, "Helvetica");
+    
+    return objMText;
 }
 
 task BossName{
