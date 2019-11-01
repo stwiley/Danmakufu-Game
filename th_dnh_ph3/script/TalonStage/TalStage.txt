@@ -28,6 +28,16 @@ let bgm2;
             ObjSound_Play(bgm2);
         }
     }
+    case(EV_USER_STAGE+1){
+        let arg = GetEventArgument(0);
+        CreateItemA1(ITEM_POINT, arg[0], arg[1], 15000);
+    }
+    case(EV_USER_STAGE+2){
+        let arg = GetEventArgument(0);
+        ascent(i in 0..12){
+            CreateItemA1(ITEM_POINT, arg[0] + 30*cos(30*i), arg[1] + 30*sin(30*i), 15000);
+        }
+    }
 }
 
 @Initialize{

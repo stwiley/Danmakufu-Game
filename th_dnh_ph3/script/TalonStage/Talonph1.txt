@@ -49,6 +49,7 @@ let objScene= GetEnemyBossSceneObjectID();
 
 task TFinalize{
     while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){yield;}
+    NotifyEventAll(EV_USER_STAGE+2, [ObjMove_GetX(objBoss), ObjMove_GetY(objBoss)]);
     Obj_Delete(objBoss);
     DeleteShotAll(TYPE_ALL, TYPE_IMMEDIATE);
     SetAutoDeleteObject(true);
