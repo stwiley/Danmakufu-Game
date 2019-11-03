@@ -3,6 +3,7 @@
 #Title["Talon Stage/Tut File"]
 #Text["Code by Cyvo[r]A script to hold experiments with stages"]
 #include "./lib/lib_general.dnh"
+#include "./stgenemy/StageEnemy1.txt"
 #Background["./../tutorial/system/Default_Background_IceMountain.txt"]
 #System["./../tutorial/system/Default_System.txt"]
 
@@ -76,6 +77,7 @@ task TStage{
         yield;
     }
     StartScript(idscript);
+    CreateStageEnemy1(-16, 128, 0.5, 0);
     
     while(!IsCloseScript(idscript) && GetPlayerState() != STATE_END){
         yield;

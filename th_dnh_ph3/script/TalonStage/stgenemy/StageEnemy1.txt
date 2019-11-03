@@ -1,0 +1,65 @@
+task CreateStageEnemy1(x, y, speedE, angleE){
+    let count =0;
+    let Xmin= -32;
+    let Xmax= GetStgFrameWidth + 32;
+    let Ymin= -32;
+    let Ymax= GetStgFrameHeight + 32;
+    
+    let objEnemy;
+    TInitialize;
+    
+    task TInitialize{
+        objEnemy= ObjEnemy_Create(OBJ_ENEMY);
+        ObjEnemy_Regist(objEnemy);
+        ObjEnemy_SetLife(objEnemy, 48);
+        ObjEnemy_SetDamageRate(objEnemy, 100, 100);
+        ObjMove_SetPosition(objEnemy, x, y);
+        ObjMove_SetAngle(objEnemy, angleE);
+        ObjMove_SetSpeed(objEnemy, speedE);
+        TDrawLoop(objEnemy);
+        TMainLoop;
+        TFinalize;
+    }
+    
+    task TMainLoop{
+        while(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) > 0){
+            ObjEnemy_SetIntersectionCircleToShot(objEnemy, ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), 32);
+            ObjEnemy_SetIntersectionCircleToPlayer(objEnemy, ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), 8);
+            
+            if(count == 30){bulletA;}
+            
+            if(ObjMove_GetX(objEnemy) < Xmin || ObjMove_GetX(objEnemy) > Xmax || ObjMove_GetY(objEnemy) < Ymin || ObjMove_GetY(objEnemy) > Ymax){
+                ObjEnemy_SetLife(objEnemy, -1000);
+            }
+            count++;
+            yield;
+        }
+    }
+    
+    task bulletA{
+        while(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) > 0){
+            CreateShotA1(ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), 3, GetAngleToPlayer(objEnemy), 5, 10);
+            wait(30);
+        }
+    }
+    
+    task TDrawLoop(obj){
+        let BossImage = GetCurrentScriptDirectory() ~ "./u2l13spritesheet.png"; //assumes that image is in same directory
+        let animframe = 0;
+        ObjPrim_SetTexture(obj, BossImage);
+        ObjRender_SetScaleXYZ(obj, 1, 1, 1);
+        ObjSprite2D_SetSourceRect(obj, 0, 0, 64, 64);
+        ObjSprite2D_SetDestCenter(obj);
+        while(!Obj_IsDeleted(obj)){
+            ObjSprite2D_SetSourceRect(obj, 0 + 64*floor(animframe/8), 0, 64 + 64*floor(animframe/8), 64);
+            animframe++;
+            if(animframe >= 32){animframe = 0;}//reset if too high
+            yield;
+        }
+    }
+    
+    task TFinalize{
+        while(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) > 0){yield;}
+        Obj_Delete(objEnemy);
+    }
+}
