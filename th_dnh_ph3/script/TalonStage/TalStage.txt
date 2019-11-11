@@ -3,6 +3,7 @@
 #Title["Talon Stage/Tut File"]
 #Text["Code by Cyvo[r]A script to hold experiments with stages"]
 #include "./lib/lib_general.dnh"
+#include"./lib/lib_dialogue.txt"
 #include "./stgenemy/StageEnemy1.txt"
 #Background["./../tutorial/system/Default_Background_IceMountain.txt"]
 #System["./../tutorial/system/Default_System.txt"]
@@ -76,6 +77,11 @@ task TStage{
     loop(60){
         yield;
     }
+    
+    StageEvent();
+    
+    loop(120){yield;}
+    
     StartScript(idscript);
     CreateStageEnemy1(-16, 128, 0.5, 0);
     
@@ -168,6 +174,70 @@ function DrawSubMenuText(string){
     ObjText_SetFontType(objMText, "Helvetica");
     
     return objMText;
+}
+
+function StageEvent{
+    let dialogueobj = CreateDialogueEvent();
+    let textobj = dialogueobj[1];
+    let leftportrait = dialogueobj[2];
+    let rightportrait = dialogueobj[3];
+    
+    SetForbidPlayerSpell(true);
+    SetForbidPlayerShot(true);
+    
+    let pathReisen1= GetCurrentScriptDirectory() ~ "./lib/u3l32aimg/reisen1.png";
+    let pathReisen2= GetCurrentScriptDirectory() ~ "./lib/u3l32aimg/reisen2.png";
+    let pathReisen3= GetCurrentScriptDirectory() ~ "./lib/u3l32aimg/reisen3.png";
+    let pathReimu1= GetCurrentScriptDirectory() ~ "./lib/u3l32aimg/reimu1.png";
+    let pathReimu2= GetCurrentScriptDirectory() ~ "./lib/u3l32aimg/reimu2.png";
+    let pathReimu3= GetCurrentScriptDirectory() ~ "./lib/u3l32aimg/reimu3.png";
+    
+    ObjPrim_SetTexture(leftportrait, pathReisen1);
+    ObjPrim_SetTexture(rightportrait, pathReimu1);
+    
+    ObjText_SetText(textobj, "Hey buddy");
+    ObjText_SetFontBorderColor(textobj, 255, 128, 192);
+    SetPortraitToForeground(leftportrait);
+    SetPortraitToBackground(rightportrait);
+    EventWaitA3(15);
+    
+    ObjText_SetText(textobj, "Oh[r]The boony girl haha");
+    ObjText_SetFontBorderColor(textobj, 255, 128, 128);
+    SetPortraitToForeground(rightportrait);
+    SetPortraitToBackground(leftportrait);
+    EventWaitA1(15);
+    
+    ObjText_SetText(textobj, "Ha yes it is me");
+    ObjText_SetFontBorderColor(textobj, 255, 128, 192);
+    ObjPrim_SetTexture(leftportrait, pathReisen2);
+    SetPortraitToForeground(leftportrait);
+    SetPortraitToBackground(rightportrait);
+    EventWaitA1(15);
+    
+    ObjText_SetText(textobj, "Very good");
+    ObjText_SetFontBorderColor(textobj, 255, 128, 128);
+    ObjPrim_SetTexture(rightportrait, pathReimu2);
+    SetPortraitToForeground(rightportrait);
+    SetPortraitToBackground(leftportrait);
+    EventWaitA1(15);
+    
+    ObjText_SetText(textobj, "I'm gonna kick ur ass now");
+    ObjText_SetFontBorderColor(textobj, 255, 128, 192);
+    ObjPrim_SetTexture(leftportrait, pathReisen3);
+    SetPortraitToForeground(leftportrait);
+    SetPortraitToBackground(rightportrait);
+    EventWaitA1(15);
+    
+    ObjText_SetText(textobj, "Well alright then");
+    ObjText_SetFontBorderColor(textobj, 255, 128, 128);
+    ObjPrim_SetTexture(rightportrait, pathReimu3);
+    SetPortraitToForeground(rightportrait);
+    SetPortraitToBackground(leftportrait);
+    EventWaitA1(15);
+    
+    DestroyDialogueEvent(dialogueobj);
+    SetForbidPlayerSpell(false);
+    SetForbidPlayerShot(false);
 }
 
 task BossName{

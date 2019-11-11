@@ -1,0 +1,86 @@
+function CreateDialogueEvent{
+    let imgpathL = GetCurrentScriptDirectory()~"./u3l32aimg/reisen1.png";
+    let objImgLeft= ObjPrim_Create(OBJ_SPRITE_2D);
+    Obj_SetRenderPriority(objImgLeft, 81);
+    ObjPrim_SetTexture(objImgLeft, imgpathL);
+    ObjSprite2D_SetSourceRect(objImgLeft, 0, 0, 384, 384);
+    ObjSprite2D_SetDestCenter(objImgLeft);
+    ObjRender_SetX(objImgLeft, GetStgFrameLeft()+GetStgFrameWidth()/2-100);
+    ObjRender_SetY(objImgLeft, 288);
+    
+    let imgpathR = GetCurrentScriptDirectory()~"./u3l32aimg/reimu1.png";
+    let objImgRight= ObjPrim_Create(OBJ_SPRITE_2D);
+    Obj_SetRenderPriority(objImgRight, 81);
+    ObjPrim_SetTexture(objImgRight, imgpathR);
+    ObjSprite2D_SetSourceRect(objImgRight, 0, 0, 384, 384);
+    ObjSprite2D_SetDestCenter(objImgRight);
+    ObjRender_SetX(objImgRight, GetStgFrameLeft()+GetStgFrameWidth()/2+100);
+    ObjRender_SetY(objImgRight, 288);
+    
+    let TEXTBOX_BUFFER = 16;
+    let TEXTBOX_WIDTH = GetStgFrameWidth() - TEXTBOX_BUFFER*2;
+    let TEXTBOX_HEIGHT = 48;
+    let objTextBack = ObjPrim_Create(OBJ_SPRITE_2D);
+    Obj_SetRenderPriority(objTextBack, 83);
+    ObjSprite2D_SetSourceRect(objTextBack, 0, 0, 1, 1);
+    ObjSprite2D_SetDestRect(objTextBack, 0, 0, TEXTBOX_WIDTH, TEXTBOX_HEIGHT);
+    ObjRender_SetX(objTextBack, GetStgFrameLeft()+TEXTBOX_BUFFER);
+    ObjRender_SetY(objTextBack, GetStgFrameTop()+GetStgFrameHeight()-TEXTBOX_HEIGHT-TEXTBOX_BUFFER);
+    ObjRender_SetColor(objTextBack, 0, 0, 0);
+    ascent(i in 0..30){
+        ObjRender_SetAlpha(objTextBack, 192/30*i);
+        yield;
+    }
+    ObjRender_SetAlpha(objTextBack, 192);
+    
+    let TEXT_MARGIN_LR = 8;
+    let TEXT_MARGIN_TOP = 6;
+    let TEXT_MAXWIDTH = TEXTBOX_WIDTH - TEXT_MARGIN_LR*2;
+    let objText = ObjText_Create();
+    ObjText_SetText(objText, "Default[r]Default");
+    ObjText_SetFontSize(objText, 15);
+    ObjText_SetFontBold(objText, false);
+    ObjText_SetFontType(objText, "Helvetica");
+    Obj_SetRenderPriority(objText, 83);
+    ObjText_SetFontColorTop(objText, 255, 255, 255);
+    ObjText_SetFontColorBottom(objText, 255, 255, 255);
+    ObjText_SetFontBorderType(objText, BORDER_FULL);
+    ObjText_SetFontBorderColor(objText, 255,255,255);
+    ObjText_SetFontBorderWidth(objText, 1);
+    ObjText_SetMaxWidth(objText, TEXT_MAXWIDTH);
+    ObjRender_SetX(objText, GetStgFrameLeft()+TEXTBOX_BUFFER+TEXT_MARGIN_LR);
+    ObjRender_SetY(objText, GetStgFrameTop()+GetStgFrameHeight()-TEXTBOX_HEIGHT-TEXTBOX_BUFFER+TEXT_MARGIN_TOP);
+    
+    return [objTextBack, objText, objImgLeft, objImgRight];
+}
+
+function EventWaitA1(frames){
+    while(GetVirtualKeyState(VK_OK) == KEY_FREE || GetVirtualKeyState(VK_OK) == KEY_HOLD){yield;}
+    loop(frames){yield;}
+}
+
+function EventWaitA2(frames){
+    loop(frames){yield;}
+}
+
+function EventWaitA3(frames){
+    while(GetVirtualKeyState(VK_OK) == KEY_HOLD){yield;}
+    while(GetVirtualKeyState(VK_OK) != KEY_PUSH){yield;}
+    loop(frames){yield;}
+}
+
+function SetPortraitToBackground(portrait){
+    ObjRender_SetAlpha(portrait, 192);
+    ObjRender_SetColor(portrait, 192, 192, 192);
+}
+
+function SetPortraitToForeground(portrait){
+    ObjRender_SetAlpha(portrait, 255);
+    ObjRender_SetColor(portrait, 255, 255, 255);
+}
+
+function DestroyDialogueEvent(objects){
+    ascent(i in 0..length(objects)){
+        Obj_Delete(objects[i]);
+    }
+}
