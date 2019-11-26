@@ -1,0 +1,249 @@
+#TouhouDanmakufu[Stage]
+#ScriptVersion[3]
+#Title["Talon Stage/Tut File"]
+#Text["Code by Cyvo[r]A script to hold experiments with stages"]
+#include "./../lib/lib_general.dnh"
+#include"./../lib/lib_dialogue.txt"
+#include "./../stgenemy/StageEnemy1.txt"
+#Background["./../../tutorial/system/Default_Background_IceMountain.txt"]
+#System["./../../tutorial/system/Default_System.txt"]
+
+let stagepart = 0;
+let bgm;
+let bgm2;
+
+@Event{
+    alternative(GetEventType())
+    case(EV_PAUSE_ENTER){
+        if(stagepart == 0){
+            ObjSound_Stop(bgm);
+        }
+        if(stagepart == 1){
+            ObjSound_Stop(bgm2);
+        }
+    }
+    case(EV_PAUSE_LEAVE){
+        if(stagepart == 0){
+            ObjSound_Play(bgm);
+        }
+        if(stagepart == 1){
+            ObjSound_Play(bgm2);
+        }
+    }
+    case(EV_USER_STAGE+1){
+        let arg = GetEventArgument(0);
+        CreateItemA1(ITEM_POINT, arg[0], arg[1], 15000);
+    }
+    case(EV_USER_STAGE+2){
+        let arg = GetEventArgument(0);
+        ascent(i in 0..12){
+            CreateItemA1(ITEM_POINT, arg[0] + 30*cos(30*i), arg[1] + 30*sin(30*i), 15000);
+        }
+    }
+}
+
+@Initialize{
+    SetPauseScriptPath(GetCurrentScriptDirectory() ~ "./../system/Default_Pause.txt");
+    SetEndSceneScriptPath(GetCurrentScriptDirectory() ~ "./../system/Default_EndScene.txt");
+    SetReplaySaveSceneScriptPath(GetCurrentScriptDirectory() ~ "./../system/Default_ReplaySaveScene.txt");
+    TStage;
+}
+
+@MainLoop{
+    yield;
+}
+
+task TStage{
+    stagepart = 1;
+    let dir = GetCurrentScriptDirectory();
+    let path = dir ~ "KrLvPlu.txt";
+    let idscript = LoadScriptInThread(path);
+    
+    SetForbidPlayerSpell(true);
+    SetForbidPlayerShot(true);
+    SetPlayerSpeed(0,0);
+    SetStageDifficulty();
+    
+    bgm2 = ObjSound_Create();
+    ObjSound_Load(bgm2, dir ~ "metacrys.ogg");
+    StageBGM(bgm2, 2);
+    
+    bgm= ObjSound_Create();
+    ObjSound_Load(bgm, dir~ "whatuneed.ogg");
+    StageBGM(bgm, 1);
+    
+    ObjSound_Play(bgm2);
+    
+    loop(60){
+        yield;
+    }
+    
+    StageEvent();
+    
+    loop(120){yield;}
+    
+    StartScript(idscript);
+    CreateStageEnemy1(-16, 128, 0.5, 0);
+    
+    while(!IsCloseScript(idscript) && GetPlayerState() != STATE_END){
+        yield;
+    }
+    
+    loop(240){
+        yield;
+    }
+    CloseStgScene();
+}
+
+function StageBGM(obj, ID){
+    ObjSound_SetSoundDivision(obj, SOUND_BGM);
+    ObjSound_SetRestartEnable(obj, true);
+    ObjSound_SetLoopEnable(obj, true);
+    ObjSound_SetLoopTime(obj, 0, 300);
+    if(ID == 1){
+        ObjSound_SetLoopTime(obj, 0, 299);
+        ObjSound_SetVolumeRate(obj, 40);
+    }
+    if(ID == 2){
+        ObjSound_SetLoopTime(obj, 0, 166);
+        ObjSound_SetVolumeRate(obj, 40);
+        
+    }
+    return obj;
+}
+
+function SetStageDifficulty{
+    let selection =0;
+    let sdiff = 0;
+    let TextObjects = [];
+    let TextNames = ["Normal", "Hard"];
+    
+    let diffs = [1,2];
+    
+    let Center = [GetStgFrameWidth()/2, GetStgFrameHeight/2];
+    ascent(i in 0..length(TextNames)){
+        TextObjects = TextObjects ~ [DrawSubMenuText(TextNames[i])];
+        let locText = TextObjects[i];
+        ObjText_SetHorizontalAlignment(locText, ALIGNMENT_CENTER);
+        ObjRender_SetPosition(locText, Center[0] - 100, Center[1] - 150 + i*25, 0);
+        ObjText_SetMaxWidth(locText, 200);
+        ObjText_SetFontSize(locText, 16);
+        ObjText_SetFontType(locText, "Helvetica");
+        ObjText_SetFontBorderColor(locText, 16, 16, 16);
+    }
+    
+    loop{
+        if(GetVirtualKeyState(VK_UP) == KEY_PUSH){selection--;}
+        if(GetVirtualKeyState(VK_DOWN) == KEY_PUSH){selection++;}
+        if(selection < 0){selection = 1;}
+        if(selection > 1){selection = 0;}
+        
+        ascent(i in 0..length(TextObjects)){
+            if (selection == i){
+                ObjText_SetFontColorTop(TextObjects[i], 255, 127, 40);
+                ObjText_SetFontColorBottom(TextObjects[i], 255/1.5, 127/1.5, 40/1.5);
+            } else{
+                ObjText_SetFontColorTop(TextObjects[i], 255/1.75, 127/1.75, 40/1.75);
+                ObjText_SetFontColorBottom(TextObjects[i], 255/2.25, 127/2.25, 40/2.25);
+            }
+        }
+        
+        if(GetVirtualKeyState(VK_SHOT) == KEY_PUSH){
+            sdiff = diffs[selection];
+            SetCommonData("Difficulty", sdiff);
+            break;
+        }
+        
+        yield;
+    }
+    
+    SetForbidPlayerSpell(false);
+    SetPlayerSpeed(4,1.6);
+    
+    ascent(i in 0..length(TextObjects)){
+        Obj_Delete(TextObjects[i]);
+    }
+    wait(60);
+    SetForbidPlayerShot(false);
+}
+
+function DrawSubMenuText(string){
+    let objMText = ObjText_Create();
+    ObjText_SetText(objMText, string);
+    ObjText_SetFontSize(objMText, 16);
+    ObjText_SetFontType(objMText, "Helvetica");
+    
+    return objMText;
+}
+
+function StageEvent{
+    let dialogueobj = CreateDialogueEvent();
+    let textobj = dialogueobj[1];
+    let leftportrait = dialogueobj[2];
+    let rightportrait = dialogueobj[3];
+    
+    SetForbidPlayerSpell(true);
+    SetForbidPlayerShot(true);
+    
+    let pathReisen1= GetCurrentScriptDirectory() ~ "./../lib/u3l32aimg/reisen1.png";
+    let pathReisen2= GetCurrentScriptDirectory() ~ "./../lib/u3l32aimg/reisen2.png";
+    let pathReisen3= GetCurrentScriptDirectory() ~ "./../lib/u3l32aimg/reisen3.png";
+    let pathReimu1= GetCurrentScriptDirectory() ~ "./../lib/u3l32aimg/reimu1.png";
+    let pathReimu2= GetCurrentScriptDirectory() ~ "./../lib/u3l32aimg/reimu2.png";
+    let pathReimu3= GetCurrentScriptDirectory() ~ "./../lib/u3l32aimg/reimu3.png";
+    
+    ObjPrim_SetTexture(leftportrait, pathReisen1);
+    ObjPrim_SetTexture(rightportrait, pathReimu1);
+    
+    ObjText_SetText(textobj, "Hey buddy");
+    ObjText_SetFontBorderColor(textobj, 255, 128, 192);
+    SetPortraitToForeground(leftportrait);
+    SetPortraitToBackground(rightportrait);
+    EventWaitA3(15);
+    
+    ObjText_SetText(textobj, "Oh[r]The boony girl haha");
+    ObjText_SetFontBorderColor(textobj, 255, 128, 128);
+    SetPortraitToForeground(rightportrait);
+    SetPortraitToBackground(leftportrait);
+    EventWaitA1(15);
+    
+    ObjText_SetText(textobj, "Ha yes it is me");
+    ObjText_SetFontBorderColor(textobj, 255, 128, 192);
+    ObjPrim_SetTexture(leftportrait, pathReisen2);
+    SetPortraitToForeground(leftportrait);
+    SetPortraitToBackground(rightportrait);
+    EventWaitA1(15);
+    
+    ObjText_SetText(textobj, "Very good");
+    ObjText_SetFontBorderColor(textobj, 255, 128, 128);
+    ObjPrim_SetTexture(rightportrait, pathReimu2);
+    SetPortraitToForeground(rightportrait);
+    SetPortraitToBackground(leftportrait);
+    EventWaitA1(15);
+    
+    ObjText_SetText(textobj, "I'm gonna kick ur ass now");
+    ObjText_SetFontBorderColor(textobj, 255, 128, 192);
+    ObjPrim_SetTexture(leftportrait, pathReisen3);
+    SetPortraitToForeground(leftportrait);
+    SetPortraitToBackground(rightportrait);
+    EventWaitA1(15);
+    
+    ObjText_SetText(textobj, "Well alright then");
+    ObjText_SetFontBorderColor(textobj, 255, 128, 128);
+    ObjPrim_SetTexture(rightportrait, pathReimu3);
+    SetPortraitToForeground(rightportrait);
+    SetPortraitToBackground(leftportrait);
+    EventWaitA1(15);
+    
+    DestroyDialogueEvent(dialogueobj);
+    SetForbidPlayerSpell(false);
+    SetForbidPlayerShot(false);
+}
+
+task BossName{
+    let objText = ObjText_Create();
+	ObjText_SetText(objText, "Krikka");
+	ObjText_SetFontSize(objText, 16);
+	ObjText_SetMaxWidth(objText, 100);
+	ObjRender_SetY(objText,15);
+}
