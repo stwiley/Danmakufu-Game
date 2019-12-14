@@ -60,18 +60,18 @@ task TFinalize{
 task MainTask{
     wait(120);
     snakeRad;
+    singleShot;
 }
 
 task snakeRad{
     while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){
         let dir = 1;
         let wvel =1 * dir;
-        let angleT = rand(0, 360);
+        let angleT = 0;
         loop(12){
             ascent(i in 0..12){
                 let obj = CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 2.5-i/12, angleT, 9, 5);
-                //snakePatt(obj, 1);
-                ObjMove_AddPatternA2(obj, i*5, NO_CHANGE, NO_CHANGE, NO_CHANGE, wvel, 5);
+                ObjMove_AddPatternA2(obj, i*5, NO_CHANGE, NO_CHANGE, NO_CHANGE, wvel, 7);
                 wvel *=-1;
             }
             angleT += 360/12;
@@ -80,11 +80,11 @@ task snakeRad{
     }
 }
 
-task snakePatt(obj, dir){
-    let wvel =1 * dir;
-    ascent(i in 0..12){
-        ObjMove_AddPatternA2(obj, i*30, NO_CHANGE, NO_CHANGE, NO_CHANGE, wvel, 5);
-        wvel *=-1;
+task singleShot{
+    while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){
+        let home = CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 2, -1*rand(0, 180), 67, 5);
+        ObjMove_AddPatternA4(home, 30, NO_CHANGE, 0, NO_CHANGE, 0, 2, GetPlayerObjectID(), NO_CHANGE);
+        wait(80);
     }
 }
 
