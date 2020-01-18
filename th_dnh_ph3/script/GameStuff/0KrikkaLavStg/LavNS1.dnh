@@ -1,7 +1,7 @@
 #TouhouDanmakufu[Single]
 #ScriptVersion[3]
-#Title["Krikka Non-Spell 2 Single"]
-#Text["Code by Cyvo[r]Krikka Non-Spell 2"]
+#Title["Lavarus Non-Spell 1 Single"]
+#Text["Code by Cyvo[r]Lavarus Non-Spell 1"]
 #include "script/default_system/Default_ShotConst.txt"
 #include "./../lib/lib_general.dnh"
 #Background["./../../tutorial/system/Default_Background_IceMountain.txt"]
@@ -59,6 +59,30 @@ task TFinalize{
 
 task MainTask{
     wait(120);
+	clawShot;
+	movement;
+}
+
+task clawShot{
+	while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){
+		let angleT= 0;
+		let playerAngle = GetAngleToPlayer(objBoss);
+        CreateShotA1(ObjMove_GetX(objBoss)+cos(angleT) + 20, ObjMove_GetY(objBoss)+sin(angleT), 4, angleT + playerAngle, DS_BALL_BS_GREEN, 5);
+		loop(2){
+        	angleT += 45/5;
+			CreateShotA1(ObjMove_GetX(objBoss)+cos(angleT) + 20, ObjMove_GetY(objBoss)+sin(angleT), 4, angleT + playerAngle, DS_BALL_BS_GREEN, 5);
+            CreateShotA1(ObjMove_GetX(objBoss)+cos(angleT) + 20, ObjMove_GetY(objBoss)+sin(angleT), 4, -angleT + playerAngle, DS_BALL_BS_GREEN, 5);
+		}
+		wait(10);
+        angleT=0;
+        CreateShotA1(ObjMove_GetX(objBoss)+cos(angleT) - 20, ObjMove_GetY(objBoss)+sin(angleT), 4, angleT + playerAngle, DS_BALL_BS_GREEN, 5);
+		loop(2){
+            angleT -= 45/5;
+			CreateShotA1(ObjMove_GetX(objBoss)+cos(angleT) - 20, ObjMove_GetY(objBoss)+sin(angleT), 4, angleT + playerAngle, DS_BALL_BS_GREEN, 5);
+            CreateShotA1(ObjMove_GetX(objBoss)+cos(angleT) - 20, ObjMove_GetY(objBoss)+sin(angleT), 4, -angleT + playerAngle, DS_BALL_BS_GREEN, 5);
+		}
+		wait(60);
+	}
 }
 
 
@@ -74,5 +98,12 @@ task TDrawLoop{
         animframe++;
         if(animframe >= 32){animframe = 0;}//reset if too high
         yield;
+    }
+}
+
+task movement{
+    while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) > 0){
+        ObjMove_SetDestAtFrame(objBoss, GetPlayerX(), GetPlayerY(), 60);
+        wait(120);
     }
 }

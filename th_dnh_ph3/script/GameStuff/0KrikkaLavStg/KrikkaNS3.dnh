@@ -1,7 +1,7 @@
 #TouhouDanmakufu[Single]
 #ScriptVersion[3]
-#Title["Krikka Non-Spell 2 Single"]
-#Text["Code by Cyvo[r]Krikka Non-Spell 2"]
+#Title["Krikka Non-Spell 3 Single"]
+#Text["Code by Cyvo[r]Krikka Non-Spell 3"]
 #include "script/default_system/Default_ShotConst.txt"
 #include "./../lib/lib_general.dnh"
 #Background["./../../tutorial/system/Default_Background_IceMountain.txt"]
