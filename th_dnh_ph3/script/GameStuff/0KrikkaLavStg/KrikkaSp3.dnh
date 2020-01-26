@@ -1,7 +1,7 @@
 #TouhouDanmakufu[Single]
 #ScriptVersion[3]
-#Title["Krikka Non-Spell 2 Single"]
-#Text["Code by Cyvo[r]Krikka Non-Spell 2"]
+#Title["Krikka Spell 3 Single"]
+#Text["Code by Cyvo[r]Krikka Spell 3"]
 #include "script/default_system/Default_ShotConst.txt"
 #include "./../lib/lib_general.dnh"
 #Background["./../../tutorial/system/Default_Background_IceMountain.txt"]
@@ -34,7 +34,7 @@ let objScene= GetEnemyBossSceneObjectID();
     SetEndSceneScriptPath(GetCurrentScriptDirectory() ~ "./../system/Default_EndScene.txt");
     SetReplaySaveSceneScriptPath(GetCurrentScriptDirectory() ~ "./../system/Default_ReplaySaveScene.txt");
     
-    //ObjEnemyBossScene_StartSpell(objScene);
+    ObjEnemyBossScene_StartSpell(objScene);
     
     TDrawLoop;
     TFinalize;
@@ -59,17 +59,29 @@ task TFinalize{
 
 task MainTask{
     wait(120);
-	whip;
+    oneRad;
+	curveTarg;
 }
 
-task whip{
-	while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){
-		let angleT = 0;
-		loop(10){
-			CreateShotA2(ObjMove_GetX(GetPlayerObjectID()) + 50*cos(angleT), ObjMove_GetY(GetPlayerObjectID()) + 50*sin(angleT), 0, angleT+180, 0.01, 2, 145, 10);
-			angleT += 360/10;
+task oneRad{
+    while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){
+		ascent(i in 0..36){
+			CreateShotA2(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 0.01, 0+i*10, 0.05, 7, 9, 5);
+			CreateShotA2(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 0.01, 90+i*10, 0.05, 7, 9, 5);
+			CreateShotA2(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 0.01, 180+i*10, 0.05, 7, 10, 5);
+			CreateShotA2(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 0.01, 270+i*10, 0.05, 7, 9, 5);
+			wait(5);
 		}
-		wait(120);
+        yield;
+    }
+}
+
+task curveTarg{
+	while(ObjEnemy_GetInfo(objBoss, INFO_LIFE)>0){
+		loop(4){
+			let angleT = 45;
+		}
+	
 	}
 }
 
