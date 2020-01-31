@@ -65,11 +65,11 @@ task TStage{
     SetStageDifficulty();
     
     bgm2 = ObjSound_Create();
-    ObjSound_Load(bgm2, dir ~ "metacrys.ogg");
+    ObjSound_Load(bgm2, dir ~ "./../img/metacrys.ogg");
     StageBGM(bgm2, 2);
     
     bgm= ObjSound_Create();
-    ObjSound_Load(bgm, dir~ "whatuneed.ogg");
+    ObjSound_Load(bgm, dir~ "./../img/whatuneed.ogg");
     StageBGM(bgm, 1);
     
     ObjSound_Play(bgm2);

@@ -1,11 +1,11 @@
 #TouhouDanmakufu[Single]
 #ScriptVersion[3]
-#Title["Talon Phase 1 Single"]
-#Text["Code by Cyvo[r]Talon boss phase 1"]
+#Title["Talon Phase 2 Spell"]
+#Text["Code by Cyvo[r]Talon boss phase 2 spell"]
 #include "script/default_system/Default_ShotConst.txt"
-#include "./lib/lib_general.dnh"
-#Background["./../tutorial/system/Default_Background_IceMountain.txt"]
-#System["./../tutorial/system/Default_System.txt"]
+#include "./../lib/lib_general.dnh"
+#Background["./../../tutorial/system/Default_Background_IceMountain.txt"]
+#System["./../../tutorial/system/Default_System.txt"]
 
 
 let objBoss;
@@ -15,7 +15,7 @@ let objScene= GetEnemyBossSceneObjectID();
 @Event{
 	alternative(GetEventType())
 	case(EV_REQUEST_LIFE){
-        SetScriptResult(1000);
+        SetScriptResult(2000);
     }
     case(EV_REQUEST_TIMER){
         SetScriptResult(60);
@@ -30,11 +30,11 @@ let objScene= GetEnemyBossSceneObjectID();
     objBoss= ObjEnemy_Create(OBJ_ENEMY_BOSS);
     ObjEnemy_Regist(objBoss);
     ObjMove_SetDestAtFrame(objBoss, GetCenterX(), 60, 60);
-    SetPauseScriptPath(GetCurrentScriptDirectory() ~ "./system/Default_Pause.txt");
-    SetEndSceneScriptPath(GetCurrentScriptDirectory() ~ "./system/Default_EndScene.txt");
-    SetReplaySaveSceneScriptPath(GetCurrentScriptDirectory() ~ "./system/Default_ReplaySaveScene.txt");
+    SetPauseScriptPath(GetCurrentScriptDirectory() ~ "./../system/Default_Pause.txt");
+    SetEndSceneScriptPath(GetCurrentScriptDirectory() ~ "./../system/Default_EndScene.txt");
+    SetReplaySaveSceneScriptPath(GetCurrentScriptDirectory() ~ "./../system/Default_ReplaySaveScene.txt");
     
-    //ObjEnemyBossScene_StartSpell(objScene);
+    ObjEnemyBossScene_StartSpell(objScene);
     
     TDrawLoop;
     TFinalize;
@@ -49,7 +49,10 @@ let objScene= GetEnemyBossSceneObjectID();
 
 task TFinalize{
     while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){yield;}
-    NotifyEventAll(EV_USER_STAGE+2, [ObjMove_GetX(objBoss), ObjMove_GetY(objBoss)]);
+    if(ObjEnemyBossScene_GetInfo(objScene, INFO_PLAYER_SHOOTDOWN_COUNT)
+            +ObjEnemyBossScene_GetInfo(objScene, INFO_PLAYER_SPELL_COUNT) == 0){
+        AddScore(ObjEnemyBossScene_GetInfo(objScene, INFO_SPELL_SCORE));    
+    }
     Obj_Delete(objBoss);
     DeleteShotAll(TYPE_ALL, TYPE_IMMEDIATE);
     SetAutoDeleteObject(true);
@@ -61,18 +64,21 @@ task MainTask{
     wait(120);
     movement;
     while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){
-        let angleT=GetAngleToPlayer(objBoss);
-        let RShellSpeedX = rand(-3, 3);
-        let RShellAccX= rand(-0.1, 0.1);
-        CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 3, angleT, 57, 5);
-        CreateShotB2(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 3, -3, RShellAccX, 0.1, RShellSpeedX, 3, 2, 5);
-        CreateShotB2(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), -3, -3, RShellAccX, 0.1, RShellSpeedX, 3, 2, 5);
-        wait(10);
+        let angleT=rand_int(0,360);
+        let randX= rand(-40, 40);
+        let randY= rand(-20, 20);
+        loop(10){
+            ascent(i in 0..4){
+                CreateShotA1(ObjMove_GetX(objBoss)+randX, ObjMove_GetY(objBoss)+randY, 2.5-i/4, angleT, 162 , 5);
+            }
+            angleT += 360/10;
+        }
+        wait(20);
     }
 }
 
 task TDrawLoop{
-    let BossImage = GetCurrentScriptDirectory() ~ "./u2l13spritesheet.png"; //assumes that image is in same directory
+    let BossImage = GetCurrentScriptDirectory() ~ "./../img/u2l13spritesheet.png"; //assumes that image is in same directory
     let animframe = 0;
     ObjPrim_SetTexture(objBoss, BossImage);
     ObjRender_SetScaleXYZ(objBoss, 1, 1, 1);

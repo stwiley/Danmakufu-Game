@@ -74,7 +74,7 @@ task whip{
 }
 
 task TDrawLoop{
-    let BossImage = GetCurrentScriptDirectory() ~ "./../u2l13spritesheet.png"; //assumes that image is in same directory
+    let BossImage = GetCurrentScriptDirectory() ~ "./../img/u2l13spritesheet.png"; //assumes that image is in same directory
     let animframe = 0;
     ObjPrim_SetTexture(objBoss, BossImage);
     ObjRender_SetScaleXYZ(objBoss, 1, 1, 1);

@@ -1,11 +1,12 @@
 #TouhouDanmakufu[Single]
 #ScriptVersion[3]
-#Title["Talon Phase 2 Single"]
-#Text["Code by Cyvo[r]Talon boss phase 2"]
+#Title["Talon Phase 1 Single"]
+#Text["Code by Cyvo[r]Talon boss phase 1"]
 #include "script/default_system/Default_ShotConst.txt"
-#include "./lib/lib_general.dnh"
-#Background["./../tutorial/system/Default_Background_IceMountain.txt"]
-#System["./../tutorial/system/Default_System.txt"]
+#include "./../lib/lib_general.dnh"
+#Background["./../../tutorial/system/Default_Background_IceMountain.txt"]
+#System["./../../tutorial/system/Default_System.txt"]
+
 
 let objBoss;
 let objScene= GetEnemyBossSceneObjectID();
@@ -48,6 +49,7 @@ let objScene= GetEnemyBossSceneObjectID();
 
 task TFinalize{
     while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){yield;}
+    NotifyEventAll(EV_USER_STAGE+2, [ObjMove_GetX(objBoss), ObjMove_GetY(objBoss)]);
     Obj_Delete(objBoss);
     DeleteShotAll(TYPE_ALL, TYPE_IMMEDIATE);
     SetAutoDeleteObject(true);
@@ -59,27 +61,18 @@ task MainTask{
     wait(120);
     movement;
     while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){
-        let angleT= rand (0, 180);
-        let bombDist = rand (-0.01, -0.05);
-        let bomb = CreateShotA2(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 3.5, angleT, bombDist, 0, 248, 5);
-        ExplodeBomb(bomb);
-        wait(30);
+        let angleT=GetAngleToPlayer(objBoss);
+        let RShellSpeedX = rand(-3, 3);
+        let RShellAccX= rand(-0.1, 0.1);
+        CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 3, angleT, 57, 5);
+        CreateShotB2(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 3, -3, RShellAccX, 0.1, RShellSpeedX, 3, 2, 5);
+        CreateShotB2(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), -3, -3, RShellAccX, 0.1, RShellSpeedX, 3, 2, 5);
+        wait(10);
     }
-}
-
-task ExplodeBomb(bomb){
-    while(ObjMove_GetSpeed(bomb) >0){yield;}
-    wait(30);
-    let angleT = rand(0,360);
-    loop(12){
-        CreateShotA1(ObjMove_GetX(bomb), ObjMove_GetY(bomb), 2, angleT, 162, 0);
-        angleT += 360/12;
-    }
-    Obj_Delete(bomb);
 }
 
 task TDrawLoop{
-    let BossImage = GetCurrentScriptDirectory() ~ "./u2l13spritesheet.png"; //assumes that image is in same directory
+    let BossImage = GetCurrentScriptDirectory() ~ "./../img/u2l13spritesheet.png"; //assumes that image is in same directory
     let animframe = 0;
     ObjPrim_SetTexture(objBoss, BossImage);
     ObjRender_SetScaleXYZ(objBoss, 1, 1, 1);

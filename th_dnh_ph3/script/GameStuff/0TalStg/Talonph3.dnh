@@ -3,9 +3,9 @@
 #Title["Talon Phase 3 Single"]
 #Text["Code by Cyvo[r]Talon boss phase 3"]
 #include "script/default_system/Default_ShotConst.txt"
-#include "./lib/lib_general.dnh"
-#Background["./../tutorial/system/Default_Background_IceMountain.txt"]
-#System["./../tutorial/system/Default_System.txt"]
+#include "./../lib/lib_general.dnh"
+#Background["./../../tutorial/system/Default_Background_IceMountain.txt"]
+#System["./../../tutorial/system/Default_System.txt"]
 
 let objBoss;
 let objScene= GetEnemyBossSceneObjectID();
@@ -29,9 +29,9 @@ let objScene= GetEnemyBossSceneObjectID();
     objBoss= ObjEnemy_Create(OBJ_ENEMY_BOSS);
     ObjEnemy_Regist(objBoss);
     ObjMove_SetDestAtFrame(objBoss, GetCenterX(), 60, 60);
-    SetPauseScriptPath(GetCurrentScriptDirectory() ~ "./system/Default_Pause.txt");
-    SetEndSceneScriptPath(GetCurrentScriptDirectory() ~ "./system/Default_EndScene.txt");
-    SetReplaySaveSceneScriptPath(GetCurrentScriptDirectory() ~ "./system/Default_ReplaySaveScene.txt");
+    SetPauseScriptPath(GetCurrentScriptDirectory() ~ "./../system/Default_Pause.txt");
+    SetEndSceneScriptPath(GetCurrentScriptDirectory() ~ "./../system/Default_EndScene.txt");
+    SetReplaySaveSceneScriptPath(GetCurrentScriptDirectory() ~ "./../system/Default_ReplaySaveScene.txt");
     
     TDrawLoop;
     TFinalize;
@@ -66,7 +66,7 @@ task MainTask{
 }
 
 task TDrawLoop{
-    let BossImage = GetCurrentScriptDirectory() ~ "./u2l13spritesheet.png"; //assumes that image is in same directory
+    let BossImage = GetCurrentScriptDirectory() ~ "./../img/u2l13spritesheet.png"; //assumes that image is in same directory
     let animframe = 0;
     ObjPrim_SetTexture(objBoss, BossImage);
     ObjRender_SetScaleXYZ(objBoss, 1, 1, 1);

@@ -60,33 +60,25 @@ task TFinalize{
 task MainTask{
     wait(120);
     oneRad;
-	curveTarg;
 }
 
 task oneRad{
     while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){
 		ascent(i in 0..36){
-			CreateShotA2(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 0.01, 0+i*10, 0.05, 7, 9, 5);
-			CreateShotA2(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 0.01, 90+i*10, 0.05, 7, 9, 5);
-			CreateShotA2(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 0.01, 180+i*10, 0.05, 7, 10, 5);
-			CreateShotA2(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 0.01, 270+i*10, 0.05, 7, 9, 5);
-			wait(5);
+            ascent(j in 0..3){
+                CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 2.5-j/3, 0+i*10, 9+j, 5);
+                CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 2.5-j/3, 90+i*10, 9+j, 5);
+                CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 2.5-j/3, 180+i*10, 9+j, 5);
+                CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 2.5-j/3, 270+i*10, 9+j, 5);
+                wait(5);
+            }
 		}
         yield;
     }
 }
 
-task curveTarg{
-	while(ObjEnemy_GetInfo(objBoss, INFO_LIFE)>0){
-		loop(4){
-			let angleT = 45;
-		}
-	
-	}
-}
-
 task TDrawLoop{
-    let BossImage = GetCurrentScriptDirectory() ~ "./../u2l13spritesheet.png"; //assumes that image is in same directory
+    let BossImage = GetCurrentScriptDirectory() ~ "./../img/u2l13spritesheet.png"; //assumes that image is in same directory
     let animframe = 0;
     ObjPrim_SetTexture(objBoss, BossImage);
     ObjRender_SetScaleXYZ(objBoss, 1, 1, 1);

@@ -2,11 +2,11 @@
 #ScriptVersion[3]
 #Title["Talon Stage/Tut File"]
 #Text["Code by Cyvo[r]A script to hold experiments with stages"]
-#include "./lib/lib_general.dnh"
-#include"./lib/lib_dialogue.txt"
-#include "./stgenemy/StageEnemy1.txt"
-#Background["./../tutorial/system/Default_Background_IceMountain.txt"]
-#System["./../tutorial/system/Default_System.txt"]
+#include "./../lib/lib_general.dnh"
+#include"./../lib/lib_dialogue.txt"
+#include "./../stgenemy/StageEnemy1.txt"
+#Background["./../../tutorial/system/Default_Background_IceMountain.txt"]
+#System["./../../tutorial/system/Default_System.txt"]
 
 let stagepart = 0;
 let bgm;
@@ -56,7 +56,7 @@ let bgm2;
 task TStage{
     stagepart = 1;
     let dir = GetCurrentScriptDirectory();
-    let path = dir ~ "PluralTut.txt";
+    let path = dir ~ "PluralTut.dnh";
     let idscript = LoadScriptInThread(path);
     
     SetForbidPlayerSpell(true);
@@ -65,11 +65,11 @@ task TStage{
     SetStageDifficulty();
     
     bgm2 = ObjSound_Create();
-    ObjSound_Load(bgm2, dir ~ "metacrys.ogg");
+    ObjSound_Load(bgm2, dir ~ "./../img/metacrys.ogg");
     StageBGM(bgm2, 2);
     
     bgm= ObjSound_Create();
-    ObjSound_Load(bgm, dir~ "whatuneed.ogg");
+    ObjSound_Load(bgm, dir~ "./../img/whatuneed.ogg");
     StageBGM(bgm, 1);
     
     ObjSound_Play(bgm2);
@@ -185,12 +185,12 @@ function StageEvent{
     SetForbidPlayerSpell(true);
     SetForbidPlayerShot(true);
     
-    let pathReisen1= GetCurrentScriptDirectory() ~ "./lib/u3l32aimg/reisen1.png";
-    let pathReisen2= GetCurrentScriptDirectory() ~ "./lib/u3l32aimg/reisen2.png";
-    let pathReisen3= GetCurrentScriptDirectory() ~ "./lib/u3l32aimg/reisen3.png";
-    let pathReimu1= GetCurrentScriptDirectory() ~ "./lib/u3l32aimg/reimu1.png";
-    let pathReimu2= GetCurrentScriptDirectory() ~ "./lib/u3l32aimg/reimu2.png";
-    let pathReimu3= GetCurrentScriptDirectory() ~ "./lib/u3l32aimg/reimu3.png";
+    let pathReisen1= GetCurrentScriptDirectory() ~ "./../lib/u3l32aimg/reisen1.png";
+    let pathReisen2= GetCurrentScriptDirectory() ~ "./../lib/u3l32aimg/reisen2.png";
+    let pathReisen3= GetCurrentScriptDirectory() ~ "./../lib/u3l32aimg/reisen3.png";
+    let pathReimu1= GetCurrentScriptDirectory() ~ "./../lib/u3l32aimg/reimu1.png";
+    let pathReimu2= GetCurrentScriptDirectory() ~ "./../lib/u3l32aimg/reimu2.png";
+    let pathReimu3= GetCurrentScriptDirectory() ~ "./../lib/u3l32aimg/reimu3.png";
     
     ObjPrim_SetTexture(leftportrait, pathReisen1);
     ObjPrim_SetTexture(rightportrait, pathReimu1);
