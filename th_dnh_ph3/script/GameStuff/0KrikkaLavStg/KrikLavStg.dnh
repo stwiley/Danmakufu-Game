@@ -1,6 +1,6 @@
 #TouhouDanmakufu[Stage]
 #ScriptVersion[3]
-#Title["Talon Stage/Tut File"]
+#Title["Krikka/Lav Stage"]
 #Text["Code by Cyvo[r]A script to hold experiments with stages"]
 #include "./../lib/lib_general.dnh"
 #include"./../lib/lib_dialogue.txt"
