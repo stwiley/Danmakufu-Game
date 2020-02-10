@@ -1,7 +1,7 @@
 #TouhouDanmakufu[Single]
 #ScriptVersion[3]
-#Title["Victoria Non-Spell 1 Single"]
-#Text["Code by Cyvo[r]Victoria Non-Spell 1"]
+#Title["Victoria Spell 1 Single"]
+#Text["Code by Cyvo[r]Victoria Spell 1"]
 #include "script/default_system/Default_ShotConst.txt"
 #include "./../lib/lib_general.dnh"
 #Background["./../../tutorial/system/Default_Background_IceMountain.txt"]
@@ -34,7 +34,7 @@ let objScene= GetEnemyBossSceneObjectID();
     SetEndSceneScriptPath(GetCurrentScriptDirectory() ~ "./../system/Default_EndScene.txt");
     SetReplaySaveSceneScriptPath(GetCurrentScriptDirectory() ~ "./../system/Default_ReplaySaveScene.txt");
     
-    //ObjEnemyBossScene_StartSpell(objScene);
+    ObjEnemyBossScene_StartSpell(objScene);
     
     TDrawLoop;
     TFinalize;
@@ -59,23 +59,36 @@ task TFinalize{
 
 task MainTask{
     wait(120);
-    laserFun;
+    laserTrap;
+    coneTrap;
 }
 
-task laserFun{
+task laserTrap{
     while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){
-        let i=0;
-        let inc = 50;
+        let angleT=GetAngleToPlayer(objBoss);
+        CreateStraightLaserA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), angleT + 10, 512, 40, 15, 153, 30);
+        CreateStraightLaserA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), angleT - 10, 512, 40, 15, 153, 30);
+
+        wait(30);
+    }
+}
+
+task coneTrap{
+    while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) > 0){
+        let playerAngle=GetAngleToPlayer(objBoss);
         let angleT=0;
-        while(true){
-            CreateStraightLaserA1(i, 0, 90, 512, 60, 15, 153, 60);
-            i+=inc;
-            if(i >= GetStgFrameWidth() || i<=0){
-                inc *= -1;
-            }
-            wait(45);
+        CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 4, angleT + playerAngle, DS_BALL_BS_GREEN, 5);
+        loop(2){
+            angleT += 45/5;
+            CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 4, angleT + playerAngle, DS_BALL_BS_GREEN, 5);
+            CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 4, -angleT + playerAngle, DS_BALL_BS_GREEN, 5);
         }
-        yield;
+        loop(2){
+            angleT -= 45/5;
+            CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 4, angleT + playerAngle, DS_BALL_BS_GREEN, 5);
+            CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 4, -angleT + playerAngle, DS_BALL_BS_GREEN, 5);
+        }
+        wait(10);
     }
 }
 

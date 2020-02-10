@@ -1,7 +1,7 @@
 #TouhouDanmakufu[Single]
 #ScriptVersion[3]
-#Title["Victoria Non-Spell 1 Single"]
-#Text["Code by Cyvo[r]Victoria Non-Spell 1"]
+#Title["Victoria Non-Spell 2 Single"]
+#Text["Code by Cyvo[r]Victoria Non-Spell 2"]
 #include "script/default_system/Default_ShotConst.txt"
 #include "./../lib/lib_general.dnh"
 #Background["./../../tutorial/system/Default_Background_IceMountain.txt"]
@@ -59,23 +59,33 @@ task TFinalize{
 
 task MainTask{
     wait(120);
-    laserFun;
+    alternShot;
+
 }
 
-task laserFun{
+task alternShot{
     while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){
         let i=0;
-        let inc = 50;
-        let angleT=0;
+        let j=GetStgFrameWidth();
+        let inc = 10;
+        let ninc = -10;
+        let angleT=rand(0, 360);
         while(true){
-            CreateStraightLaserA1(i, 0, 90, 512, 60, 15, 153, 60);
+            loop(10){
+                let obj = CreateShotA1(i, ObjMove_GetY(objBoss), 2, angleT, 10, 5);
+                let obj2 = CreateShotA1(j, ObjMove_GetY(objBoss), 2, angleT, 10, 5);
+                angleT += 360/10;
+                ObjMove_SetAngularVelocity(obj, 0.3);
+                ObjMove_SetAngularVelocity(obj2, -0.3);
+            }
             i+=inc;
+            j+=ninc;
             if(i >= GetStgFrameWidth() || i<=0){
                 inc *= -1;
+                ninc *= -1;
             }
-            wait(45);
+            wait(20);
         }
-        yield;
     }
 }
 
