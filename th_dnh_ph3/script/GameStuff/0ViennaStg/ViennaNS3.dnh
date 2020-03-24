@@ -1,0 +1,107 @@
+#TouhouDanmakufu[Single]
+#ScriptVersion[3]
+#Title["Vienna Non-Spell 3 Single"]
+#Text["Code by Cyvo[r]Vienna Non-Spell 3"]
+#include "script/default_system/Default_ShotConst.txt"
+#include "./../lib/lib_general.dnh"
+#Background["./../../tutorial/system/Default_Background_IceMountain.txt"]
+#System["./../../tutorial/system/Default_System.txt"]
+
+
+let objBoss;
+let objScene= GetEnemyBossSceneObjectID();
+
+
+@Event{
+	alternative(GetEventType())
+	case(EV_REQUEST_LIFE){
+        SetScriptResult(1000);
+    }
+    case(EV_REQUEST_TIMER){
+        SetScriptResult(60);
+    }
+    case(EV_REQUEST_SPELL_SCORE){
+        SetScriptResult(1000000);
+    }
+    
+}
+
+@Initialize{
+    objBoss= ObjEnemy_Create(OBJ_ENEMY_BOSS);
+    ObjEnemy_Regist(objBoss);
+    ObjMove_SetDestAtFrame(objBoss, GetCenterX(), 60, 60);
+    SetPauseScriptPath(GetCurrentScriptDirectory() ~ "./../system/Default_Pause.txt");
+    SetEndSceneScriptPath(GetCurrentScriptDirectory() ~ "./../system/Default_EndScene.txt");
+    SetReplaySaveSceneScriptPath(GetCurrentScriptDirectory() ~ "./../system/Default_ReplaySaveScene.txt");
+    
+    //ObjEnemyBossScene_StartSpell(objScene);
+    
+    TDrawLoop;
+    TFinalize;
+    MainTask;
+}
+
+@MainLoop{
+    ObjEnemy_SetIntersectionCircleToShot(objBoss, ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 32);
+    ObjEnemy_SetIntersectionCircleToPlayer(objBoss, ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 24);
+    yield;
+}
+
+task TFinalize{
+    while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){yield;}
+    NotifyEventAll(EV_USER_STAGE+2, [ObjMove_GetX(objBoss), ObjMove_GetY(objBoss)]);
+    Obj_Delete(objBoss);
+    DeleteShotAll(TYPE_ALL, TYPE_IMMEDIATE);
+    SetAutoDeleteObject(true);
+    CloseScript(GetOwnScriptID());
+    return;
+}
+
+task MainTask{
+    wait(120);
+    snowBall;
+}
+
+task snowBall{
+    while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){
+        let ball = CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), rand(2, 3), GetAngleToPlayer(objBoss) + rand_int(-45, 45), 32, 5);
+        paff(ball);
+        wait(45);
+    }
+}
+
+task paff(snowBall){
+    wait(rand(60, 120));
+    let angleT = rand(0,360);
+    loop(8){
+        let paffShot= CreateShotA1(ObjMove_GetX(snowBall), ObjMove_GetY(snowBall), 2, angleT, 16, 0);
+        angleT += 360/8;
+        ObjMove_AddPatternB2(paffShot, 30, NO_CHANGE, NO_CHANGE, 0, rand(0.1, 0.3), 2, 2);
+        snowFall(paffShot);
+    }
+    Obj_Delete(snowBall);
+}
+
+task snowFall(obj){
+    wait(60);
+    let wvel=1;
+    ascent (i in 0..8){
+        ObjMove_AddPatternA2(obj, i*30, NO_CHANGE, NO_CHANGE, NO_CHANGE, wvel, 2);
+        wvel *= -1;
+    }
+}
+
+task TDrawLoop{
+    let BossImage = GetCurrentScriptDirectory() ~ "./../img/u2l13spritesheet.png"; //assumes that image is in same directory
+    let animframe = 0;
+    ObjPrim_SetTexture(objBoss, BossImage);
+    ObjRender_SetScaleXYZ(objBoss, 1, 1, 1);
+    ObjSprite2D_SetSourceRect(objBoss, 0, 0, 64, 64);
+    ObjSprite2D_SetDestCenter(objBoss);
+    while(!Obj_IsDeleted(objBoss)){
+        ObjSprite2D_SetSourceRect(objBoss, 0 + 64*floor(animframe/8), 0, 64 + 64*floor(animframe/8), 64);
+        animframe++;
+        if(animframe >= 32){animframe = 0;}//reset if too high
+        yield;
+    }
+}

@@ -1,0 +1,116 @@
+#TouhouDanmakufu[Single]
+#ScriptVersion[3]
+#Title["Vienna Non-Spell 1 Single"]
+#Text["Code by Cyvo[r]Vienna Non-Spell 1"]
+#include "script/default_system/Default_ShotConst.txt"
+#include "./../lib/lib_general.dnh"
+#Background["./../../tutorial/system/Default_Background_IceMountain.txt"]
+#System["./../../tutorial/system/Default_System.txt"]
+
+
+let objBoss;
+let objScene= GetEnemyBossSceneObjectID();
+
+
+@Event{
+	alternative(GetEventType())
+	case(EV_REQUEST_LIFE){
+        SetScriptResult(1000);
+    }
+    case(EV_REQUEST_TIMER){
+        SetScriptResult(60);
+    }
+    case(EV_REQUEST_SPELL_SCORE){
+        SetScriptResult(1000000);
+    }
+    
+}
+
+@Initialize{
+    objBoss= ObjEnemy_Create(OBJ_ENEMY_BOSS);
+    ObjEnemy_Regist(objBoss);
+    ObjMove_SetDestAtFrame(objBoss, GetCenterX(), 60, 60);
+    SetPauseScriptPath(GetCurrentScriptDirectory() ~ "./../system/Default_Pause.txt");
+    SetEndSceneScriptPath(GetCurrentScriptDirectory() ~ "./../system/Default_EndScene.txt");
+    SetReplaySaveSceneScriptPath(GetCurrentScriptDirectory() ~ "./../system/Default_ReplaySaveScene.txt");
+    
+    //ObjEnemyBossScene_StartSpell(objScene);
+    
+    TDrawLoop;
+    TFinalize;
+    MainTask;
+}
+
+@MainLoop{
+    ObjEnemy_SetIntersectionCircleToShot(objBoss, ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 32);
+    ObjEnemy_SetIntersectionCircleToPlayer(objBoss, ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 24);
+    yield;
+}
+
+task TFinalize{
+    while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){yield;}
+    NotifyEventAll(EV_USER_STAGE+2, [ObjMove_GetX(objBoss), ObjMove_GetY(objBoss)]);
+    Obj_Delete(objBoss);
+    DeleteShotAll(TYPE_ALL, TYPE_IMMEDIATE);
+    SetAutoDeleteObject(true);
+    CloseScript(GetOwnScriptID());
+    return;
+}
+
+task MainTask{
+    wait(120);
+    fourCorners;
+    viennaShot;
+}
+
+task fourCorners{
+    while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){
+        let angleT = 0;
+        loop(20){
+            let luc= CreateShotA1(1,1, 2, angleT, 53, 10);
+            let ruc= CreateShotA1(GetStgFrameWidth()-1,1, 2, angleT, 53, 10);
+            let llc= CreateShotA1(1,GetStgFrameHeight()-1, 2, angleT, 53, 10);
+            let rlc= CreateShotA1(GetStgFrameWidth()-1,GetStgFrameHeight()-1, 2, angleT, 53, 10);
+            ObjMove_SetAngularVelocity(luc, 0.3);
+            ObjMove_SetAngularVelocity(ruc, -0.3);
+            ObjMove_SetAngularVelocity(llc, -0.3);
+            ObjMove_SetAngularVelocity(rlc, 0.3);
+            angleT += 360/20;
+        }
+        wait(20);
+    }
+}
+
+task viennaShot{
+    while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){
+        let angleT = rand(0,360);
+        loop(50){
+            let left= CreateShotA1(ObjMove_GetX(objBoss),ObjMove_GetY(objBoss), 3, angleT, 26, 10);
+            ObjMove_SetAngularVelocity(left, 0.5);
+            angleT += 360/20;
+        }
+        angleT=0;
+        wait(90);
+        loop(50){
+            let right= CreateShotA1(ObjMove_GetX(objBoss),ObjMove_GetY(objBoss), 3, angleT, 26, 10);
+            ObjMove_SetAngularVelocity(right, -0.5);
+            angleT += 360/20;
+        }
+        wait(90);
+    } 
+}
+
+task TDrawLoop{
+    let BossImage = GetCurrentScriptDirectory() ~ "./../img/u2l13spritesheet.png"; //assumes that image is in same directory
+    let animframe = 0;
+    ObjPrim_SetTexture(objBoss, BossImage);
+    ObjRender_SetScaleXYZ(objBoss, 1, 1, 1);
+    ObjSprite2D_SetSourceRect(objBoss, 0, 0, 64, 64);
+    ObjSprite2D_SetDestCenter(objBoss);
+    while(!Obj_IsDeleted(objBoss)){
+        ObjSprite2D_SetSourceRect(objBoss, 0 + 64*floor(animframe/8), 0, 64 + 64*floor(animframe/8), 64);
+        animframe++;
+        if(animframe >= 32){animframe = 0;}//reset if too high
+        yield;
+    }
+}

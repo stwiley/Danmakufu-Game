@@ -1,0 +1,140 @@
+#TouhouDanmakufu[Single]
+#ScriptVersion[3]
+#Title["Vienna Spell 1 Single"]
+#Text["Code by Cyvo[r]Vienna Spell 1"]
+#include "script/default_system/Default_ShotConst.txt"
+#include "./../lib/lib_general.dnh"
+#Background["./../../tutorial/system/Default_Background_IceMountain.txt"]
+#System["./../../tutorial/system/Default_System.txt"]
+
+
+let objBoss;
+let objScene= GetEnemyBossSceneObjectID();
+
+
+@Event{
+	alternative(GetEventType())
+	case(EV_REQUEST_LIFE){
+        SetScriptResult(1000);
+    }
+    case(EV_REQUEST_TIMER){
+        SetScriptResult(60);
+    }
+    case(EV_REQUEST_SPELL_SCORE){
+        SetScriptResult(1000000);
+    }
+    
+}
+
+@Initialize{
+    objBoss= ObjEnemy_Create(OBJ_ENEMY_BOSS);
+    ObjEnemy_Regist(objBoss);
+    ObjMove_SetDestAtFrame(objBoss, GetCenterX(), 60, 60);
+    SetPauseScriptPath(GetCurrentScriptDirectory() ~ "./../system/Default_Pause.txt");
+    SetEndSceneScriptPath(GetCurrentScriptDirectory() ~ "./../system/Default_EndScene.txt");
+    SetReplaySaveSceneScriptPath(GetCurrentScriptDirectory() ~ "./../system/Default_ReplaySaveScene.txt");
+    
+    //ObjEnemyBossScene_StartSpell(objScene);
+    
+    TDrawLoop;
+    TFinalize;
+    MainTask;
+}
+
+@MainLoop{
+    ObjEnemy_SetIntersectionCircleToShot(objBoss, ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 32);
+    ObjEnemy_SetIntersectionCircleToPlayer(objBoss, ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 24);
+    yield;
+}
+
+task TFinalize{
+    while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){yield;}
+    NotifyEventAll(EV_USER_STAGE+2, [ObjMove_GetX(objBoss), ObjMove_GetY(objBoss)]);
+    Obj_Delete(objBoss);
+    DeleteShotAll(TYPE_ALL, TYPE_IMMEDIATE);
+    SetAutoDeleteObject(true);
+    CloseScript(GetOwnScriptID());
+    return;
+}
+
+task MainTask{
+    wait(120);
+    fourCorners;
+}
+
+task fourCorners{
+    while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){
+        let angleT = 0;
+        let moveX = 0;
+        let moveY = 0;
+        let move2X =0;
+        let move2Y =0;
+        let move3X =0;
+        let move3Y =0;
+        let move4X =0;
+        let move4Y =0;
+        let movArr= [];
+        let lucX = 0;
+        let lucY = 0;
+        let rucX = GetStgFrameWidth();
+        let rucY = 0;
+        let llcX= 0;
+        let llcY= GetStgFrameHeight();
+        let rlcX = GetStgFrameWidth();
+        let rlcY = GetStgFrameHeight();
+        while(true){
+            loop(10){
+                let luc= CreateShotA1(lucX,lucY, 1.5, angleT, 53, 10); //Top left
+                let ruc= CreateShotA1(rucX,rucY, 1.5, angleT, 53, 10); //Top right
+                let llc= CreateShotA1(llcX,llcY, 1.5, angleT, 53, 10); //Lower left
+                let rlc= CreateShotA1(rlcX,rlcY, 1.5, angleT, 53, 10); //Lower right
+                angleT += 360/10;
+            }
+            movArr = moveShots(lucX, lucY, moveX, moveY);
+            moveX = movArr[0]; moveY = movArr[1];
+            lucX += moveX; lucY += moveY;
+            movArr = moveShots(rucX, rucY, move2X, move2Y);
+            move2X = movArr[0]; move2Y = movArr[1];
+            rucX += movArr[0]; rucY += movArr[1];
+            movArr = moveShots(llcX, llcY, move3X, move3Y);
+            move3X = movArr[0]; move3Y = movArr[1];
+            llcX += movArr[0]; llcY += movArr[1];
+            movArr = moveShots(rlcX, rlcY, move4X, move4Y);
+            move4X = movArr[0]; move4Y = movArr[1];
+            rlcX += movArr[0]; rlcY += movArr[1];
+            wait(45);
+        }
+    }
+}
+
+function moveShots(posX, posY, mvX, mvY){
+    if(posY <= GetStgFrameHeight() && posX <=0){
+        mvX = 0;
+        mvY =20;
+    }else if(posY >= GetStgFrameHeight() && posX >= GetStgFrameWidth()){
+        mvX = 0;
+        mvY =-20;
+    }else if(posY >= GetStgFrameHeight() && posX <= GetStgFrameWidth()){
+        mvX =20;
+        mvY = 0;
+    }else if(posY <= 0 && posX >= GetStgFrameWidth()){
+        mvX =-20;
+        mvY = 0;
+    }
+    return [mvX, mvY];
+}
+
+task TDrawLoop{
+    let BossImage = GetCurrentScriptDirectory() ~ "./../img/u2l13spritesheet.png"; //assumes that image is in same directory
+    let animframe = 0;
+    ObjPrim_SetTexture(objBoss, BossImage);
+    ObjRender_SetScaleXYZ(objBoss, 1, 1, 1);
+    ObjSprite2D_SetSourceRect(objBoss, 0, 0, 64, 64);
+    ObjSprite2D_SetDestCenter(objBoss);
+    while(!Obj_IsDeleted(objBoss)){
+        ObjSprite2D_SetSourceRect(objBoss, 0 + 64*floor(animframe/8), 0, 64 + 64*floor(animframe/8), 64);
+        animframe++;
+        if(animframe >= 32){animframe = 0;}//reset if too high
+        yield;
+    }
+}
