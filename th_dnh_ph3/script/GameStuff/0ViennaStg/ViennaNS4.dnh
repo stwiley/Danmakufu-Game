@@ -59,9 +59,33 @@ task TFinalize{
 
 task MainTask{
     wait(120);
-    something;
+    snowflake;
 }
 
+task snowflake{
+    let ind =0;
+    while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){
+        let anglArray = [0, 90];
+        let angleT = anglArray[ind];
+        loop(6){
+            let shot = CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 3, angleT, 25, 10);
+            angleT += 360/6;
+            branch(shot);
+        }
+        if (ind == 0){ind = 1;}
+        else if(ind ==1){ind =0;}
+        wait(60);
+    }
+}
+
+task branch(obj){
+    while(obj){
+        if(Obj_IsDeleted(obj)){return;}
+        CreateShotA1(ObjMove_GetX(obj), ObjMove_GetY(obj), 2, ObjMove_GetAngle(obj)+45, 14, 5);
+        CreateShotA1(ObjMove_GetX(obj), ObjMove_GetY(obj), 2, ObjMove_GetAngle(obj)-45, 14, 5);
+        wait(30);
+    }
+}
 
 task TDrawLoop{
     let BossImage = GetCurrentScriptDirectory() ~ "./../img/u2l13spritesheet.png"; //assumes that image is in same directory
