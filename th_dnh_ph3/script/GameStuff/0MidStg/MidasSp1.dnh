@@ -1,7 +1,7 @@
 #TouhouDanmakufu[Single]
 #ScriptVersion[3]
-#Title["Midas Non-Spell 1 Single"]
-#Text["Code by Cyvo[r]Midas Non-Spell 1"]
+#Title["Midas Spell 1 Single"]
+#Text["Code by Cyvo[r]Midas Spell 1"]
 #include "script/default_system/Default_ShotConst.txt"
 #include "./../lib/lib_general.dnh"
 #Background["./../../tutorial/system/Default_Background_IceMountain.txt"]
@@ -59,6 +59,25 @@ task TFinalize{
 
 task MainTask{
     wait(120);
+    movement;
+    someLaser;
+    backStab;
+}
+
+task someLaser{
+    while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){
+        let las1= CreateStraightLaserA1(ObjMove_GetX(objBoss)+60, ObjMove_GetY(objBoss)-10, 90, 400, 80, 30, 153, 30);
+        let las2= CreateStraightLaserA1(ObjMove_GetX(objBoss)-60, ObjMove_GetY(objBoss)-10, 90, 400, 80, 30, 153, 30);
+        wait(120);
+    }
+}
+
+task backStab{
+    while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){
+        let shotArray = [48, 96, 144, 192, 240, 288, 336, 384];
+        let crow1= CreateShotA1(shotArray[rand_int(0, 7)], GetStgFrameHeight()-10, 2, 270, 174, 5);
+        wait(rand(0, 10));
+    }
 }
 
 task TDrawLoop{
@@ -73,5 +92,13 @@ task TDrawLoop{
         animframe++;
         if(animframe >= 32){animframe = 0;}//reset if too high
         yield;
+    }
+}
+
+task movement{
+    wait(60);
+    while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){
+        ObjMove_SetDestAtFrame(objBoss, rand(GetCenterX() + 90, GetCenterX()-90), 60, 60);
+        wait(120);
     }
 }
