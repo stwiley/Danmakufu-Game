@@ -1,7 +1,7 @@
 #TouhouDanmakufu[Single]
 #ScriptVersion[3]
-#Title["Midas Spell 2 Single"]
-#Text["Code by Cyvo[r]Midas Spell 2"]
+#Title["Midas Non-Spell 3 Single"]
+#Text["Code by Cyvo[r]Midas Non-Spell 3"]
 #include "script/default_system/Default_ShotConst.txt"
 #include "./../lib/lib_general.dnh"
 #Background["./../../tutorial/system/Default_Background_IceMountain.txt"]
@@ -59,39 +59,37 @@ task TFinalize{
 
 task MainTask{
     wait(120);
-    movement;
-    midasRadial;
-    laserWalls;
+    //movement;
+    midasShot;
+    shotGrid;
 }
 
-task midasRadial{
+task midasShot{
     while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){
-      let angleT =0;
-      loop(4){
-        loop(12){
-            let radShot= CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 2, angleT, 25, 5);
-            angleT += 360/12;
-        }
-        wait(5);
-      }
-      wait(120);
+        let playerAngle=GetAngleToPlayer(objBoss);
+        let angleT=0;
+        let secondShot = angleT + 45/3;
+        let thirdShot = angleT - 45/3;
+        let fourthShot= angleT + 45/5;
+        let fifthShot = angleT - 45/5;
+        CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 2, angleT + playerAngle, DS_BALL_BS_RED, 5);
+        CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 2, secondShot + playerAngle, DS_BALL_BS_RED, 5);
+        CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 2, thirdShot + playerAngle, DS_BALL_BS_RED, 5);
+        CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 2, fourthShot + playerAngle, DS_BALL_BS_RED, 5);
+        CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 2, fifthShot + playerAngle, DS_BALL_BS_RED, 5);
+        wait(120);
     }
 }
 
-task laserWalls{
+task shotGrid{
+    let shotArray1 = [48, 96, 144, 192, 240, 288, 336, 384];
+    let shotArray2 = [56, 112, 168, 220, 276, 332, 384, 436];
+    let shotArray3 = [28, 84, 140, 196, 248, 304, 360, 412];
     while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){
-        let shotArray2 = [56, 112, 168, 220, 276, 332, 384, 436];
-        let shotArray3 = [412, 360, 304, 248, 196, 140, 84, 28];
-        ascent(i in 0..7){
-            let crowLas1 = CreateStraightLaserA1(10, shotArray2[i], 0, 500, 20, 30, 153, 30);
-            wait(30);
-        }
-        yield;
-        ascent(i in 0..7){
-            let crowLas2 = CreateStraightLaserA1(GetStgFrameWidth()-10, shotArray3[i], 180, 500, 20, 30, 153, 30);
-            wait(30);
-        }
-        yield;
+        let crow1= CreateShotA1(shotArray1[rand_int(0, 7)], GetStgFrameHeight()-10, 1, 270, 174, 5);
+        let crow2 = CreateShotA1(10, shotArray2[rand_int(0, 7)], 1, 0, 174, 5);
+        let crow3 = CreateShotA1(GetStgFrameWidth()-10, shotArray3[rand_int(0, 7)], 1, 180, 174, 5);
+        wait(60);
     }
 }
 
@@ -113,7 +111,7 @@ task TDrawLoop{
 task movement{
     wait(60);
     while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){
-        ObjMove_SetDestAtFrame(objBoss, rand(GetCenterX() + 90, GetCenterX()-90), rand(GetCenterY()+90, GetCenterY()-90), 60);
+        ObjMove_SetDestAtFrame(objBoss, rand(GetCenterX() + 90, GetCenterX()-90), 60, 60);
         wait(120);
     }
 }
