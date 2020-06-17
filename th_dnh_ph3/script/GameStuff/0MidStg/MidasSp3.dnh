@@ -1,0 +1,111 @@
+#TouhouDanmakufu[Single]
+#ScriptVersion[3]
+#Title["Midas Spell 3 Single"]
+#Text["Code by Cyvo[r]Midas Spell 3"]
+#include "script/default_system/Default_ShotConst.txt"
+#include "./../lib/lib_general.dnh"
+#Background["./../../tutorial/system/Default_Background_IceMountain.txt"]
+#System["./../../tutorial/system/Default_System.txt"]
+
+
+let objBoss;
+let objScene= GetEnemyBossSceneObjectID();
+
+
+@Event{
+	alternative(GetEventType())
+	case(EV_REQUEST_LIFE){
+        SetScriptResult(1000);
+    }
+    case(EV_REQUEST_TIMER){
+        SetScriptResult(60);
+    }
+    case(EV_REQUEST_SPELL_SCORE){
+        SetScriptResult(1000000);
+    }
+    
+}
+
+@Initialize{
+    objBoss= ObjEnemy_Create(OBJ_ENEMY_BOSS);
+    ObjEnemy_Regist(objBoss);
+    ObjMove_SetDestAtFrame(objBoss, GetCenterX(), 60, 60);
+    SetPauseScriptPath(GetCurrentScriptDirectory() ~ "./../system/Default_Pause.txt");
+    SetEndSceneScriptPath(GetCurrentScriptDirectory() ~ "./../system/Default_EndScene.txt");
+    SetReplaySaveSceneScriptPath(GetCurrentScriptDirectory() ~ "./../system/Default_ReplaySaveScene.txt");
+    
+    ObjEnemyBossScene_StartSpell(objScene);
+    
+    TDrawLoop;
+    TFinalize;
+    MainTask;
+}
+
+@MainLoop{
+    ObjEnemy_SetIntersectionCircleToShot(objBoss, ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 32);
+    ObjEnemy_SetIntersectionCircleToPlayer(objBoss, ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 24);
+    yield;
+}
+
+task TFinalize{
+    while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){yield;}
+    NotifyEventAll(EV_USER_STAGE+2, [ObjMove_GetX(objBoss), ObjMove_GetY(objBoss)]);
+    Obj_Delete(objBoss);
+    DeleteShotAll(TYPE_ALL, TYPE_IMMEDIATE);
+    SetAutoDeleteObject(true);
+    CloseScript(GetOwnScriptID());
+    return;
+}
+
+task MainTask{
+    wait(120);
+    midasRadial;
+    snakeWalls;
+}
+
+task midasRadial{
+    while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){
+      let angleT = rand(0, 360);
+      loop(12){
+        let radShot= CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 2, angleT, 25, 5);
+        angleT += 360/12;
+      }
+      wait(120);
+    }
+}
+
+task snakeWalls{
+    while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){
+        let shotArray2 = [56, 112, 168, 220, 276, 332, 384, 436];
+        let shotArray3 = [412, 360, 304, 248, 196, 140, 84, 28];
+        let snake = CreateShotA1(10, shotArray2[rand_int(0, 7)], 1, 0, 174, 5);
+        let snake2 = CreateShotA1(GetStgFrameWidth()-10, shotArray3[rand_int(0, 7)], 1, 180, 174, 5);
+        snakeShot(snake);
+        snakeShot(snake2);
+        wait(30);
+
+    }
+}
+
+task snakeShot(obj){
+    let wvel = 1;
+    ascent(i in 0..20){
+        ObjMove_AddPatternA2(obj, i*30, 1, NO_CHANGE, NO_CHANGE, wvel, 1);
+        wvel *= -1;
+    }
+}
+
+task TDrawLoop{
+    let BossImage = GetCurrentScriptDirectory() ~ "./../img/u2l13spritesheet.png"; //assumes that image is in same directory
+    let animframe = 0;
+    ObjPrim_SetTexture(objBoss, BossImage);
+    ObjRender_SetScaleXYZ(objBoss, 1, 1, 1);
+    ObjSprite2D_SetSourceRect(objBoss, 0, 0, 64, 64);
+    ObjSprite2D_SetDestCenter(objBoss);
+    while(!Obj_IsDeleted(objBoss)){
+        ObjSprite2D_SetSourceRect(objBoss, 0 + 64*floor(animframe/8), 0, 64 + 64*floor(animframe/8), 64);
+        animframe++;
+        if(animframe >= 32){animframe = 0;}//reset if too high
+        yield;
+    }
+}

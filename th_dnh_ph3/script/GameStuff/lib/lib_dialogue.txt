@@ -1,10 +1,11 @@
 function CreateDialogueEvent{
-    let imgpathL = GetCurrentScriptDirectory()~"./u3l32aimg/reisen1.png";
+    let imgpathL = GetCurrentScriptDirectory()~"./NewNigmaIdle.png";
     let objImgLeft= ObjPrim_Create(OBJ_SPRITE_2D);
     Obj_SetRenderPriority(objImgLeft, 81);
     ObjPrim_SetTexture(objImgLeft, imgpathL);
-    ObjSprite2D_SetSourceRect(objImgLeft, 0, 0, 384, 384);
+    ObjSprite2D_SetSourceRect(objImgLeft, 0, 0, 343, 936);
     ObjSprite2D_SetDestCenter(objImgLeft);
+    ObjRender_SetScaleXYZ(objImgLeft, 0.45, 0.45, 0.45);
     ObjRender_SetX(objImgLeft, GetStgFrameLeft()+GetStgFrameWidth()/2-100);
     ObjRender_SetY(objImgLeft, 288);
     

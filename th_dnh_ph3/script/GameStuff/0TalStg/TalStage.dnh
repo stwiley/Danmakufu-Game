@@ -5,8 +5,8 @@
 #include "./../lib/lib_general.dnh"
 #include"./../lib/lib_dialogue.txt"
 #include "./../stgenemy/StageEnemy1.txt"
-#Background["./../../tutorial/system/Default_Background_IceMountain.txt"]
-#System["./../../tutorial/system/Default_System.txt"]
+#Background["./../system/Default_Background_IceMountain.txt"]
+#System["./../system/Default_System.txt"]
 
 let stagepart = 0;
 let bgm;
@@ -188,12 +188,11 @@ function StageEvent{
     let pathReisen1= GetCurrentScriptDirectory() ~ "./../lib/u3l32aimg/reisen1.png";
     let pathReisen2= GetCurrentScriptDirectory() ~ "./../lib/u3l32aimg/reisen2.png";
     let pathReisen3= GetCurrentScriptDirectory() ~ "./../lib/u3l32aimg/reisen3.png";
-    let pathReimu1= GetCurrentScriptDirectory() ~ "./../lib/u3l32aimg/reimu1.png";
-    let pathReimu2= GetCurrentScriptDirectory() ~ "./../lib/u3l32aimg/reimu2.png";
-    let pathReimu3= GetCurrentScriptDirectory() ~ "./../lib/u3l32aimg/reimu3.png";
+    let pathNigma1= GetCurrentScriptDirectory() ~ "./../lib/NewNigmaIdle.png";
+    let pathNigma2= GetCurrentScriptDirectory() ~ "./../lib/NigmaAngry.png";
     
-    ObjPrim_SetTexture(leftportrait, pathReisen1);
-    ObjPrim_SetTexture(rightportrait, pathReimu1);
+    ObjPrim_SetTexture(leftportrait, pathNigma1);
+    ObjPrim_SetTexture(rightportrait, pathReisen1);
     
     ObjText_SetText(textobj, "Hey buddy");
     ObjText_SetFontBorderColor(textobj, 255, 128, 192);
@@ -209,28 +208,26 @@ function StageEvent{
     
     ObjText_SetText(textobj, "Ha yes it is me");
     ObjText_SetFontBorderColor(textobj, 255, 128, 192);
-    ObjPrim_SetTexture(leftportrait, pathReisen2);
+    ObjPrim_SetTexture(leftportrait, pathNigma2);
     SetPortraitToForeground(leftportrait);
     SetPortraitToBackground(rightportrait);
     EventWaitA1(15);
     
     ObjText_SetText(textobj, "Very good");
     ObjText_SetFontBorderColor(textobj, 255, 128, 128);
-    ObjPrim_SetTexture(rightportrait, pathReimu2);
+    ObjPrim_SetTexture(rightportrait, pathReisen2);
     SetPortraitToForeground(rightportrait);
     SetPortraitToBackground(leftportrait);
     EventWaitA1(15);
     
     ObjText_SetText(textobj, "I'm gonna kick ur ass now");
     ObjText_SetFontBorderColor(textobj, 255, 128, 192);
-    ObjPrim_SetTexture(leftportrait, pathReisen3);
     SetPortraitToForeground(leftportrait);
     SetPortraitToBackground(rightportrait);
     EventWaitA1(15);
     
     ObjText_SetText(textobj, "Well alright then");
     ObjText_SetFontBorderColor(textobj, 255, 128, 128);
-    ObjPrim_SetTexture(rightportrait, pathReimu3);
     SetPortraitToForeground(rightportrait);
     SetPortraitToBackground(leftportrait);
     EventWaitA1(15);
