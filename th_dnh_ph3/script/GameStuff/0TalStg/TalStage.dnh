@@ -185,9 +185,7 @@ function StageEvent{
     SetForbidPlayerSpell(true);
     SetForbidPlayerShot(true);
     
-    let pathReisen1= GetCurrentScriptDirectory() ~ "./../lib/u3l32aimg/reisen1.png";
-    let pathReisen2= GetCurrentScriptDirectory() ~ "./../lib/u3l32aimg/reisen2.png";
-    let pathReisen3= GetCurrentScriptDirectory() ~ "./../lib/u3l32aimg/reisen3.png";
+    let pathReisen1= GetCurrentScriptDirectory() ~ "./../lib/TalonIdle.png";
     let pathNigma1= GetCurrentScriptDirectory() ~ "./../lib/NewNigmaIdle.png";
     let pathNigma2= GetCurrentScriptDirectory() ~ "./../lib/NigmaAngry.png";
     
@@ -215,7 +213,6 @@ function StageEvent{
     
     ObjText_SetText(textobj, "Very good");
     ObjText_SetFontBorderColor(textobj, 255, 128, 128);
-    ObjPrim_SetTexture(rightportrait, pathReisen2);
     SetPortraitToForeground(rightportrait);
     SetPortraitToBackground(leftportrait);
     EventWaitA1(15);
