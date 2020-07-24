@@ -69,11 +69,15 @@ task midasRadial{
       loop(12){
         let radShot= CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 2, angleT, 25, 5);
         angleT += 360/12;
+        Explode(radshot);
       }
       wait(120);
     }
 }
 
+task Explode(shotobj){
+	
+}
 task snakeWalls{
     while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){
         let shotArray2 = [56, 112, 168, 220, 276, 332, 384, 436];

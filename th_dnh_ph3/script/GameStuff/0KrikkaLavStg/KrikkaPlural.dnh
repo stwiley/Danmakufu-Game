@@ -1,6 +1,6 @@
 #TouhouDanmakufu[Plural]
 #ScriptVersion[3]
-#Title["Krikka Lav Plural"]
+#Title["Krikka Plural"]
 #Text["Code by Cyvo[r]A script to hold Krikka singles"]
 #include "./../lib/lib_general.dnh"
 #Background["./../../tutorial/system/Default_Background_IceMountain.txt"]
@@ -14,8 +14,6 @@
     SetEndSceneScriptPath(GetCurrentScriptDirectory() ~ "./../system/Default_EndScene.txt");
     SetReplaySaveSceneScriptPath(GetCurrentScriptDirectory() ~ "./../system/Default_ReplaySaveScene.txt");
     TPlural;
-    CreateTrack();
-    BossName;
 }
 
 @MainLoop{
@@ -25,7 +23,12 @@
 task TPlural{
     let dir = GetCurrentScriptDirectory();
     let obj = ObjEnemyBossScene_Create();
-    ObjEnemyBossScene_Add(obj, 0 ,dir ~ "./KrikkaNS1.txt");
+    ObjEnemyBossScene_Add(obj, 0 ,dir ~ "./KrikkaNS1.dnh");
+    ObjEnemyBossScene_Add(obj, 1 ,dir ~ "./KrikkaNS2.dnh");
+    ObjEnemyBossScene_Add(obj, 2 ,dir ~ "./KrikkaNS3.dnh");
+    ObjEnemyBossScene_Add(obj, 0 ,dir ~ "./KrikkaSp1.dnh");
+    ObjEnemyBossScene_Add(obj, 1 ,dir ~ "./KrikkaSp2.dnh");
+    ObjEnemyBossScene_Add(obj, 2 ,dir ~ "./KrikkaSp3.dnh");
     
     ObjEnemyBossScene_LoadInThread(obj);
     ObjEnemyBossScene_Regist(obj);
@@ -43,22 +46,4 @@ task RenderBG{
     ObjSprite2D_SetDestRect(obj, 0, 0, 384, 448);
     ObjRender_SetPosition(obj, 0, 0, 1);
     Obj_SetRenderPriorityI(obj, 20)
-}
-
-function CreateTrack{
-    let obj = ObjSound_Create();
-    ObjSound_Load(obj, GetCurrentScriptDirectory() ~ "./../img/whatuneed.ogg");
-    ObjSound_SetSoundDivision(obj, SOUND_BGM);
-    ObjSound_SetLoopEnable(obj, true);
-    ObjSound_SetVolumeRate(obj, 40);
-    ObjSound_Play(obj);
-    return obj;
-}
-
-task BossName{
-    let objText = ObjText_Create();
-	ObjText_SetText(objText, "Krikka");
-	ObjText_SetFontSize(objText, 16);
-	ObjText_SetMaxWidth(objText, 100);
-	ObjRender_SetY(objText,15);
 }
