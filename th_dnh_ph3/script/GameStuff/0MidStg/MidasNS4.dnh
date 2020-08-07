@@ -1,7 +1,7 @@
 #TouhouDanmakufu[Single]
 #ScriptVersion[3]
-#Title["Midas Spell 3 Single"]
-#Text["Code by Cyvo[r]Midas Spell 3"]
+#Title["Midas Non-Spell 4 Single"]
+#Text["Code by Cyvo[r]Midas Non-Spell 4"]
 #include "script/default_system/Default_ShotConst.txt"
 #include "./../lib/lib_general.dnh"
 #Background["./../../tutorial/system/Default_Background_IceMountain.txt"]
@@ -34,7 +34,7 @@ let objScene= GetEnemyBossSceneObjectID();
     SetEndSceneScriptPath(GetCurrentScriptDirectory() ~ "./../system/Default_EndScene.txt");
     SetReplaySaveSceneScriptPath(GetCurrentScriptDirectory() ~ "./../system/Default_ReplaySaveScene.txt");
     
-    ObjEnemyBossScene_StartSpell(objScene);
+    //ObjEnemyBossScene_StartSpell(objScene);
     
     TDrawLoop;
     TFinalize;
@@ -59,50 +59,38 @@ task TFinalize{
 
 task MainTask{
     wait(120);
-    midasRadial;
-    snakeWalls;
+    movement;
+    midasSpray;
+    midasLaser;
 }
 
-task midasRadial{
+task midasSpray{
+    let timer = 60;
     while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){
-      let angleT = rand(0, 360);
-      loop(12){
-        let radShot= CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 2, angleT, 25, 5);
-        angleT += 360/12;
-        Explode(radShot);
-      }
-      wait(180);
+        while(timer > 0){
+            let angle1= rand(-60, 60);
+            let angle2= rand(120, 210);
+            let spray1= CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 3, angle1, 9, 0);
+            let spray2= CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 3, angle2, 9, 0);
+            ObjMove_AddPatternA2(spray1, 5, NO_CHANGE, NO_CHANGE, NO_CHANGE, 0.7, 3);
+            ObjMove_AddPatternA2(spray2, 5, NO_CHANGE, NO_CHANGE, NO_CHANGE, -0.7, 3);
+            ObjMove_AddPatternA2(spray1, 60, NO_CHANGE, NO_CHANGE, NO_CHANGE, 0, 3);
+            ObjMove_AddPatternA2(spray2, 60, NO_CHANGE, NO_CHANGE, NO_CHANGE, 0, 3);
+            timer -= 1;
+            yield;
+        }
+        while(timer < 60){
+            timer +=1;
+            yield;
+        }
     }
 }
 
-task Explode(shotobj){
-	wait(rand(60, 140));
-	let angleT = 90;
-	loop(6){
-		let explosion = CreateStraightLaserA1(ObjMove_GetX(shotobj), ObjMove_GetY(shotobj), angleT, 120, 60, 30, 153,0);
-		angleT += 360/6;
-	}
-	Obj_Delete(shotobj);
-}
-
-task snakeWalls{
+task midasLaser{
     while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){
-        let shotArray2 = [56, 112, 168, 220, 276, 332, 384, 436];
-        let shotArray3 = [412, 360, 304, 248, 196, 140, 84, 28];
-        let snake = CreateShotA1(10, shotArray2[rand_int(0, 7)], 1, 0, 174, 5);
-        let snake2 = CreateShotA1(GetStgFrameWidth()-10, shotArray3[rand_int(0, 7)], 1, 180, 174, 5);
-        snakeShot(snake);
-        snakeShot(snake2);
-        wait(30);
-
-    }
-}
-
-task snakeShot(obj){
-    let wvel = 1;
-    ascent(i in 0..20){
-        ObjMove_AddPatternA2(obj, i*30, 1, NO_CHANGE, NO_CHANGE, wvel, 1);
-        wvel *= -1;
+        let angleT = 270;
+        let las = CreateStraightLaserA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss)+10, 90, 420, 60, 30, 153, 30);
+        wait(120);
     }
 }
 
@@ -118,5 +106,13 @@ task TDrawLoop{
         animframe++;
         if(animframe >= 32){animframe = 0;}//reset if too high
         yield;
+    }
+}
+
+task movement{
+    wait(60);
+    while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){
+        ObjMove_SetDestAtFrame(objBoss, rand(GetCenterX() + 90, GetCenterX()-90), 60, 60);
+        wait(120);
     }
 }
