@@ -59,13 +59,13 @@ task TFinalize{
 
 task MainTask{
     wait(120);
-    CreateTurret(1,60);
-    CreateTurret(1,-60);
-    CreateTurret(-1,60);
-    CreateTurret(-1,-60);
+    CreateTurret(60,60);
+    CreateTurret(60,-60);
+    CreateTurret(-60,60);
+    CreateTurret(-60,-60);
 }
 
-task CreateTurret(dir, dist){
+task CreateTurret(X, Y){
 
     let graphic = GetCurrentScriptDirectory() ~ "./../stgenemy/enemy.png";
     let obj = ObjPrim_Create(OBJ_SPRITE_2D);
@@ -74,8 +74,8 @@ task CreateTurret(dir, dist){
     ObjSprite2D_SetDestCenter(obj);
     ObjRender_SetBlendType(obj, BLEND_ADD_ARGB);
     while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){
-        ObjRender_SetPosition(obj, ObjMove_GetX(objBoss) + dir * dist, 
-                                   ObjMove_GetY(objBoss) + dir * dist, 1);
+        ObjRender_SetPosition(obj, ObjMove_GetX(objBoss) + X, 
+                                   ObjMove_GetY(objBoss) + Y, 1);
             let currx = ObjRender_GetX(obj);
             let curry = ObjRender_GetY(obj);
             CreateShotA1(currx, curry, 3, GetAngleToPlayer(obj), 57, 5);
