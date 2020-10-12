@@ -1,0 +1,112 @@
+#TouhouDanmakufu[Single]
+#ScriptVersion[3]
+#Title["Mother Spell 1 single"]
+#Text["Code by Cyvo[r]Mother Spell 1"]
+#include "script/default_system/Default_ShotConst.txt"
+#include "./../lib/lib_general.dnh"
+#Background["./../../tutorial/system/Default_Background_IceMountain.txt"]
+#System["./../../tutorial/system/Default_System.txt"]
+
+
+let objBoss;
+let objScene= GetEnemyBossSceneObjectID();
+
+
+@Event{
+	alternative(GetEventType())
+	case(EV_REQUEST_LIFE){
+        SetScriptResult(1000);
+    }
+    case(EV_REQUEST_TIMER){
+        SetScriptResult(60);
+    }
+    case(EV_REQUEST_SPELL_SCORE){
+        SetScriptResult(1000000);
+    }
+    
+}
+
+@Initialize{
+    objBoss= ObjEnemy_Create(OBJ_ENEMY_BOSS);
+    ObjEnemy_Regist(objBoss);
+    ObjMove_SetPosition(objBoss, GetStgFrameWidth()/2, GetStgFrameHeight()/2);
+    SetPauseScriptPath(GetCurrentScriptDirectory() ~ "./../system/Default_Pause.txt");
+    SetEndSceneScriptPath(GetCurrentScriptDirectory() ~ "./../system/Default_EndScene.txt");
+    SetReplaySaveSceneScriptPath(GetCurrentScriptDirectory() ~ "./../system/Default_ReplaySaveScene.txt");
+    
+    //ObjEnemyBossScene_StartSpell(objScene);
+    
+    TDrawLoop;
+    TFinalize;
+    MainTask;
+}
+
+@MainLoop{
+    ObjEnemy_SetIntersectionCircleToShot(objBoss, ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 32);
+    ObjEnemy_SetIntersectionCircleToPlayer(objBoss, ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 24);
+    yield;
+}
+
+task TFinalize{
+    while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){yield;}
+    NotifyEventAll(EV_USER_STAGE+2, [ObjMove_GetX(objBoss), ObjMove_GetY(objBoss)]);
+    Obj_Delete(objBoss);
+    DeleteShotAll(TYPE_ALL, TYPE_IMMEDIATE);
+    SetAutoDeleteObject(true);
+    CloseScript(GetOwnScriptID());
+    return;
+}
+
+task MainTask{
+    wait(120);
+    CreateTurret(60,60);
+    CreateTurret(60,-60);
+    CreateTurret(-60,60);
+    CreateTurret(-60,-60);
+}
+
+task CreateTurret(X, Y){
+
+    let graphic = GetCurrentScriptDirectory() ~ "./../stgenemy/enemy.png";
+    let obj = ObjPrim_Create(OBJ_SPRITE_2D);
+    ObjPrim_SetTexture(obj, graphic);
+    ObjSprite2D_SetSourceRect(obj, 0, 0, 64, 64);
+    ObjSprite2D_SetDestCenter(obj);
+    ObjRender_SetBlendType(obj, BLEND_ADD_ARGB);
+    while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){
+        ObjRender_SetPosition(obj, ObjMove_GetX(objBoss) + X, 
+                                   ObjMove_GetY(objBoss) + Y, 1);
+            let currx = ObjRender_GetX(obj);
+            let curry = ObjRender_GetY(obj);
+            let bomb = CreateShotA1(currx, curry, 1, GetAngleToPlayer(obj), 25, 5);
+            Explode(bomb);
+        
+        wait(rand_int(60, 120));
+    }
+    Obj_Delete(obj);
+}
+
+task Explode(bomb){
+    wait(rand_int(30, 60));
+    let angleT = rand(0, 360);
+    loop(8){
+        CreateShotA1(ObjMove_GetX(bomb), ObjMove_GetY(bomb), 2, angleT, rand_int(9, 16), 0);
+        angleT += 360/8;
+    }
+    Obj_Delete(bomb);
+}
+
+task TDrawLoop{
+    let BossImage = GetCurrentScriptDirectory() ~ "./../img/u2l13spritesheet.png"; //assumes that image is in same directory
+    let animframe = 0;
+    ObjPrim_SetTexture(objBoss, BossImage);
+    ObjRender_SetScaleXYZ(objBoss, 1, 1, 1);
+    ObjSprite2D_SetSourceRect(objBoss, 0, 0, 64, 64);
+    ObjSprite2D_SetDestCenter(objBoss);
+    while(!Obj_IsDeleted(objBoss)){
+        ObjSprite2D_SetSourceRect(objBoss, 0 + 64*floor(animframe/8), 0, 64 + 64*floor(animframe/8), 64);
+        animframe++;
+        if(animframe >= 32){animframe = 0;}//reset if too high
+        yield;
+    }
+}

@@ -1,0 +1,109 @@
+#TouhouDanmakufu[Single]
+#ScriptVersion[3]
+#Title["Mother Spell 2 single"]
+#Text["Code by Cyvo[r]Mother Spell 2"]
+#include "script/default_system/Default_ShotConst.txt"
+#include "./../lib/lib_general.dnh"
+#Background["./../../tutorial/system/Default_Background_IceMountain.txt"]
+#System["./../../tutorial/system/Default_System.txt"]
+
+
+let objBoss;
+let objScene= GetEnemyBossSceneObjectID();
+
+
+@Event{
+	alternative(GetEventType())
+	case(EV_REQUEST_LIFE){
+        SetScriptResult(1000);
+    }
+    case(EV_REQUEST_TIMER){
+        SetScriptResult(60);
+    }
+    case(EV_REQUEST_SPELL_SCORE){
+        SetScriptResult(1000000);
+    }
+    
+}
+
+@Initialize{
+    objBoss= ObjEnemy_Create(OBJ_ENEMY_BOSS);
+    ObjEnemy_Regist(objBoss);
+    ObjMove_SetPosition(objBoss, GetStgFrameWidth()/2, GetStgFrameHeight()/2);
+    SetPauseScriptPath(GetCurrentScriptDirectory() ~ "./../system/Default_Pause.txt");
+    SetEndSceneScriptPath(GetCurrentScriptDirectory() ~ "./../system/Default_EndScene.txt");
+    SetReplaySaveSceneScriptPath(GetCurrentScriptDirectory() ~ "./../system/Default_ReplaySaveScene.txt");
+    
+    //ObjEnemyBossScene_StartSpell(objScene);
+    
+    TDrawLoop;
+    TFinalize;
+    MainTask;
+}
+
+@MainLoop{
+    ObjEnemy_SetIntersectionCircleToShot(objBoss, ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 32);
+    ObjEnemy_SetIntersectionCircleToPlayer(objBoss, ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 24);
+    yield;
+}
+
+task TFinalize{
+    while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){yield;}
+    NotifyEventAll(EV_USER_STAGE+2, [ObjMove_GetX(objBoss), ObjMove_GetY(objBoss)]);
+    Obj_Delete(objBoss);
+    DeleteShotAll(TYPE_ALL, TYPE_IMMEDIATE);
+    SetAutoDeleteObject(true);
+    CloseScript(GetOwnScriptID());
+    return;
+}
+
+task MainTask{
+    wait(120);
+    CreateChaser;
+    KnifeShot;
+}
+
+task CreateChaser{
+
+    let obj = CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 0, 0, 129, 0);
+    ObjShot_SetSpellResist(obj, true);
+    ObjMove_SetDestAtFrame(obj, GetStgFrameWidth()/2, GetStgFrameHeight()/2, 60);
+    wait(60);
+    while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){
+        ObjMove_SetDestAtFrame(obj, GetPlayerX(), GetPlayerY(), 60);
+        wait(60);
+    }
+    Obj_Delete(obj);
+}
+
+task KnifeShot{
+    while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){
+        ascent(i in 0..36){
+            CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 2, 0+i*10, rand(137, 144), 5);
+            CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 2, 45+i*10, rand(137, 144), 5);
+            CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 2, 90+i*10, rand(137, 144), 5);
+            CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 2, 135+i*10, rand(137, 144), 5);
+            CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 2, 180+i*10, rand(137, 144), 5);
+            CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 2, 225+i*10, rand(137, 144), 5);
+            CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 2, 270+i*10, rand(137, 144), 5);
+            CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 2, 315+i*10, rand(137, 144), 5);
+            wait(30);
+        }
+        yield;
+    }
+}
+
+task TDrawLoop{
+    let BossImage = GetCurrentScriptDirectory() ~ "./../img/u2l13spritesheet.png"; //assumes that image is in same directory
+    let animframe = 0;
+    ObjPrim_SetTexture(objBoss, BossImage);
+    ObjRender_SetScaleXYZ(objBoss, 1, 1, 1);
+    ObjSprite2D_SetSourceRect(objBoss, 0, 0, 64, 64);
+    ObjSprite2D_SetDestCenter(objBoss);
+    while(!Obj_IsDeleted(objBoss)){
+        ObjSprite2D_SetSourceRect(objBoss, 0 + 64*floor(animframe/8), 0, 64 + 64*floor(animframe/8), 64);
+        animframe++;
+        if(animframe >= 32){animframe = 0;}//reset if too high
+        yield;
+    }
+}
