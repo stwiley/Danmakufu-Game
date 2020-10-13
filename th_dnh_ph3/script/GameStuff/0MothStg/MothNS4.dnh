@@ -1,7 +1,7 @@
 #TouhouDanmakufu[Single]
 #ScriptVersion[3]
-#Title["Mother Non-Spell 2  Single"]
-#Text["Code by Cyvo[r]Mother Non-Spell 2"]
+#Title["Mother Non-Spell 4 Single"]
+#Text["Code by Cyvo[r]Mother Non-Spell 4"]
 #include "script/default_system/Default_ShotConst.txt"
 #include "./../lib/lib_general.dnh"
 #Background["./../../tutorial/system/Default_Background_IceMountain.txt"]
@@ -59,31 +59,33 @@ task TFinalize{
 
 task MainTask{
     wait(120);
-    CreateChaser;
-    KnifeTrap;
+    SnowflakeRad;
+
 }
 
-task CreateChaser{
-
-    let obj = CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 0, 0, 132, 0);
-    ObjShot_SetSpellResist(obj, true);
-    ObjMove_SetDestAtFrame(obj, GetStgFrameWidth()/2, GetStgFrameHeight()/2, 60);
-    wait(60);
+task SnowflakeRad{
+    let ind =0;
     while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){
-        ObjMove_SetDestAtFrame(obj, GetPlayerX(), GetPlayerY(), 30);
+        let anglArray = [0, 90];
+        let angleT = anglArray[ind];
+        loop(6){
+            let shot = CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 3, angleT, 25, 10);
+            angleT += 360/6;
+            branch(shot);
+        }
+        if (ind == 0){ind = 1;}
+        else if(ind ==1){ind =0;}
         wait(60);
     }
-    Obj_Delete(obj);
+
 }
 
-task KnifeTrap{
-    while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){
-        let angleT = 0;
-        loop(13){
-            CreateShotA2(ObjMove_GetX(GetPlayerObjectID()) + 100*cos(angleT), ObjMove_GetY(GetPlayerObjectID()) + 100*sin(angleT), 0, angleT+180, 0.01, 2, rand_int(145, 152), 10);
-            angleT += 360/13;
-        }
-        wait(120);
+task branch(obj){
+    while(obj){
+        if(Obj_IsDeleted(obj)){return;}
+        CreateShotA1(ObjMove_GetX(obj), ObjMove_GetY(obj), 2, ObjMove_GetAngle(obj)+45, 14, 5);
+        CreateShotA1(ObjMove_GetX(obj), ObjMove_GetY(obj), 2, ObjMove_GetAngle(obj)-45, 14, 5);
+        wait(30);
     }
 }
 
