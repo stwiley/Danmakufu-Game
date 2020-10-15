@@ -66,15 +66,15 @@ task MainTask{
 task SnowflakeRad{
     let ind =0;
     while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){
-        let anglArray = [0, 90];
+        let anglArray = [0, 45, 90];
         let angleT = anglArray[ind];
-        loop(6){
+        loop(10){
             let shot = CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 3, angleT, 25, 10);
-            angleT += 360/6;
+            angleT += 360/10;
             branch(shot);
         }
-        if (ind == 0){ind = 1;}
-        else if(ind ==1){ind =0;}
+        ind++;
+        if(ind == 3){ind =0;}
         wait(60);
     }
 
