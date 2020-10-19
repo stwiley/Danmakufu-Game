@@ -1,7 +1,7 @@
 #TouhouDanmakufu[Plural]
 #ScriptVersion[3]
-#Title["Victoria Plural"]
-#Text["Code by Cyvo[r]A script to hold Victoria singles"]
+#Title["Vienna Plural"]
+#Text["Code by Cyvo[r]A script to hold Vienna singles"]
 #include "./../lib/lib_general.dnh"
 #Background["./../../tutorial/system/Default_Background_IceMountain.txt"]
 #System["./../../tutorial/system/Default_System.txt"]
@@ -25,13 +25,14 @@
 task TPlural{
     let dir = GetCurrentScriptDirectory();
     let obj = ObjEnemyBossScene_Create();
-    ObjEnemyBossScene_Add(obj, 0 ,dir ~ "./VictNS1.dnh");
-    ObjEnemyBossScene_Add(obj, 1 ,dir ~ "./VictNS2.dnh");
-    ObjEnemyBossScene_Add(obj, 2 ,dir ~ "./VictNS3.dnh");
-    ObjEnemyBossScene_Add(obj, 0 ,dir ~ "./VictSp1.dnh");
-    ObjEnemyBossScene_Add(obj, 1 ,dir ~ "./VictSp2.dnh");
-    ObjEnemyBossScene_Add(obj, 2 ,dir ~ "./VictSp3.dnh");
-    ObjEnemyBossScene_Add(obj, 3 ,dir ~ "./VictSp4.dnh");
+    ObjEnemyBossScene_Add(obj, 0 ,dir ~ "./ViennaNS1.dnh");
+    ObjEnemyBossScene_Add(obj, 1 ,dir ~ "./ViennaNS2.dnh");
+    ObjEnemyBossScene_Add(obj, 2 ,dir ~ "./ViennaNS3.dnh");
+    ObjEnemyBossScene_Add(obj, 3 ,dir ~ "./ViennaNS4.dnh");
+    ObjEnemyBossScene_Add(obj, 0 ,dir ~ "./ViennaSp1.dnh");
+    ObjEnemyBossScene_Add(obj, 1 ,dir ~ "./ViennaSp2.dnh");
+    ObjEnemyBossScene_Add(obj, 2 ,dir ~ "./ViennaSp3.dnh");
+    ObjEnemyBossScene_Add(obj, 3 ,dir ~ "./ViennaSp4.dnh");
     
     ObjEnemyBossScene_LoadInThread(obj);
     ObjEnemyBossScene_Regist(obj);

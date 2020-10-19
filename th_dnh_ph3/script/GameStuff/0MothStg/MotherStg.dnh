@@ -1,6 +1,6 @@
 #TouhouDanmakufu[Stage]
 #ScriptVersion[3]
-#Title["Victoria Stage"]
+#Title["Mother Stage"]
 #Text["Code by Cyvo[r]A script to hold experiments with stages"]
 #include "./../lib/lib_general.dnh"
 #include"./../lib/lib_dialogue.txt"
@@ -56,7 +56,7 @@ let bgm2;
 task TStage{
     stagepart = 1;
     let dir = GetCurrentScriptDirectory();
-    let path = dir ~ "VictPlu.dnh";
+    let path = dir ~ "MotherPlu.dnh";
     let idscript = LoadScriptInThread(path);
     
     SetForbidPlayerSpell(true);
@@ -242,7 +242,7 @@ function StageEvent{
 
 task BossName{
     let objText = ObjText_Create();
-	ObjText_SetText(objText, "Victoria");
+	ObjText_SetText(objText, "Mother");
 	ObjText_SetFontSize(objText, 16);
 	ObjText_SetMaxWidth(objText, 100);
 	ObjRender_SetY(objText,15);

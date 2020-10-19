@@ -1,7 +1,7 @@
 #TouhouDanmakufu[Plural]
 #ScriptVersion[3]
-#Title["Victoria Plural"]
-#Text["Code by Cyvo[r]A script to hold Victoria singles"]
+#Title["Midas Plural"]
+#Text["Code by Cyvo[r]A script to hold Midas singles"]
 #include "./../lib/lib_general.dnh"
 #Background["./../../tutorial/system/Default_Background_IceMountain.txt"]
 #System["./../../tutorial/system/Default_System.txt"]
@@ -25,13 +25,14 @@
 task TPlural{
     let dir = GetCurrentScriptDirectory();
     let obj = ObjEnemyBossScene_Create();
-    ObjEnemyBossScene_Add(obj, 0 ,dir ~ "./VictNS1.dnh");
-    ObjEnemyBossScene_Add(obj, 1 ,dir ~ "./VictNS2.dnh");
-    ObjEnemyBossScene_Add(obj, 2 ,dir ~ "./VictNS3.dnh");
-    ObjEnemyBossScene_Add(obj, 0 ,dir ~ "./VictSp1.dnh");
-    ObjEnemyBossScene_Add(obj, 1 ,dir ~ "./VictSp2.dnh");
-    ObjEnemyBossScene_Add(obj, 2 ,dir ~ "./VictSp3.dnh");
-    ObjEnemyBossScene_Add(obj, 3 ,dir ~ "./VictSp4.dnh");
+    ObjEnemyBossScene_Add(obj, 0 ,dir ~ "./MidasNS1.dnh");
+    ObjEnemyBossScene_Add(obj, 1 ,dir ~ "./MidasNS2.dnh");
+    ObjEnemyBossScene_Add(obj, 2 ,dir ~ "./MidasNS3.dnh");
+    ObjEnemyBossScene_Add(obj, 3 ,dir ~ "./MidasNS4.dnh");
+    ObjEnemyBossScene_Add(obj, 0 ,dir ~ "./MidasSp1.dnh");
+    ObjEnemyBossScene_Add(obj, 1 ,dir ~ "./MidasSp2.dnh");
+    ObjEnemyBossScene_Add(obj, 2 ,dir ~ "./MidasSp3.dnh");
+    ObjEnemyBossScene_Add(obj, 3 ,dir ~ "./MidasSp4.dnh");
     
     ObjEnemyBossScene_LoadInThread(obj);
     ObjEnemyBossScene_Regist(obj);
