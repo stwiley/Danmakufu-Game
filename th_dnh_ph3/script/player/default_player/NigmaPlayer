@@ -1,0 +1,108 @@
+#TouhouDanmakufu[Player]
+#ScriptVersion[3]
+#ID["Nigma"]
+#Title["Nigma Player Script"]
+#Text["Player script for Nigma character"]
+#ReplayName["Nigma"]
+
+let objPlayer = GetPlayerObjectID();
+let csd = GetCurrentScriptDirectory();
+let curr_graze_particles = 0;
+let MAX_GRAZE_PARTICLES = 10;
+
+@Initialize{
+
+	ObjPlayer_AddIntersectionCircleA1(objPlayer, 0, 0, 1, 20);
+
+	DrawPlayer;
+	CreateOption(-1);
+	CreateOption(1);
+
+}
+
+@MainLoop{
+	yield;
+}
+
+@Event{
+	alternative(GetEventType())
+	case(EV_GRAZE){
+		//TODO: Sound effect
+		if(curr_graze_particles < MAX_GRAZE_PARTICLES){
+			CreateGrazeParticle;
+		}
+	}
+}
+
+task DrawPlayer{
+	let path = csd ~ "dot.png";
+	ObjPrim_SetTexture(objPlayer, path);
+	ObjSprite2D_SetSourceRect(objPlayer, 0, 0, 15, 15);
+	ObjSprite2D_SetDestCenter(objPlayer);
+	loop{
+		if(GetVirtualKeyState(VK_LEFT) == KEY_PUSH || GetVirtualKeyState(VK_LEFT) == KEY_HOLD){
+			ObjRender_SetAngleZ(objPlayer, -15);
+		} else if(GetVirtualKeyState(VK_RIGHT) == KEY_PUSH || GetVirtualKeyState(VK_RIGHT) == KEY_HOLD){
+			ObjRender_SetAngleZ(objPlayer, 15);
+		} else{
+			ObjRender_SetAngleZ(objPlayer, 0);
+		}
+		yield;
+	}
+}
+
+task PlayerShot{
+
+}
+
+task CreateOption(dir){
+	let path = csd ~"dot.png";
+	let unfocdist = 64; //Unfocused player distance
+	let focdist= 32; //Focus distance
+	let transitionfr =15; //Transition frames
+	let currdist = unfocdist;
+	let objOption = ObjPrim_Create(OBJ_SPRITE_2D);
+	ObjPrim_SetTexture(objOption, path);
+	ObjSprite2D_SetSourceRect(objOption, 0, 0, 11, 11);
+	ObjSprite2D_SetDestCenter(objOption);
+
+	loop{
+		if(GetVirtualKeyState(VK_SLOWMOVE) != KEY_HOLD && GetVirtualKeyState(VK_SLOWMOVE) != KEY_PUSH){
+			if(currdist < unfocdist){
+				currdist += (unfocdist - focdist)/transitionfr;
+			}
+		} else{
+			if(currdist > focdist){
+				currdist -= (unfocdist - focdist)/transitionfr;
+			}
+		}
+		ObjRender_SetPosition(objOption, GetPlayerX() + currdist*dir, GetPlayerY(), 1);
+		yield;
+	}
+}
+
+task CreateGrazeParticle{
+	let path = csd ~ "dot.png";
+	let objparticle = ObjPrim_Create(OBJ_SPRITE_2D);
+	let startx = GetPlayerX();
+	let starty = GetPlayerY();
+	let angle = rand(0, 360);
+	let anglecomponents = [cos(angle), sin(angle)];
+	let speed = rand(0,4) + rand(0, 8);
+	let frames = 30;
+	let size = rand(1,3);
+	curr_graze_particles += 1;
+	ObjPrim_SetTexture(objparticle, path);
+	ObjSprite2D_SetSourceRect(objparticle, 0, 0, size, size);
+	ObjSprite2D_SetDestCenter(objparticle);
+	ascent(i in 0..frames){
+		ObjRender_SetX(objparticle, startx + anglecomponents[0]*i);
+		ObjRender_SetY(objparticle, starty + anglecomponents[1]*i);
+		if(i > frames/2){
+			ObjRender_SetAlpha(objparticle, 255- (i-frames/2)*255/(frames/2));
+		}
+		yield;
+	}
+	Obj_Delete(objparticle);
+	curr_graze_particles -= 1;
+}

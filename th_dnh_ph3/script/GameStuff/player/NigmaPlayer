@@ -1,0 +1,44 @@
+#TouhouDanmakufu[Player]
+#ScriptVersion[3]
+#ID["Nigma"]
+#Title["Nigma Player Script"]
+#Text["Player script for Nigma character"]
+#ReplayName["Nigma"]
+
+let objPlayer = GetPlayerObjectID();
+let dir = GetCurrentScriptDirectory();
+
+@Initialize{
+
+	DrawPlayer;
+
+}
+
+@MainLoop{
+	yield;
+}
+
+@Event{
+
+}
+
+task DrawPlayer{
+	let path = dir ~ "dot.png";
+	ObjPrim_SetTexture(objPlayer, path);
+	ObjSprite2D_SetSourceRect(objPlayer, 0, 0, 15, 15);
+	ObjSprite2D_SetDestCenter(objPlayer);
+	loop{
+		if(GetVirtualKeyState(VK_LEFT) == KEY_PUSH || GetVirtualKeyState(VK_LEFT) == KEY_HOLD){
+			ObjRender_SetAngleZ(objPlayer, -15);
+		} else if(GetVirtualKeyState(VK_RIGHT) == KEY_PUSH || GetVirtualKeyState(VK_RIGHT) == KEY_HOLD){
+			ObjRender_SetAngleZ(objPlayer, 15);
+		} else{
+			ObjRender_SetAngleZ(objPlayer, 0);
+		}
+		yield;
+	}
+}
+
+task PlayerShot{
+
+}
