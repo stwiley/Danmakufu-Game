@@ -1,0 +1,25 @@
+shot_image = "./dot.png"
+
+ShotData{
+	id = 0
+	rect = (0,0,0,0)
+	render = ALPHA
+	alpha = 0
+	collision = 12
+}
+
+ShotData{
+	id = 1
+	rect = (0,0,8,8)
+	render = ALPHA
+	alpha = 64
+	collision = 12
+}
+
+ShotData{
+	id = 2
+	rect = (0,0, 4, 16)
+	render = ADD_ARGB
+	alpha = 64
+	collision = 12
+}
