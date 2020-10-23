@@ -13,20 +13,21 @@ let playerdead = false;
 let count =0;
 
 @Initialize{
+	LoadPlayerShotData(csd ~ "player_shotsheet.txt");
 
 	ObjPlayer_AddIntersectionCircleA1(objPlayer, 0, 0, 1, 20);
 
 	DrawPlayer;
+	PlayerShot;
 	CreateOption(-1);
 	CreateOption(1);
 	MagicCircle;
-	LoadPlayerShotData(csd ~ "player_shotsheet.txt");
+	RenderHitbox;
 
 }
 
 @MainLoop{
 	count++;
-	PlayerShot;
 	yield;
 }
 
@@ -356,7 +357,7 @@ task CreateUnfocusedSpellSquare(ID){
 
 		yield;
 	}
-	Obj_delete(objspell);
+	Obj_Delete(objspell);
 }
 
 task FocusedSpell{
@@ -374,7 +375,7 @@ task FocusedSpell{
 	SetForbidPlayerShot(false);
 }
 
-task CreateFocusedSpellSquare(ID){
+task CreateFocusedSpellSquare(ID, dir){
 	let path = csd ~ "dot.png";
 	let rad = 0;
 	let rotdist = 64;
@@ -435,4 +436,36 @@ task CreateFocusedSpellSquare(ID){
 		yield;
 	}
 	Obj_Delete(objspell);
+}
+
+task RenderHitbox{
+	let path = csd ~ "dot.png";
+	let visible = false;
+	let objHitbox = ObjPrim_Create(OBJ_SPRITE_2D);
+	ObjPrim_SetTexture(objHitbox, path);
+	ObjSprite2D_SetSourceRect(objHitbox, 0, 0, 5, 5);
+	ObjSprite2D_SetDestRect(objHitbox, -5, -5, 5, 5);
+	ObjRender_SetColor(objHitbox, 255, 0, 0);
+	Obj_SetRenderPriority(objHitbox, 0.31);
+	let objHitbox2 = ObjPrim_Create(OBJ_SPRITE_2D);
+	ObjPrim_SetTexture(objHitbox2, path);
+	ObjSprite2D_SetSourceRect(objHitbox2, 0, 0, 5, 5);
+	ObjSprite2D_SetDestRect(objHitbox2, -3, -3, 3, 3);
+	Obj_SetRenderPriority(objHitbox2, 0.31);
+
+	loop{
+		if(visible && (playerdead || GetVirtualKeyState(VK_SLOWMOVE) != KEY_HOLD)){
+			visible = false;
+			Obj_SetVisible(objHitbox, false);
+			Obj_SetVisible(objHitbox2, false);
+		} else if(!visible && !playerdead && GetVirtualKeyState(VK_SLOWMOVE) == KEY_HOLD){
+			visible = true;
+			Obj_SetVisible(objHitbox, true);
+			Obj_SetVisible(objHitbox2, true);
+		}
+
+		ObjRender_SetPosition(objHitbox, GetPlayerX(), GetPlayerY(), 1);
+		ObjRender_SetPosition(objHitbox2, GetPlayerX(), GetPlayerY(), 1);
+		yield;
+	}
 }
