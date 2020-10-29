@@ -60,6 +60,7 @@ task TFinalize{
 task MainTask{
     wait(120);
     oneRad;
+    twoRad;
 }
 
 task oneRad{
@@ -67,14 +68,29 @@ task oneRad{
 		ascent(i in 0..36){
             ascent(j in 0..3){
                 CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 2.5-j/3, 0+i*10, 9+j, 5);
+                CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 3.5-j/3, 45+i*10, 137+j, 5);
                 CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 2.5-j/3, 90+i*10, 9+j, 5);
+                CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 3.5-j/3, 135+i*10, 137+j, 5);
                 CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 2.5-j/3, 180+i*10, 9+j, 5);
+                CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 3.5-j/3, 225+i*10, 137+j, 5);
                 CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 2.5-j/3, 270+i*10, 9+j, 5);
+                CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 3.5-j/3, 315+i*10, 137+j, 5);
                 wait(5);
             }
 		}
         yield;
     }
+}
+
+task twoRad{
+	while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){
+		let angleT = rand(0, 360);
+		loop(30){
+			CreateShotA1(ObjMove_GetX(objBoss) + 50*cos(angleT), ObjMove_GetY(objBoss) + 50*sin(angleT), 3, angleT, 152, 5);
+			angleT += 360/30;
+		}
+		wait(60);
+	}
 }
 
 task TDrawLoop{
