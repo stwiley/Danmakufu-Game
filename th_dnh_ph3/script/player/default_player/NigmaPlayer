@@ -65,9 +65,10 @@ let count =0;
 }
 
 task DrawPlayer{
-	let path = csd ~ "dot.png";
+	let path = csd ~"a.png";
 	ObjPrim_SetTexture(objPlayer, path);
-	ObjSprite2D_SetSourceRect(objPlayer, 0, 0, 15, 15);
+	ObjRender_SetScaleXYZ(objPlayer, 0.8, 0.8, 0.8);
+	ObjSprite2D_SetSourceRect(objPlayer, 0, 0, 64, 64);
 	ObjSprite2D_SetDestCenter(objPlayer);
 	loop{
 		if(GetVirtualKeyState(VK_LEFT) == KEY_PUSH || GetVirtualKeyState(VK_LEFT) == KEY_HOLD){
@@ -118,7 +119,7 @@ task CreateOption(dir){
 	let currdist = unfocdist;
 	let objOption = ObjPrim_Create(OBJ_SPRITE_2D);
 	ObjPrim_SetTexture(objOption, path);
-	ObjSprite2D_SetSourceRect(objOption, 0, 0, 11, 11);
+	ObjSprite2D_SetSourceRect(objOption, 0, 0, 15, 15);
 	ObjSprite2D_SetDestCenter(objOption);
 
 	loop{

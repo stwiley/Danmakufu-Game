@@ -192,38 +192,26 @@ function StageEvent{
     ObjPrim_SetTexture(leftportrait, pathNigma1);
     ObjPrim_SetTexture(rightportrait, pathReisen1);
     
-    ObjText_SetText(textobj, "Hey buddy");
-    ObjText_SetFontBorderColor(textobj, 255, 128, 192);
-    SetPortraitToForeground(leftportrait);
-    SetPortraitToBackground(rightportrait);
-    EventWaitA3(15);
-    
-    ObjText_SetText(textobj, "Oh[r]The boony girl haha");
-    ObjText_SetFontBorderColor(textobj, 255, 128, 128);
-    SetPortraitToForeground(rightportrait);
-    SetPortraitToBackground(leftportrait);
-    EventWaitA1(15);
-    
-    ObjText_SetText(textobj, "Ha yes it is me");
+    ObjText_SetText(textobj, "Hey you! Put down the teleporter!");
     ObjText_SetFontBorderColor(textobj, 255, 128, 192);
     ObjPrim_SetTexture(leftportrait, pathNigma2);
     SetPortraitToForeground(leftportrait);
     SetPortraitToBackground(rightportrait);
-    EventWaitA1(15);
+    EventWaitA3(15);
     
-    ObjText_SetText(textobj, "Very good");
+    ObjText_SetText(textobj, "No dice, girly! Can't have humans snoopin' around our stuff, ya know?");
     ObjText_SetFontBorderColor(textobj, 255, 128, 128);
     SetPortraitToForeground(rightportrait);
     SetPortraitToBackground(leftportrait);
     EventWaitA1(15);
     
-    ObjText_SetText(textobj, "I'm gonna kick ur ass now");
+    ObjText_SetText(textobj, "Last chance, or else I start blasting and take it anyway!");
     ObjText_SetFontBorderColor(textobj, 255, 128, 192);
     SetPortraitToForeground(leftportrait);
     SetPortraitToBackground(rightportrait);
     EventWaitA1(15);
     
-    ObjText_SetText(textobj, "Well alright then");
+    ObjText_SetText(textobj, "In that hunk o' junk? I'll take my chances. Come an' get it!");
     ObjText_SetFontBorderColor(textobj, 255, 128, 128);
     SetPortraitToForeground(rightportrait);
     SetPortraitToBackground(leftportrait);

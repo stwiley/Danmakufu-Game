@@ -198,54 +198,52 @@ function StageEvent{
     SetForbidPlayerSpell(true);
     SetForbidPlayerShot(true);
     
-    let pathReisen1= GetCurrentScriptDirectory() ~ "./../lib/u3l32aimg/reisen1.png";
-    let pathReisen2= GetCurrentScriptDirectory() ~ "./../lib/u3l32aimg/reisen2.png";
-    let pathReisen3= GetCurrentScriptDirectory() ~ "./../lib/u3l32aimg/reisen3.png";
-    let pathReimu1= GetCurrentScriptDirectory() ~ "./../lib/u3l32aimg/reimu1.png";
-    let pathReimu2= GetCurrentScriptDirectory() ~ "./../lib/u3l32aimg/reimu2.png";
-    let pathReimu3= GetCurrentScriptDirectory() ~ "./../lib/u3l32aimg/reimu3.png";
+    let pathKrikka= GetCurrentScriptDirectory() ~ "./../lib/KrikkaIdle.png";
+    let pathNigma= GetCurrentScriptDirectory() ~ "./../lib/NigmaAngry.png";
     
-    ObjPrim_SetTexture(leftportrait, pathReisen1);
-    ObjPrim_SetTexture(rightportrait, pathReimu1);
+    ObjPrim_SetTexture(leftportrait, pathNigma);
+    ObjPrim_SetTexture(rightportrait, pathKrikka);
     
-    ObjText_SetText(textobj, "Hey buddy");
+    ObjText_SetText(textobj, "Another one? You gonna tell me where I am, or am I gonna hafta blast you too?");
     ObjText_SetFontBorderColor(textobj, 255, 128, 192);
     SetPortraitToForeground(leftportrait);
     SetPortraitToBackground(rightportrait);
     EventWaitA3(15);
     
-    ObjText_SetText(textobj, "Oh[r]The boony girl haha");
+    ObjText_SetText(textobj, "Another one?! My name's Krikka, and you're in the Expanse.");
     ObjText_SetFontBorderColor(textobj, 255, 128, 128);
     SetPortraitToForeground(rightportrait);
     SetPortraitToBackground(leftportrait);
     EventWaitA1(15);
     
-    ObjText_SetText(textobj, "Ha yes it is me");
+    ObjText_SetText(textobj, "The Expanse?! So the teleporter---");
     ObjText_SetFontBorderColor(textobj, 255, 128, 192);
-    ObjPrim_SetTexture(leftportrait, pathReisen2);
     SetPortraitToForeground(leftportrait);
     SetPortraitToBackground(rightportrait);
     EventWaitA1(15);
     
-    ObjText_SetText(textobj, "Very good");
+    ObjText_SetText(textobj, "Looks like it. Right now though, you're on my shit list. I saw what you did to Lavvy back there.");
     ObjText_SetFontBorderColor(textobj, 255, 128, 128);
-    ObjPrim_SetTexture(rightportrait, pathReimu2);
     SetPortraitToForeground(rightportrait);
     SetPortraitToBackground(leftportrait);
     EventWaitA1(15);
     
-    ObjText_SetText(textobj, "I'm gonna kick ur ass now");
+    ObjText_SetText(textobj, "That thing was Lavvy? Your friend attacked ME first!");
     ObjText_SetFontBorderColor(textobj, 255, 128, 192);
-    ObjPrim_SetTexture(leftportrait, pathReisen3);
     SetPortraitToForeground(leftportrait);
     SetPortraitToBackground(rightportrait);
     EventWaitA1(15);
     
-    ObjText_SetText(textobj, "Well alright then");
+    ObjText_SetText(textobj, "Do I look like I care, fleshling? You beat up my friend, so now I gotta return the favor.");
     ObjText_SetFontBorderColor(textobj, 255, 128, 128);
-    ObjPrim_SetTexture(rightportrait, pathReimu3);
     SetPortraitToForeground(rightportrait);
     SetPortraitToBackground(leftportrait);
+    EventWaitA1(15);
+
+    ObjText_SetText(textobj, "I'm already sensing a pattern with you guys... Fine! Let's go!");
+    ObjText_SetFontBorderColor(textobj, 255, 128, 192);
+    SetPortraitToForeground(leftportrait);
+    SetPortraitToBackground(rightportrait);
     EventWaitA1(15);
     
     DestroyDialogueEvent(dialogueobj);
