@@ -185,54 +185,82 @@ function StageEvent{
     SetForbidPlayerSpell(true);
     SetForbidPlayerShot(true);
     
-    let pathReisen1= GetCurrentScriptDirectory() ~ "./../lib/u3l32aimg/reisen1.png";
-    let pathReisen2= GetCurrentScriptDirectory() ~ "./../lib/u3l32aimg/reisen2.png";
-    let pathReisen3= GetCurrentScriptDirectory() ~ "./../lib/u3l32aimg/reisen3.png";
-    let pathReimu1= GetCurrentScriptDirectory() ~ "./../lib/u3l32aimg/reimu1.png";
-    let pathReimu2= GetCurrentScriptDirectory() ~ "./../lib/u3l32aimg/reimu2.png";
-    let pathReimu3= GetCurrentScriptDirectory() ~ "./../lib/u3l32aimg/reimu3.png";
+    let pathNigma= GetCurrentScriptDirectory() ~ "./../lib/u3l32aimg/NigmaAngry.png";
+    let pathMidas= GetCurrentScriptDirectory() ~ "./../lib/u3l32aimg/MidasIdle.png";
     
-    ObjPrim_SetTexture(leftportrait, pathReisen1);
-    ObjPrim_SetTexture(rightportrait, pathReimu1);
+    ObjPrim_SetTexture(leftportrait, pathNigma);
+    ObjPrim_SetTexture(rightportrait, pathMidas);
     
-    ObjText_SetText(textobj, "Hey buddy");
+    ObjText_SetText(textobj, "So, you've finally arrived.");
     ObjText_SetFontBorderColor(textobj, 255, 128, 192);
-    SetPortraitToForeground(leftportrait);
-    SetPortraitToBackground(rightportrait);
+    SetPortraitToForeground(rightportrait);
+    SetPortraitToBackground(leftportrait);
     EventWaitA3(15);
     
-    ObjText_SetText(textobj, "Oh[r]The boony girl haha");
+    ObjText_SetText(textobj, "Yup. You gonna send me home willingly, or do I have to make you?");
     ObjText_SetFontBorderColor(textobj, 255, 128, 128);
-    SetPortraitToForeground(rightportrait);
-    SetPortraitToBackground(leftportrait);
-    EventWaitA1(15);
-    
-    ObjText_SetText(textobj, "Ha yes it is me");
-    ObjText_SetFontBorderColor(textobj, 255, 128, 192);
-    ObjPrim_SetTexture(leftportrait, pathReisen2);
     SetPortraitToForeground(leftportrait);
     SetPortraitToBackground(rightportrait);
     EventWaitA1(15);
     
-    ObjText_SetText(textobj, "Very good");
-    ObjText_SetFontBorderColor(textobj, 255, 128, 128);
-    ObjPrim_SetTexture(rightportrait, pathReimu2);
+    ObjText_SetText(textobj, "Please. You've beaten a lot of Crows on your way here, true.");
+    ObjText_SetFontBorderColor(textobj, 255, 128, 192);
     SetPortraitToForeground(rightportrait);
     SetPortraitToBackground(leftportrait);
     EventWaitA1(15);
     
-    ObjText_SetText(textobj, "I'm gonna kick ur ass now");
+    ObjText_SetText(textobj, "But you haven't even made a scratch in the population. I could keep you here as long as I wanted.");
+    ObjText_SetFontBorderColor(textobj, 255, 128, 128);
+    SetPortraitToForeground(rightportrait);
+    SetPortraitToBackground(leftportrait);
+    EventWaitA1(15);
+    
+    ObjText_SetText(textobj, "Okay, but why?! What's your obsession with taking stuff from us and keeping it here?!");
     ObjText_SetFontBorderColor(textobj, 255, 128, 192);
-    ObjPrim_SetTexture(leftportrait, pathReisen3);
     SetPortraitToForeground(leftportrait);
     SetPortraitToBackground(rightportrait);
     EventWaitA1(15);
     
-    ObjText_SetText(textobj, "Well alright then");
+    ObjText_SetText(textobj, "... I'm afraid you wouldn't believe me or understand if I told you.");
     ObjText_SetFontBorderColor(textobj, 255, 128, 128);
-    ObjPrim_SetTexture(rightportrait, pathReimu3);
     SetPortraitToForeground(rightportrait);
     SetPortraitToBackground(leftportrait);
+    EventWaitA1(15);
+
+    ObjText_SetText(textobj, "Your daughter said that too! What's going on?! I can probably help if you'd just tell me!");
+    ObjText_SetFontBorderColor(textobj, 255, 128, 192);
+    SetPortraitToForeground(leftportrait);
+    SetPortraitToBackground(rightportrait);
+    EventWaitA1(15);
+
+    ObjText_SetText(textobj, "...");
+    ObjText_SetFontBorderColor(textobj, 255, 128, 128);
+    SetPortraitToForeground(rightportrait);
+    SetPortraitToBackground(leftportrait);
+    EventWaitA1(15);
+
+    ObjText_SetText(textobj, "Very well. I'll tell you. First, however... I have to make sure you're strong enough to handle it.");
+    ObjText_SetFontBorderColor(textobj, 255, 128, 192);
+    SetPortraitToForeground(rightportrait);
+    SetPortraitToBackground(leftportrait);
+    EventWaitA1(15);
+
+    ObjText_SetText(textobj, "If you can't beat me, there's no way you'll be able to help with our problem.");
+    ObjText_SetFontBorderColor(textobj, 255, 128, 128);
+    SetPortraitToForeground(rightportrait);
+    SetPortraitToBackground(leftportrait);
+    EventWaitA1(15);
+
+    ObjText_SetText(textobj, "If you DO beat me, and manage to assist us with the problem, I'll happily send you home.");
+    ObjText_SetFontBorderColor(textobj, 255, 128, 128);
+    SetPortraitToForeground(rightportrait);
+    SetPortraitToBackground(leftportrait);
+    EventWaitA1(15);
+
+    ObjText_SetText(textobj, "...Saw this coming... Let's just get this over with.");
+    ObjText_SetFontBorderColor(textobj, 255, 128, 192);
+    SetPortraitToForeground(leftportrait);
+    SetPortraitToBackground(rightportrait);
     EventWaitA1(15);
     
     DestroyDialogueEvent(dialogueobj);

@@ -185,52 +185,86 @@ function StageEvent{
     SetForbidPlayerSpell(true);
     SetForbidPlayerShot(true);
     
-    let pathReisen1= GetCurrentScriptDirectory() ~ "./../lib/u3l32aimg/reisen1.png";
-    let pathReisen2= GetCurrentScriptDirectory() ~ "./../lib/u3l32aimg/reisen2.png";
-    let pathReisen3= GetCurrentScriptDirectory() ~ "./../lib/u3l32aimg/reisen3.png";
-    let pathReimu1= GetCurrentScriptDirectory() ~ "./../lib/u3l32aimg/reimu1.png";
-    let pathReimu2= GetCurrentScriptDirectory() ~ "./../lib/u3l32aimg/reimu2.png";
-    let pathReimu3= GetCurrentScriptDirectory() ~ "./../lib/u3l32aimg/reimu3.png";
+    let pathNigma= GetCurrentScriptDirectory() ~ "./../lib/NigmaAngry.png";
+    let pathVienna= GetCurrentScriptDirectory() ~ "./../lib/ViennaIdle.png";
     
-    ObjPrim_SetTexture(leftportrait, pathReisen1);
-    ObjPrim_SetTexture(rightportrait, pathReimu1);
+    ObjPrim_SetTexture(leftportrait, pathNigma);
+    ObjPrim_SetTexture(rightportrait, pathVienna);
     
-    ObjText_SetText(textobj, "Hey buddy");
+    ObjText_SetText(textobj, "Stop.");
     ObjText_SetFontBorderColor(textobj, 255, 128, 192);
-    SetPortraitToForeground(leftportrait);
-    SetPortraitToBackground(rightportrait);
+    SetPortraitToForeground(rightportrait);
+    SetPortraitToBackground(leftportrait);
     EventWaitA3(15);
     
-    ObjText_SetText(textobj, "Oh[r]The boony girl haha");
+    ObjText_SetText(textobj, "Lemme guess, you wanna kill me too?");
     ObjText_SetFontBorderColor(textobj, 255, 128, 128);
-    SetPortraitToForeground(rightportrait);
-    SetPortraitToBackground(leftportrait);
-    EventWaitA1(15);
-    
-    ObjText_SetText(textobj, "Ha yes it is me");
-    ObjText_SetFontBorderColor(textobj, 255, 128, 192);
-    ObjPrim_SetTexture(leftportrait, pathReisen2);
     SetPortraitToForeground(leftportrait);
     SetPortraitToBackground(rightportrait);
     EventWaitA1(15);
     
-    ObjText_SetText(textobj, "Very good");
-    ObjText_SetFontBorderColor(textobj, 255, 128, 128);
-    ObjPrim_SetTexture(rightportrait, pathReimu2);
+    ObjText_SetText(textobj, "After you've downed so many of us, it's only fair.");
+    ObjText_SetFontBorderColor(textobj, 255, 128, 192);
     SetPortraitToForeground(rightportrait);
     SetPortraitToBackground(leftportrait);
     EventWaitA1(15);
     
-    ObjText_SetText(textobj, "I'm gonna kick ur ass now");
-    ObjText_SetFontBorderColor(textobj, 255, 128, 192);
-    ObjPrim_SetTexture(leftportrait, pathReisen3);
+    ObjText_SetText(textobj, "Look, I just wanna get home, alright? We don't---");
+    ObjText_SetFontBorderColor(textobj, 255, 128, 128);
     SetPortraitToForeground(leftportrait);
     SetPortraitToBackground(rightportrait);
     EventWaitA1(15);
     
-    ObjText_SetText(textobj, "Well alright then");
+    ObjText_SetText(textobj, "By virtue of your kind even constructing the teleporter, we both knew conflict was inevitable.");
+    ObjText_SetFontBorderColor(textobj, 255, 128, 192);
+    SetPortraitToForeground(rightportrait);
+    SetPortraitToBackground(leftportrait);
+    EventWaitA1(15);
+    
+    ObjText_SetText(textobj, "Huh? I mean maybe yeah, but---");
     ObjText_SetFontBorderColor(textobj, 255, 128, 128);
-    ObjPrim_SetTexture(rightportrait, pathReimu3);
+    SetPortraitToForeground(leftportrait);
+    SetPortraitToBackground(rightportrait);
+    EventWaitA1(15);
+
+    ObjText_SetText(textobj, "Whether it was now or later, your kind has always wanted our extermination.");
+    ObjText_SetFontBorderColor(textobj, 255, 128, 192);
+    SetPortraitToForeground(rightportrait);
+    SetPortraitToBackground(leftportrait);
+    EventWaitA1(15);
+
+    ObjText_SetText(textobj, "Th-That's not it at all! You guys keep raiding us---");
+    ObjText_SetFontBorderColor(textobj, 255, 128, 128);
+    SetPortraitToForeground(leftportrait);
+    SetPortraitToBackground(rightportrait);
+    EventWaitA1(15);
+
+    ObjText_SetText(textobj, "And you wanted a permanent end to the problem. We know your kind well, human.");
+    ObjText_SetFontBorderColor(textobj, 255, 128, 192);
+    SetPortraitToForeground(rightportrait);
+    SetPortraitToBackground(leftportrait);
+    EventWaitA1(15);
+
+    ObjText_SetText(textobj, "...You're not gonna listen to anything I say, huh?");
+    ObjText_SetFontBorderColor(textobj, 255, 128, 192);
+    SetPortraitToForeground(leftportrait);
+    SetPortraitToBackground(rightportrait);
+    EventWaitA1(15);
+
+    ObjText_SetText(textobj, "You haven't said anything worth listening to, thus far.");
+    ObjText_SetFontBorderColor(textobj, 255, 128, 128);
+    SetPortraitToForeground(rightportrait);
+    SetPortraitToBackground(leftportrait);
+    EventWaitA1(15);
+
+    ObjText_SetText(textobj, "Then listen here: Get outta my way and let me go home, or I go through you.");
+    ObjText_SetFontBorderColor(textobj, 255, 128, 192);
+    SetPortraitToForeground(leftportrait);
+    SetPortraitToBackground(rightportrait);
+    EventWaitA1(15);
+
+    ObjText_SetText(textobj, "Your only way home is through my husband. Let me see if you're worth his time.");
+    ObjText_SetFontBorderColor(textobj, 255, 128, 128);
     SetPortraitToForeground(rightportrait);
     SetPortraitToBackground(leftportrait);
     EventWaitA1(15);

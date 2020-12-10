@@ -185,52 +185,74 @@ function StageEvent{
     SetForbidPlayerSpell(true);
     SetForbidPlayerShot(true);
     
-    let pathReisen1= GetCurrentScriptDirectory() ~ "./../lib/u3l32aimg/reisen1.png";
-    let pathReisen2= GetCurrentScriptDirectory() ~ "./../lib/u3l32aimg/reisen2.png";
-    let pathReisen3= GetCurrentScriptDirectory() ~ "./../lib/u3l32aimg/reisen3.png";
-    let pathReimu1= GetCurrentScriptDirectory() ~ "./../lib/u3l32aimg/reimu1.png";
-    let pathReimu2= GetCurrentScriptDirectory() ~ "./../lib/u3l32aimg/reimu2.png";
-    let pathReimu3= GetCurrentScriptDirectory() ~ "./../lib/u3l32aimg/reimu3.png";
+    let pathNigma= GetCurrentScriptDirectory() ~ "./../lib/u3l32aimg/NigmaAngry.png";
+    let pathMother= GetCurrentScriptDirectory() ~ "./../lib/u3l32aimg/Mother.png";
     
-    ObjPrim_SetTexture(leftportrait, pathReisen1);
-    ObjPrim_SetTexture(rightportrait, pathReimu1);
+    ObjPrim_SetTexture(leftportrait, pathNigma);
+    ObjPrim_SetTexture(rightportrait, pathMother);
     
-    ObjText_SetText(textobj, "Hey buddy");
+    ObjText_SetText(textobj, "There it is! The main core!");
     ObjText_SetFontBorderColor(textobj, 255, 128, 192);
     SetPortraitToForeground(leftportrait);
     SetPortraitToBackground(rightportrait);
     EventWaitA3(15);
     
-    ObjText_SetText(textobj, "Oh[r]The boony girl haha");
+    ObjText_SetText(textobj, "ANOMALY: SENTIENT NON-CROW DETECTED IN CORE CHAMBER.");
     ObjText_SetFontBorderColor(textobj, 255, 128, 128);
     SetPortraitToForeground(rightportrait);
     SetPortraitToBackground(leftportrait);
     EventWaitA1(15);
     
-    ObjText_SetText(textobj, "Ha yes it is me");
-    ObjText_SetFontBorderColor(textobj, 255, 128, 192);
-    ObjPrim_SetTexture(leftportrait, pathReisen2);
-    SetPortraitToForeground(leftportrait);
-    SetPortraitToBackground(rightportrait);
-    EventWaitA1(15);
-    
-    ObjText_SetText(textobj, "Very good");
+    ObjText_SetText(textobj, "WHAT BUSINESS DO YOU HAVE WITH THE MOTHER UNIT?");
     ObjText_SetFontBorderColor(textobj, 255, 128, 128);
-    ObjPrim_SetTexture(rightportrait, pathReimu2);
     SetPortraitToForeground(rightportrait);
     SetPortraitToBackground(leftportrait);
     EventWaitA1(15);
     
-    ObjText_SetText(textobj, "I'm gonna kick ur ass now");
-    ObjText_SetFontBorderColor(textobj, 255, 128, 192);
-    ObjPrim_SetTexture(leftportrait, pathReisen3);
+    ObjText_SetText(textobj, "I was told you're the whole reason the Crow keep stealing from us!");
+    ObjText_SetFontBorderColor(textobj, 255, 128, 128);
     SetPortraitToForeground(leftportrait);
     SetPortraitToBackground(rightportrait);
     EventWaitA1(15);
     
-    ObjText_SetText(textobj, "Well alright then");
+    ObjText_SetText(textobj, "I'm here to shut you down for good!");
+    ObjText_SetFontBorderColor(textobj, 255, 128, 192);
+    SetPortraitToForeground(leftportrait);
+    SetPortraitToBackground(rightportrait);
+    EventWaitA1(15);
+    
+    ObjText_SetText(textobj, "HOW NOBLE. IF NOT ENTIRELY FUTILE.");
     ObjText_SetFontBorderColor(textobj, 255, 128, 128);
-    ObjPrim_SetTexture(rightportrait, pathReimu3);
+    SetPortraitToForeground(rightportrait);
+    SetPortraitToBackground(leftportrait);
+    EventWaitA1(15);
+
+    ObjText_SetText(textobj, "I HAVE SUSTAINED MYSELF HERE FOR MILLENIA, FENDING OFF CROW ATTACKS ON A DAILY BASIS.");
+    ObjText_SetFontBorderColor(textobj, 255, 128, 128);
+    SetPortraitToForeground(rightportrait);
+    SetPortraitToBackground(leftportrait);
+    EventWaitA1(15);
+
+    ObjText_SetText(textobj, "AS YOU CAN SEE, I AM STILL HERE. A SINGLE HUMAN WILL FARE NO BETTER.");
+    ObjText_SetFontBorderColor(textobj, 255, 128, 128);
+    SetPortraitToForeground(rightportrait);
+    SetPortraitToBackground(leftportrait);
+    EventWaitA1(15);
+
+    ObjText_SetText(textobj, "Maybe not, but I've gotta try anyway! You're my ticket home!");
+    ObjText_SetFontBorderColor(textobj, 255, 128, 192);
+    SetPortraitToForeground(leftportrait);
+    SetPortraitToBackground(rightportrait);
+    EventWaitA1(15);
+
+    ObjText_SetText(textobj, "(Assuming Midas isn't lying anyway. Can't think about that now.)");
+    ObjText_SetFontBorderColor(textobj, 255, 128, 192);
+    SetPortraitToForeground(leftportrait);
+    SetPortraitToBackground(rightportrait);
+    EventWaitA1(15);
+
+    ObjText_SetText(textobj, "LOADING COMBAT PROTOCOLS. GOODBYE, SPECK. I WILL NOT REMEMBER YOU.");
+    ObjText_SetFontBorderColor(textobj, 255, 128, 128);
     SetPortraitToForeground(rightportrait);
     SetPortraitToBackground(leftportrait);
     EventWaitA1(15);
