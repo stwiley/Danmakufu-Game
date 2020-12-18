@@ -10,3 +10,7 @@ function wait(n){
 function rand_int(min, max){
     return truncate(rand(min, max+1));
 }
+
+function NoEnemy(){
+	while(length(GetAllEnemyID()) > 0){yield;}
+}

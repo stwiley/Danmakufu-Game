@@ -11,6 +11,7 @@
 let stagepart = 0;
 let bgm;
 let bgm2;
+let dir = GetCurrentScriptDirectory();
 
 @Event{
     alternative(GetEventType())
@@ -47,7 +48,6 @@ let bgm2;
     SetEndSceneScriptPath(GetCurrentScriptDirectory() ~ "./../system/Default_EndScene.txt");
     SetReplaySaveSceneScriptPath(GetCurrentScriptDirectory() ~ "./../system/Default_ReplaySaveScene.txt");
     TStage;
-    BossName;
 }
 
 @MainLoop{
@@ -55,8 +55,6 @@ let bgm2;
 }
 
 task TStage{
-    stagepart = 0;
-    let dir = GetCurrentScriptDirectory();
     let pathmidboss = dir ~ "LavPlural.dnh";
     let pathboss = dir ~ "KrikkaPlural.dnh";
     let midbossScript = LoadScriptInThread(pathmidboss);
@@ -77,8 +75,16 @@ task TStage{
     
     ObjSound_Play(bgm);
 
+    loop (8){
+		CreateStageEnemy1(12, 12, 2, 45);
+		wait(30);
+	}
+    
+    
+    NoEnemy();
 
     StartScript(midbossScript);
+    BossName();
     while(!IsCloseScript(midbossScript) && GetPlayerState() != STATE_END){
         yield;
     }
@@ -86,7 +92,7 @@ task TStage{
     loop(60){
         yield;
     }
-    
+        
     StageEvent();
     
     loop(120){yield;}
@@ -96,7 +102,6 @@ task TStage{
     BossName;
     ObjSound_Stop(bgm);
     ObjSound_Play(bgm2);
-    CreateStageEnemy1(-16, 128, 0.5, 0);
     
     while(!IsCloseScript(bossScript) && GetPlayerState() != STATE_END){
         yield;
@@ -204,13 +209,13 @@ function StageEvent{
     ObjPrim_SetTexture(leftportrait, pathNigma);
     ObjPrim_SetTexture(rightportrait, pathKrikka);
     
-    ObjText_SetText(textobj, "Another one? You gonna tell me where I am, or am I gonna hafta blast you too?");
+    ObjText_SetText(textobj, "Another one? You gonna tell me where I am, [r]or am I gonna hafta blast you too?");
     ObjText_SetFontBorderColor(textobj, 255, 128, 192);
     SetPortraitToForeground(leftportrait);
     SetPortraitToBackground(rightportrait);
     EventWaitA3(15);
     
-    ObjText_SetText(textobj, "Another one?! My name's Krikka, and you're in the Expanse.");
+    ObjText_SetText(textobj, "Another one?! [r]My name's Krikka, and you're in the Expanse.");
     ObjText_SetFontBorderColor(textobj, 255, 128, 128);
     SetPortraitToForeground(rightportrait);
     SetPortraitToBackground(leftportrait);
@@ -222,7 +227,7 @@ function StageEvent{
     SetPortraitToBackground(rightportrait);
     EventWaitA1(15);
     
-    ObjText_SetText(textobj, "Looks like it. Right now though, you're on my shit list. I saw what you did to Lavvy back there.");
+    ObjText_SetText(textobj, "Looks like it. Right now though, you're on my [r]shit list. I saw what you did to Lavvy back there.");
     ObjText_SetFontBorderColor(textobj, 255, 128, 128);
     SetPortraitToForeground(rightportrait);
     SetPortraitToBackground(leftportrait);
@@ -234,7 +239,7 @@ function StageEvent{
     SetPortraitToBackground(rightportrait);
     EventWaitA1(15);
     
-    ObjText_SetText(textobj, "Do I look like I care, fleshling? You beat up my friend, so now I gotta return the favor.");
+    ObjText_SetText(textobj, "Do I look like I care, fleshling? You beat up my friend, [r]so now I gotta return the favor.");
     ObjText_SetFontBorderColor(textobj, 255, 128, 128);
     SetPortraitToForeground(rightportrait);
     SetPortraitToBackground(leftportrait);

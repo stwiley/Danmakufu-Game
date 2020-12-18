@@ -65,6 +65,7 @@ task MainTask{
 
 task feast{
 	while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){
+        wait(120);
 		let angleT = 0;
 		loop(30){
 			ascent(i in 0..36){
@@ -74,7 +75,6 @@ task feast{
 			}
 			angleT += 360/30;
 		}
-		wait(120);
 	}
 }
 

@@ -1,3 +1,5 @@
+#include "../system/Default_ShotConst.txt"
+
 task CreateStageEnemy1(x, y, speedE, angleE){
     let count =0;
     let Xmin= -32;
@@ -38,24 +40,17 @@ task CreateStageEnemy1(x, y, speedE, angleE){
     
     task bulletA{
         while(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) > 0){
-            CreateShotA1(ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), 3, GetAngleToPlayer(objEnemy), 5, 10);
-            wait(30);
+            CreateShotA1(ObjMove_GetX(objEnemy), ObjMove_GetY(objEnemy), 3, GetAngleToPlayer(objEnemy), 5, 0.5);
+            wait(10);
         }
     }
     
     task TDrawLoop(obj){
-        let BossImage = GetCurrentScriptDirectory() ~ "./u2l13spritesheet.png"; //assumes that image is in same directory
-        let animframe = 0;
+        let BossImage = GetCurrentScriptDirectory() ~ "./Enemy.png"; //assumes that image is in same directory
         ObjPrim_SetTexture(obj, BossImage);
         ObjRender_SetScaleXYZ(obj, 1, 1, 1);
         ObjSprite2D_SetSourceRect(obj, 0, 0, 64, 64);
         ObjSprite2D_SetDestCenter(obj);
-        while(!Obj_IsDeleted(obj)){
-            ObjSprite2D_SetSourceRect(obj, 0 + 64*floor(animframe/8), 0, 64 + 64*floor(animframe/8), 64);
-            animframe++;
-            if(animframe >= 32){animframe = 0;}//reset if too high
-            yield;
-        }
     }
     
     task TFinalize{
