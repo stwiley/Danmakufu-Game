@@ -60,6 +60,7 @@ task TFinalize{
 task MainTask{
     wait(120);
     sideShots;
+    MShot;
 }
 
 task sideShots{
@@ -70,6 +71,10 @@ task sideShots{
         let CrowShot2 = CreateShotA1(GetStgFrameWidth()-10, shotArray2[rand_int(0, 7)], 2, 180, 174, 5);
         wait(rand(0, 10));
     }
+}
+
+task MShot{
+    yield;
 }
 
 task TDrawLoop{

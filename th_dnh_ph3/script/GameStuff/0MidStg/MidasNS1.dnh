@@ -65,12 +65,12 @@ task MainTask{
 task figureEight{
     let angleT =0;
     while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){
-        loop(60){
-            CreateShotA2(ObjMove_GetX(objBoss) + 120*sin(angleT), ObjMove_GetY(objBoss) + 120*sin(angleT)*cos(angleT), 0, GetAngleToPlayer(objBoss), 0.02, 5, 17, 10);
-            angleT += 360/60;
+        loop(30){
+            CreateShotA2(ObjMove_GetX(objBoss) + 160*sin(angleT), ObjMove_GetY(objBoss) + 160*sin(angleT)*cos(angleT), 0.5, GetAngleToPlayer(objBoss), 0.03, 3, 17, 5);
+            angleT += 360/30;
             yield;
         }
-        wait(60);
+        wait(30);
     }
 }
 
