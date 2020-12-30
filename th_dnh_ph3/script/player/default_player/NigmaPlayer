@@ -65,10 +65,10 @@ let count =0;
 }
 
 task DrawPlayer{
-	let path = csd ~"a.png";
+	let path = csd ~"NigmaSprite.png";
 	ObjPrim_SetTexture(objPlayer, path);
-	ObjRender_SetScaleXYZ(objPlayer, 0.8, 0.8, 0.8);
-	ObjSprite2D_SetSourceRect(objPlayer, 0, 0, 64, 64);
+	ObjRender_SetScaleXYZ(objPlayer, 1, 1, 1);
+	ObjSprite2D_SetSourceRect(objPlayer, 0, 0, 32, 48);
 	ObjSprite2D_SetDestCenter(objPlayer);
 	loop{
 		if(GetVirtualKeyState(VK_LEFT) == KEY_PUSH || GetVirtualKeyState(VK_LEFT) == KEY_HOLD){
