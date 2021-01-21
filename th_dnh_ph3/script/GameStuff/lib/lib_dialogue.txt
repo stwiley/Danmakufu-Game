@@ -9,15 +9,15 @@ function CreateDialogueEvent{
     ObjRender_SetX(objImgLeft, GetStgFrameLeft()+GetStgFrameWidth()/2-100);
     ObjRender_SetY(objImgLeft, 288);
     
-    let imgpathR = GetCurrentScriptDirectory()~"./TalonIdle.png";
+    let imgpathR = GetCurrentScriptDirectory()~"./newtalidle.png";
     let objImgRight= ObjPrim_Create(OBJ_SPRITE_2D);
-    Obj_SetRenderPriority(objImgRight, 81);
+    Obj_SetRenderPriority(objImgRight, 3);
     ObjPrim_SetTexture(objImgRight, imgpathR);
-    ObjSprite2D_SetSourceRect(objImgRight, 0, 0, 702, 1670);
+    ObjSprite2D_SetSourceRect(objImgRight, 0, 0, 512, 1023);
     ObjSprite2D_SetDestCenter(objImgRight);
-    ObjRender_SetScaleXYZ(objImgRight, 0.3, 0.3, 0.3);
-    ObjRender_SetX(objImgRight, GetStgFrameLeft()+GetStgFrameWidth()/2+100);
-    ObjRender_SetY(objImgRight, 288);
+    ObjRender_SetScaleXYZ(objImgRight, 0.4, 0.4, 0.4);
+    ObjRender_SetX(objImgRight, GetStgFrameLeft()+GetStgFrameWidth()/2+89);
+    ObjRender_SetY(objImgRight, 260);
     
     let TEXTBOX_BUFFER = 16;
     let TEXTBOX_WIDTH = GetStgFrameWidth() - TEXTBOX_BUFFER*2;

@@ -14,8 +14,6 @@
     SetEndSceneScriptPath(GetCurrentScriptDirectory() ~ "./../system/Default_EndScene.txt");
     SetReplaySaveSceneScriptPath(GetCurrentScriptDirectory() ~ "./../system/Default_ReplaySaveScene.txt");
     TPlural;
-    CreateTrack();
-    BossName;
 }
 
 @MainLoop{

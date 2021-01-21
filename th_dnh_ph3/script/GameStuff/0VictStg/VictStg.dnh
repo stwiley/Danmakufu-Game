@@ -186,10 +186,10 @@ function StageEvent{
     SetForbidPlayerShot(true);
     
     let pathNigma= GetCurrentScriptDirectory() ~ "./../lib/NigmaAngry.png";
-    let pathTori= GetCurrentScriptDirectory() ~ "./../lib/ToriIdle.png";
+    let pathTori= GetCurrentScriptDirectory() ~ "./../lib/newvicrough.png";
 
-    ObjPrim_SetTexture(leftportrait, pathReisen1);
-    ObjPrim_SetTexture(rightportrait, pathReimu1);
+    ObjPrim_SetTexture(leftportrait, pathNigma);
+    ObjPrim_SetTexture(rightportrait, pathTori);
     
     ObjText_SetText(textobj, "Excuse me, are you the fleshling that's been gallavanting around?");
     ObjText_SetFontBorderColor(textobj, 255, 128, 192);

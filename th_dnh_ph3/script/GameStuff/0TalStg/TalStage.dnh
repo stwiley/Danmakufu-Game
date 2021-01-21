@@ -185,7 +185,7 @@ function StageEvent{
     SetForbidPlayerSpell(true);
     SetForbidPlayerShot(true);
     
-    let pathReisen1= GetCurrentScriptDirectory() ~ "./../lib/TalonIdle.png";
+    let pathReisen1= GetCurrentScriptDirectory() ~ "./../lib/newtalidle.png";
     let pathNigma1= GetCurrentScriptDirectory() ~ "./../lib/NewNigmaIdle.png";
     let pathNigma2= GetCurrentScriptDirectory() ~ "./../lib/NigmaAngry.png";
     

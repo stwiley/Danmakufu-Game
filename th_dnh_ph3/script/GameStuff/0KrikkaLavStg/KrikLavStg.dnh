@@ -207,7 +207,7 @@ function StageEvent{
     SetForbidPlayerSpell(true);
     SetForbidPlayerShot(true);
     
-    let pathKrikka= GetCurrentScriptDirectory() ~ "./../lib/KrikkaIdle.png";
+    let pathKrikka= GetCurrentScriptDirectory() ~ "./../lib/newkrikkarough.png";
     let pathNigma= GetCurrentScriptDirectory() ~ "./../lib/NigmaAngry.png";
     
     ObjPrim_SetTexture(leftportrait, pathNigma);

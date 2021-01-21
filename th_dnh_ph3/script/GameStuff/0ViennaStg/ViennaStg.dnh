@@ -186,7 +186,7 @@ function StageEvent{
     SetForbidPlayerShot(true);
     
     let pathNigma= GetCurrentScriptDirectory() ~ "./../lib/NigmaAngry.png";
-    let pathVienna= GetCurrentScriptDirectory() ~ "./../lib/ViennaIdle.png";
+    let pathVienna= GetCurrentScriptDirectory() ~ "./../lib/newviennarough.png";
     
     ObjPrim_SetTexture(leftportrait, pathNigma);
     ObjPrim_SetTexture(rightportrait, pathVienna);

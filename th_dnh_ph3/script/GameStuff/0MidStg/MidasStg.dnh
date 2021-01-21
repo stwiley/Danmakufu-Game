@@ -185,8 +185,8 @@ function StageEvent{
     SetForbidPlayerSpell(true);
     SetForbidPlayerShot(true);
     
-    let pathNigma= GetCurrentScriptDirectory() ~ "./../lib/u3l32aimg/NigmaAngry.png";
-    let pathMidas= GetCurrentScriptDirectory() ~ "./../lib/u3l32aimg/MidasIdle.png";
+    let pathNigma= GetCurrentScriptDirectory() ~ "./../lib/NigmaAngry.png";
+    let pathMidas= GetCurrentScriptDirectory() ~ "./../lib/newmidasrough.png";
     
     ObjPrim_SetTexture(leftportrait, pathNigma);
     ObjPrim_SetTexture(rightportrait, pathMidas);
