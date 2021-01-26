@@ -3,7 +3,7 @@
 #Title["Krikka Plural"]
 #Text["Code by Cyvo[r]A script to hold Krikka singles"]
 #include "./../lib/lib_general.dnh"
-#Background["./../../tutorial/system/Default_Background_IceMountain.txt"]
+#Background["./../system/Background_Junk.txt"]
 #System["./../../tutorial/system/Default_System.txt"]
 
 @Event{

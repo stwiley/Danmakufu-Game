@@ -4,7 +4,7 @@
 #Text["Code by Cyvo[r]Krikka Non-Spell 1"]
 #include "script/default_system/Default_ShotConst.txt"
 #include "./../lib/lib_general.dnh"
-#Background["./../../tutorial/system/Default_Background_IceMountain.txt"]
+#Background["./../system/Background_Junk.txt"]
 #System["./../../tutorial/system/Default_System.txt"]
 
 
