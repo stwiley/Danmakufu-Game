@@ -186,15 +186,13 @@ function StageEvent{
     SetForbidPlayerShot(true);
     
     let pathReisen1= GetCurrentScriptDirectory() ~ "./../lib/newtalidle.png";
-    let pathNigma1= GetCurrentScriptDirectory() ~ "./../lib/NewNigmaIdle.png";
-    let pathNigma2= GetCurrentScriptDirectory() ~ "./../lib/NigmaAngry.png";
+    let pathNigma1= GetCurrentScriptDirectory() ~ "./../lib/newnigmarough.png";
     
     ObjPrim_SetTexture(leftportrait, pathNigma1);
     ObjPrim_SetTexture(rightportrait, pathReisen1);
     
     ObjText_SetText(textobj, "Hey you! Put down the teleporter!");
     ObjText_SetFontBorderColor(textobj, 255, 128, 192);
-    ObjPrim_SetTexture(leftportrait, pathNigma2);
     SetPortraitToForeground(leftportrait);
     SetPortraitToBackground(rightportrait);
     EventWaitA3(15);

@@ -1,23 +1,23 @@
 function CreateDialogueEvent{
-    let imgpathL = GetCurrentScriptDirectory()~"./NewNigmaIdle.png";
+    let imgpathL = GetCurrentScriptDirectory()~"./newnigmarough.png";
     let objImgLeft= ObjPrim_Create(OBJ_SPRITE_2D);
     Obj_SetRenderPriority(objImgLeft, 81);
     ObjPrim_SetTexture(objImgLeft, imgpathL);
-    ObjSprite2D_SetSourceRect(objImgLeft, 0, 0, 343, 936);
+    ObjSprite2D_SetSourceRect(objImgLeft, 0, 0, 511, 1023);
     ObjSprite2D_SetDestCenter(objImgLeft);
-    ObjRender_SetScaleXYZ(objImgLeft, 0.45, 0.45, 0.45);
-    ObjRender_SetX(objImgLeft, GetStgFrameLeft()+GetStgFrameWidth()/2-100);
-    ObjRender_SetY(objImgLeft, 288);
+    ObjRender_SetScaleXYZ(objImgLeft, 0.38, 0.38, 0.38);
+    ObjRender_SetX(objImgLeft, GetStgFrameLeft()+GetStgFrameWidth()/2-95);
+    ObjRender_SetY(objImgLeft, 270);
     
     let imgpathR = GetCurrentScriptDirectory()~"./newtalidle.png";
     let objImgRight= ObjPrim_Create(OBJ_SPRITE_2D);
     Obj_SetRenderPriority(objImgRight, 3);
     ObjPrim_SetTexture(objImgRight, imgpathR);
-    ObjSprite2D_SetSourceRect(objImgRight, 0, 0, 512, 1023);
+    ObjSprite2D_SetSourceRect(objImgRight, 0, 0, 511, 1023);
     ObjSprite2D_SetDestCenter(objImgRight);
-    ObjRender_SetScaleXYZ(objImgRight, 0.4, 0.4, 0.4);
-    ObjRender_SetX(objImgRight, GetStgFrameLeft()+GetStgFrameWidth()/2+89);
-    ObjRender_SetY(objImgRight, 260);
+    ObjRender_SetScaleXYZ(objImgRight, 0.38, 0.38, 0.38);
+    ObjRender_SetX(objImgRight, GetStgFrameLeft()+GetStgFrameWidth()/2+95);
+    ObjRender_SetY(objImgRight, 270);
     
     let TEXTBOX_BUFFER = 16;
     let TEXTBOX_WIDTH = GetStgFrameWidth() - TEXTBOX_BUFFER*2;
