@@ -58,10 +58,26 @@ task CreateStageEnemy1(x, y, speedE, angleE){
             if(animframe >= 32){animframe=0;}
             yield;
         }
+        if(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) <= 0){
+
+        }
     }
     
     task TFinalize{
         while(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) > 0){yield;}
-        Obj_Delete(objEnemy);
+        let Explode = GetCurrentScriptDirectory() ~ "./Explosions/blood_explosion_64x64px.png";
+        let animframe = 0;
+        if(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) <= 0){
+        	ObjPrim_SetTexture(objEnemy, Explode);
+        	ObjSprite2D_SetSourceRect(objEnemy, 0, 0, 64, 64);
+        	ObjSprite2D_SetDestCenter(objEnemy);
+        	ObjMove_SetSpeed(objEnemy, 0);
+        	loop(46){
+        		ObjSprite2D_SetSourceRect(objEnemy, 0+64*floor(animframe), 0, 64 + 64*floor(animframe), 64);
+        		animframe++;
+        		yield;
+        	}
+        	Obj_Delete(objEnemy);
+        }
     }
 }
