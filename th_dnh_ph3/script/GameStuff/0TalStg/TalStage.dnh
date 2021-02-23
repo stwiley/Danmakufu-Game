@@ -4,7 +4,7 @@
 #Text["Code by Cyvo[r]A script to hold experiments with stages"]
 #include "./../lib/lib_general.dnh"
 #include"./../lib/lib_dialogue.txt"
-#include "./../stgenemy/StageEnemy1.txt"
+#include "./../stgenemy/Droneenemy.dnh"
 #Background["./../system/Background_Lab.txt"]
 #System["./../system/Default_System.txt"]
 
@@ -83,7 +83,7 @@ task TStage{
     loop(120){yield;}
     
     StartScript(idscript);
-    CreateStageEnemy1(-16, 128, 0.5, 0);
+    CreateDroneEnemy(-16, 128, 0.5, 0);
     
     while(!IsCloseScript(idscript) && GetPlayerState() != STATE_END){
         yield;
