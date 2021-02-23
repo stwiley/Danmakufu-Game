@@ -63,7 +63,7 @@ task TStage{
     SetForbidPlayerSpell(true);
     SetForbidPlayerShot(true);
     SetPlayerSpeed(0,0);
-    SetStageDifficulty();
+    //SetStageDifficulty();
     
     bgm2 = ObjSound_Create();
     ObjSound_Load(bgm2, dir ~ "./../img/metacrys.ogg");
@@ -134,7 +134,7 @@ function StageBGM(obj, ID){
     return obj;
 }
 
-function SetStageDifficulty{
+/*function SetStageDifficulty{
     let selection =0;
     let sdiff = 0;
     let TextObjects = [];
@@ -196,7 +196,7 @@ function DrawSubMenuText(string){
     ObjText_SetFontType(objMText, "Helvetica");
     
     return objMText;
-}
+}*/
 
 function StageEvent{
     let dialogueobj = CreateDialogueEvent();

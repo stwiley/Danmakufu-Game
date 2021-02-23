@@ -42,7 +42,7 @@ task CreateDroneEnemy(x, y, speedE, angleE){
         while(ObjEnemy_GetInfo(objEnemy, INFO_LIFE) > 0){
             CreateShotA1(ObjMove_GetX(objEnemy)+10, ObjMove_GetY(objEnemy)+10, 3, 45, 5, 0.5);
             CreateShotA1(ObjMove_GetX(objEnemy)-10, ObjMove_GetY(objEnemy)+10, 3, 135, 5, 0.5);
-            wait(10);
+            wait(30);
         }
     }
     

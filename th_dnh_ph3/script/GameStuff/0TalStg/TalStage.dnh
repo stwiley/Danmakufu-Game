@@ -59,10 +59,10 @@ task TStage{
     let path = dir ~ "PluralTut.dnh";
     let idscript = LoadScriptInThread(path);
     
-    SetForbidPlayerSpell(true);
-    SetForbidPlayerShot(true);
-    SetPlayerSpeed(0,0);
-    SetStageDifficulty();
+    //SetForbidPlayerSpell(true);
+    //SetForbidPlayerShot(true);
+    //SetPlayerSpeed(0,0);
+    //SetStageDifficulty();
     
     bgm2 = ObjSound_Create();
     ObjSound_Load(bgm2, dir ~ "./../img/metacrys.ogg");
@@ -77,13 +77,19 @@ task TStage{
     loop(60){
         yield;
     }
+
+    loop(24){
+        CreateDroneEnemy(rand(10, GetStgFrameWidth()-10), 0, 2, 90);
+        wait(30);
+    }
+
+    NoEnemy();
     
     StageEvent();
     
     loop(120){yield;}
     
     StartScript(idscript);
-    CreateDroneEnemy(-16, 128, 0.5, 0);
     
     while(!IsCloseScript(idscript) && GetPlayerState() != STATE_END){
         yield;
@@ -112,7 +118,7 @@ function StageBGM(obj, ID){
     return obj;
 }
 
-function SetStageDifficulty{
+/*function SetStageDifficulty{
     let selection =0;
     let sdiff = 0;
     let TextObjects = [];
@@ -165,16 +171,16 @@ function SetStageDifficulty{
     }
     wait(60);
     SetForbidPlayerShot(false);
-}
+}*/
 
-function DrawSubMenuText(string){
+/*function DrawSubMenuText(string){
     let objMText = ObjText_Create();
     ObjText_SetText(objMText, string);
     ObjText_SetFontSize(objMText, 16);
     ObjText_SetFontType(objMText, "Helvetica");
     
     return objMText;
-}
+}*/
 
 function StageEvent{
     let dialogueobj = CreateDialogueEvent();
