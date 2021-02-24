@@ -5,8 +5,8 @@
 #include "./../lib/lib_general.dnh"
 #include"./../lib/lib_dialogue.txt"
 #include "./../stgenemy/StageEnemy1.txt"
-#Background["./../../tutorial/system/Default_Background_IceMountain.txt"]
-#System["./../../tutorial/system/Default_System.txt"]
+#Background["./../system/Background_City.txt"]
+#System["./../system/Default_System.txt"]
 
 let stagepart = 0;
 let bgm;
