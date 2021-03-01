@@ -60,17 +60,25 @@ task TFinalize{
 task MainTask{
     wait(120);
 	whip;
+    movement;
 }
 
 task whip{
 	while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){
 		let angleT = 0;
 		loop(10){
-			CreateShotA2(ObjMove_GetX(GetPlayerObjectID()) + 50*cos(angleT), ObjMove_GetY(GetPlayerObjectID()) + 50*sin(angleT), 0, angleT+180, 0.01, 2, 145, 10);
+			CreateShotA2(ObjMove_GetX(GetPlayerObjectID()) + 90*cos(angleT), ObjMove_GetY(GetPlayerObjectID()) + 90*sin(angleT), 0, angleT+180, 0.01, 4, 145, 10);
 			angleT += 360/10;
 		}
-		wait(120);
+		wait(100);
 	}
+}
+
+task movement{
+    while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) > 0){
+        ObjMove_SetDestAtFrame(objBoss, rand(GetCenterX()+120, GetCenterX()-120), rand(GetCenterY()+120, GetCenterY()-120), 60);
+        wait(120);
+    }
 }
 
 task TDrawLoop{

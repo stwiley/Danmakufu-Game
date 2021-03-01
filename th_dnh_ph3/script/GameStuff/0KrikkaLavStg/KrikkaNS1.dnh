@@ -65,9 +65,9 @@ task MainTask{
 
 task RadialShot{
     while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){
-        let angleT=0;
+        let angleT=rand(0, 360);
         loop(60){
-            CreateShotA1(ObjMove_GetX(objBoss) + 90*cos(angleT), ObjMove_GetY(objBoss) + 50*sin(angleT), 2, angleT, 1, 0);
+            CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 2, angleT, 33, 0);
             angleT += 360/60;
         }
         wait(30);
@@ -75,10 +75,12 @@ task RadialShot{
 }
 task TargetFire{
     while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){
-        ascent(i in 0..3){
-            CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 2.5-i/3, GetAngleToPlayer(objBoss), 74, 0);
+        ascent(i in 0..4){
+            CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 3.5-i/4, GetAngleToPlayer(objBoss), 137, 0);
+            CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 3.5-i/4, GetAngleToPlayer(objBoss)+10, 137, 0);
+            CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 3.5-i/4, GetAngleToPlayer(objBoss)-10, 137, 0);
         }
-        wait(60);
+        wait(120);
     }
 }
 
