@@ -4,8 +4,8 @@
 #Text["Code by Cyvo[r]Midas Spell 4"]
 #include "script/default_system/Default_ShotConst.txt"
 #include "./../lib/lib_general.dnh"
-#Background["./../../tutorial/system/Default_Background_IceMountain.txt"]
-#System["./../../tutorial/system/Default_System.txt"]
+#Background["./../system/Default_Background_IceMountain.txt"]
+#System["./../system/Default_System.txt"]
 
 
 let objBoss;
@@ -29,12 +29,12 @@ let objScene= GetEnemyBossSceneObjectID();
 @Initialize{
     objBoss= ObjEnemy_Create(OBJ_ENEMY_BOSS);
     ObjEnemy_Regist(objBoss);
-    ObjMove_SetDestAtFrame(objBoss, GetCenterX(), GetStgFrameWidth()/2, GetStgFrameHeight()/2);
+    ObjMove_SetDestAtFrame(objBoss, GetCenterX(), GetCenterY(), 60);
     SetPauseScriptPath(GetCurrentScriptDirectory() ~ "./../system/Default_Pause.txt");
     SetEndSceneScriptPath(GetCurrentScriptDirectory() ~ "./../system/Default_EndScene.txt");
     SetReplaySaveSceneScriptPath(GetCurrentScriptDirectory() ~ "./../system/Default_ReplaySaveScene.txt");
     
-    //ObjEnemyBossScene_StartSpell(objScene);
+    ObjEnemyBossScene_StartSpell(objScene);
     
     TDrawLoop;
     TFinalize;
@@ -58,37 +58,16 @@ task TFinalize{
 }
 
 task MainTask{
-    wait(240);
-    shotAbsorb;
-    wait(360);
+    wait(120);
     midasLaser;
-}
-
-task shotAbsorb{
-    let timer =60;
-    while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){
-        while(timer >0){
-            let angleT = rand(0, 360);
-            loop(20){
-                let absShot1 = CreateShotA1(ObjMove_GetX(objBoss)+100*cos(angleT), ObjMove_GetY(objBoss)+100*sin(angleT), 1, angleT+180, 2, 0);
-                angleT += 360/20;
-            }
-            DeleteShotInCircle(TYPE_CHILD, TYPE_FADE, ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 5);
-            timer -=1;
-            wait(5);
-        }
-        while(timer <60){
-            timer += 1;
-            yield;
-        }
-        DeleteShotAll(TYPE_CHILD, TYPE_FADE);
-    }
+    spinny;
 }
 
 task midasLaser{
     while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){
         let angleT = rand(0, 360);
         let angleT2 = rand(0, 360);
+        let angleT3 = rand(0, 360);
         loop(10){
             let las = CreateStraightLaserA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss)+6, angleT, 420, 60, 30, 153, 30);
             angleT += 360/10;
@@ -96,12 +75,30 @@ task midasLaser{
         }
         wait(30);
         loop(20){
-            let las2 = CreateStraightLaserA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss)+6, angleT2, 420, 60, 30, 154, 30);
+            let las2 = CreateStraightLaserA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss)+6, angleT2, 420, 30, 30, 160, 30);
             angleT2 += 360/20;
             yield;
         }
-        wait(240);
+        wait(30);
+        loop(30){
+            let las2 = CreateStraightLaserA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss)+6, angleT3, 420, 15, 30, 161, 30);
+            angleT3 += 360/30;
+            yield;
+        }
+        wait(120);
     }
+}
+
+task spinny{
+
+	let angleT = 0;
+	loop{
+		let spinShot = CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 2, angleT, 17, 5);
+		angleT += 10;
+		yield;
+	}
+	wait(10);
+
 }
 
 task TDrawLoop{
