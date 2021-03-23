@@ -5,7 +5,7 @@
 #include "script/default_system/Default_ShotConst.txt"
 #include "./../lib/lib_general.dnh"
 #Background["./../system/Background_Junk.txt"]
-#System["./../../tutorial/system/Default_System.txt"]
+#System["./../system/Default_System.txt"]
 
 
 let objBoss;

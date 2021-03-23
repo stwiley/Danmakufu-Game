@@ -60,10 +60,10 @@ task TStage{
     let midbossScript = LoadScriptInThread(pathmidboss);
     let bossScript = LoadScriptInThread(pathboss);
     
-    SetForbidPlayerSpell(true);
+    /*SetForbidPlayerSpell(true);
     SetForbidPlayerShot(true);
     SetPlayerSpeed(0,0);
-    //SetStageDifficulty();
+    SetStageDifficulty();*/
     
     bgm2 = ObjSound_Create();
     ObjSound_Load(bgm2, dir ~ "./../img/metacrys.ogg");

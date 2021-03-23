@@ -4,8 +4,8 @@
 #Text["Code by Cyvo[r]Vienna Spell 3"]
 #include "script/default_system/Default_ShotConst.txt"
 #include "./../lib/lib_general.dnh"
-#Background["./../../tutorial/system/Default_Background_IceMountain.txt"]
-#System["./../../tutorial/system/Default_System.txt"]
+#Background["./../system/Default_Background_IceMountain.txt"]
+#System["./../system/Default_System.txt"]
 
 
 let objBoss;

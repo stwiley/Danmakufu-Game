@@ -3,8 +3,8 @@
 #Title["Victoria Plural"]
 #Text["Code by Cyvo[r]A script to hold Victoria singles"]
 #include "./../lib/lib_general.dnh"
-#Background["./../../tutorial/system/Default_Background_IceMountain.txt"]
-#System["./../../tutorial/system/Default_System.txt"]
+#Background["./../system/Default_Background_IceMountain.txt"]
+#System["./../system/Default_System.txt"]
 
 @Event{
 }

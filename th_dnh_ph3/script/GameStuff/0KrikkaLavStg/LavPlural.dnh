@@ -4,7 +4,7 @@
 #Text["Code by Cyvo[r]A script to hold Lavarus singles"]
 #include "./../lib/lib_general.dnh"
 #Background["./../system/Background_Junk.txt"]
-#System["./../../tutorial/system/Default_System.txt"]
+#System["./../system/Default_System.txt"]
 
 @Event{
 }
