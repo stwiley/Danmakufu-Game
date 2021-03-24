@@ -23,6 +23,9 @@
 task TPlural{
     let dir = GetCurrentScriptDirectory();
     let obj = ObjEnemyBossScene_Create();
+    let objKrikName = ObjPrim_Create(OBJ_SPRITE_2D);
+    let imgpath1 = GetCurrentScriptDirectory() ~ "./../system/img/krikkaname.png";
+
     ObjEnemyBossScene_Add(obj, 0 ,dir ~ "./KrikkaNS1.dnh");
     ObjEnemyBossScene_Add(obj, 1 ,dir ~ "./KrikkaNS2.dnh");
     ObjEnemyBossScene_Add(obj, 2 ,dir ~ "./KrikkaNS3.dnh");
@@ -33,8 +36,14 @@ task TPlural{
     ObjEnemyBossScene_LoadInThread(obj);
     ObjEnemyBossScene_Regist(obj);
     while(!Obj_IsDeleted(obj)){
+        ObjPrim_SetTexture(objKrikName, imgpath1);
+        ObjSprite2D_SetSourceRect(objKrikName, 0, 0, 200, 74);
+        ObjSprite2D_SetDestCenter(objKrikName);
+        ObjRender_SetPosition(objKrikName, 50, 40, 1);
+        ObjRender_SetScaleXYZ(objKrikName, 0.5, 0.5, 0.5);
         yield;
     }
+    Obj_Delete(objKrikName);
     CloseScript(GetOwnScriptID());
 }
 

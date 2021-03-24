@@ -112,14 +112,14 @@ task PlayerShot{
 }
 
 task CreateOption(dir){
-	let path = csd ~"dot.png";
+	let path = csd ~"option.png";
 	let unfocdist = 64; //Unfocused player distance
 	let focdist= 32; //Focus distance
 	let transitionfr =15; //Transition frames
 	let currdist = unfocdist;
 	let objOption = ObjPrim_Create(OBJ_SPRITE_2D);
 	ObjPrim_SetTexture(objOption, path);
-	ObjSprite2D_SetSourceRect(objOption, 0, 0, 15, 15);
+	ObjSprite2D_SetSourceRect(objOption, 0, 0, 16, 16);
 	ObjSprite2D_SetDestCenter(objOption);
 
 	loop{

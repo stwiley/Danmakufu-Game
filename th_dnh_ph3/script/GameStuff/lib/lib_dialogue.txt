@@ -9,7 +9,7 @@ function CreateDialogueEvent{
     ObjRender_SetX(objImgLeft, GetStgFrameLeft()+GetStgFrameWidth()/2-95);
     ObjRender_SetY(objImgLeft, 270);
     
-    let imgpathR = GetCurrentScriptDirectory()~"./newtalidle.png";
+    let imgpathR = GetCurrentScriptDirectory()~"./placeholderdial.png";
     let objImgRight= ObjPrim_Create(OBJ_SPRITE_2D);
     Obj_SetRenderPriority(objImgRight, 3);
     ObjPrim_SetTexture(objImgRight, imgpathR);
