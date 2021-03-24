@@ -23,14 +23,23 @@
 task TPlural{
     let dir = GetCurrentScriptDirectory();
     let obj = ObjEnemyBossScene_Create();
+    let objLavName = ObjPrim_Create(OBJ_SPRITE_2D);
+    let imgpath1 = GetCurrentScriptDirectory() ~ "./../system/img/lavname.png";
+
     ObjEnemyBossScene_Add(obj, 0 ,dir ~ "./LavNS1.dnh");
     ObjEnemyBossScene_Add(obj, 1 ,dir ~ "./LavNS2.dnh");
     
     ObjEnemyBossScene_LoadInThread(obj);
     ObjEnemyBossScene_Regist(obj);
     while(!Obj_IsDeleted(obj)){
+        ObjPrim_SetTexture(objLavName, imgpath1);
+        ObjSprite2D_SetSourceRect(objLavName, 0, 0, 200, 74);
+        ObjSprite2D_SetDestCenter(objLavName);
+        ObjRender_SetPosition(objLavName, 75, 40, 1);
+        ObjRender_SetScaleXYZ(objLavName, 0.7, 0.7, 0.7);
         yield;
     }
+    Obj_Delete(objLavName);
     CloseScript(GetOwnScriptID());
 }
 

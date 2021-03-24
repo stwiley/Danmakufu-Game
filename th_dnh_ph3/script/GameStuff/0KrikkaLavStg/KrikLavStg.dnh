@@ -84,7 +84,6 @@ task TStage{
     NoEnemy();
 
     StartScript(midbossScript);
-    BossName();
     while(!IsCloseScript(midbossScript) && GetPlayerState() != STATE_END){
         yield;
     }
@@ -103,7 +102,6 @@ task TStage{
     
     StartScript(bossScript);
     stagepart = 1;
-    BossName;
     ObjSound_Stop(bgm);
     ObjSound_Play(bgm2);
     
@@ -258,22 +256,4 @@ function StageEvent{
     DestroyDialogueEvent(dialogueobj);
     SetForbidPlayerSpell(false);
     SetForbidPlayerShot(false);
-}
-
-task BossName{
-    let objText1 = ObjText_Create();
-    let objText2 = ObjText_Create();
-	ObjText_SetFontSize(objText1, 16);
-    ObjText_SetFontSize(objText2, 16);
-	ObjText_SetMaxWidth(objText1, 100);
-    ObjText_SetMaxWidth(objText2, 100);
-	ObjRender_SetY(objText1,15);
-    ObjRender_SetY(objText2,15);
-    Obj_SetVisible(objText2, false);
-    ObjText_SetText(objText1, "Lavarus");
-    ObjText_SetText(objText2, "Krikka");
-    if(stagepart == 1){
-        Obj_SetVisible(objText1, false);
-        Obj_SetVisible(objText2, true);
-    }
 }
