@@ -59,50 +59,69 @@ task TFinalize{
 
 task MainTask{
     wait(120);
-    midasRadial;
-    snakeWalls;
+    createCrow(60, 0);
+    createCrow(-60, 0);
+    createCrow2(150, 100);
+    createCrow2(-150, 100);
+    wait(240);
+	midShot;
+
 }
 
-task midasRadial{
+task createCrow(X, Y){
+	let graphic = GetCurrentScriptDirectory() ~ "./../stgenemy/enemy.png";
+    let obj = ObjPrim_Create(OBJ_SPRITE_2D);
+    ObjPrim_SetTexture(obj, graphic);
+    ObjSprite2D_SetSourceRect(obj, 0, 0, 64, 64);
+    ObjSprite2D_SetDestCenter(obj);
+    ObjRender_SetBlendType(obj, BLEND_ADD_ARGB);
     while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){
-      let angleT = rand(0, 360);
-      loop(12){
-        let radShot= CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 2, angleT, 25, 5);
-        angleT += 360/12;
-        Explode(radShot);
-      }
-      wait(180);
+    	let angleT = 45;
+        ObjRender_SetPosition(obj, ObjMove_GetX(objBoss) + X, 
+                                   ObjMove_GetY(objBoss) + Y, 1);
+            let currx = ObjRender_GetX(obj);
+            let curry = ObjRender_GetY(obj);
+            loop(10){
+            	CreateShotA1(currx, curry, 1, angleT, 17, 5);
+            	angleT+= 90/10;
+            	yield;
+            }
+        
+        wait(60);
     }
+    Obj_Delete(obj);
+
 }
 
-task Explode(shotobj){
-	wait(rand(60, 140));
-	let angleT = 90;
-	loop(6){
-		let explosion = CreateStraightLaserA1(ObjMove_GetX(shotobj), ObjMove_GetY(shotobj), angleT, 120, 60, 30, 153,0);
-		angleT += 360/6;
-	}
-	Obj_Delete(shotobj);
-}
-
-task snakeWalls{
+task createCrow2(X, Y){
+	let graphic = GetCurrentScriptDirectory() ~ "./../stgenemy/enemy.png";
+    let obj = ObjPrim_Create(OBJ_SPRITE_2D);
+    ObjPrim_SetTexture(obj, graphic);
+    ObjSprite2D_SetSourceRect(obj, 0, 0, 64, 64);
+    ObjSprite2D_SetDestCenter(obj);
+    ObjRender_SetBlendType(obj, BLEND_ADD_ARGB);
     while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){
-        let shotArray2 = [56, 112, 168, 220, 276, 332, 384, 436];
-        let shotArray3 = [412, 360, 304, 248, 196, 140, 84, 28];
-        let snake = CreateShotA1(10, shotArray2[rand_int(0, 7)], 1, 0, 174, 5);
-        let snake2 = CreateShotA1(GetStgFrameWidth()-10, shotArray3[rand_int(0, 7)], 1, 180, 174, 5);
-        snakeShot(snake);
-        snakeShot(snake2);
-        wait(30);
+        ObjRender_SetPosition(obj, ObjMove_GetX(objBoss) + X, 
+                                   ObjMove_GetY(objBoss) + Y, 1);
+            let currx = ObjRender_GetX(obj);
+            let curry = ObjRender_GetY(obj);
 
+            CreateStraightLaserA1(currx, curry, GetAngleToPlayer(obj), 500, 40, 20, 160, 60);
+        
+        wait(90);
     }
+    Obj_Delete(obj);
 }
 
-task snakeShot(obj){
-    let wvel = 1;
-    ascent(i in 0..20){
-        ObjMove_AddPatternA2(obj, i*30, 1, NO_CHANGE, NO_CHANGE, wvel, 1);
-        wvel *= -1;
+task midShot{
+	while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){
+		let angleT = rand(0, 360);
+		loop(60){
+			CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 3, angleT, rand(65, 72), 10);
+			angleT += 360/60;
+		}
+
+        wait(240);
     }
 }
 
