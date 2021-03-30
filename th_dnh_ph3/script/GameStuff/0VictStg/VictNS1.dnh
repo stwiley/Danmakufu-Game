@@ -68,12 +68,12 @@ task laserFun{
         let inc = 50;
         let angleT=0;
         while(true){
-            CreateStraightLaserA1(i, 0, 90, 512, 60, 15, 153, 60);
+            CreateStraightLaserA1(i, 0, 90, 512, 40, 10, 153, 30);
             i+=inc;
             if(i >= GetStgFrameWidth() || i<=0){
                 inc *= -1;
             }
-            wait(45);
+            wait(30);
         }
         yield;
     }
