@@ -81,6 +81,7 @@ task firstLoop{
 
 task secondLoop{
     while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){
+        wait(30);
         let angleT = 0;
         loop(20){
             let obj2=CreateShotA2(ObjMove_GetX(objBoss)+30*-cos(angleT), ObjMove_GetY(objBoss)+30*-sin(angleT), 0.5, angleT + 180, 0.01, 2, rand_int(17, 24), 5);
@@ -88,7 +89,6 @@ task secondLoop{
             ObjMove_SetAngularVelocity(obj2, -0.35);
             yield;
         }
-        wait(30);
     }
 }
 
