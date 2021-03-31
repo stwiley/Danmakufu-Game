@@ -60,6 +60,7 @@ task TFinalize{
 task MainTask{
     wait(120);
     laserFun;
+    vicShot;
 }
 
 task laserFun{
@@ -77,6 +78,30 @@ task laserFun{
         }
         yield;
     }
+}
+
+task vicShot{
+    while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){
+        let initShot = CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 4, GetAngleToPlayer(objBoss), 165, 5);
+        sneakExplode(initShot);
+        wait(120);
+    }
+}
+
+task sneakExplode(bigShot){
+    wait(60);
+    let angleT = rand(0, 360);
+    loop(24){
+        let littleShot= CreateShotA1(ObjMove_GetX(bigShot), ObjMove_GetY(bigShot), 3, angleT, rand(9, 16), 0);
+        angleT += 360/24;
+        homingLittle(littleShot);
+    }
+    Obj_Delete(bigShot);
+}
+
+task homingLittle(little){
+    wait(30);
+    ObjMove_SetAngle(little, GetAngleToPlayer(little));
 }
 
 task TDrawLoop{
