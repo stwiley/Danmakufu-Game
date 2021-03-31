@@ -68,17 +68,29 @@ task alternShot{
     while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){
         let angleT=rand(0, 360);
         loop(20){
-            let shot1= CreateShotA2(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 1, angleT, -0.005, -1, 7, 10);
+            let shot1= CreateShotA2(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 1, angleT, -0.01, -4, rand(1, 8), 10);
             angleT += 360/20;
-            ObjMove_SetAngularVelocity(shot1, 0.4);
+            ObjMove_SetAngularVelocity(shot1, 0.5);
         }
-        wait(30);
+        wait(10);
         loop(20){
-            let shot2= CreateShotA2(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 1, angleT, -0.005, -1, 7, 10);
+            let shot2= CreateShotA2(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 1, angleT, -0.01, -4, rand(1, 8), 10);
             angleT += 360/20;
-            ObjMove_SetAngularVelocity(shot2, -0.4);
+            ObjMove_SetAngularVelocity(shot2, -0.5);
         }
-        wait(60);
+        wait(10);
+        loop(20){
+            let shot3= CreateShotA2(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 1, angleT, -0.01, -4, rand(1, 8), 10);
+            angleT += 360/20;
+            ObjMove_SetAngularVelocity(shot3, 0.5);
+        }
+        wait(10);
+        loop(20){
+            let shot4= CreateShotA2(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 1, angleT, -0.01, -4, rand(1, 8), 10);
+            angleT += 360/20;
+            ObjMove_SetAngularVelocity(shot4, -0.5);
+        }
+        wait(20);
     }
 }
 
