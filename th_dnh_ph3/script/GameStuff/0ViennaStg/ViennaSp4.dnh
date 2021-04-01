@@ -65,12 +65,31 @@ task MainTask{
 task scatterShot{
     let angleT = rand(0, 360);
     while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){
-        loop(240){
-            let scatter = CreateShotA2(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 5, rand(0, 360), rand(-0.01, -0.1), 0, 56, 5);
+        loop(360){
+            let scatter = CreateShotA2(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 5, angleT, rand(-0.01, -0.1), 0, 56, 5);
             homingShot(scatter);
+            angleT += 360/360;
             yield;
         }
-        wait(360);
+        angleT = rand(0, 360);
+        wait(90);
+        loop(60){
+        	let radius = CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 4, angleT, rand(65, 72), 5);
+        	angleT += 360/60;
+        }
+        angleT = rand(0, 360);
+        wait(30);
+        loop(60){
+        	let radius2 = CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 4, angleT, rand(65, 72), 5);
+        	angleT += 360/60;
+        }
+        angleT = rand(0, 360);
+        wait(30);
+        loop(60){
+        	let radius3 = CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 4, angleT, rand(65, 72), 5);
+        	angleT += 360/60;
+        }
+        wait(240);
     }
 }
 
