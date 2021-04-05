@@ -70,7 +70,7 @@ task slam{
 		loop(30){
 			ascent(i in 0..36){
 				ascent(j in 0..4){
-				CreateShotA1(ObjMove_GetX(objBoss) + 30*cos(i * 10), ObjMove_GetY(objBoss) + 30*sin(i * 10), 2.5-j/4, i * 10, 5, 0)
+				CreateShotA1(ObjMove_GetX(objBoss) + 30*cos(i * 10), ObjMove_GetY(objBoss) + 30*sin(i * 10), 3.5-j/4, i * 10, 5, 0)
 				}
 			}
 			angleT += 360/30;
