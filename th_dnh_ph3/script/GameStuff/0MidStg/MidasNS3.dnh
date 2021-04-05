@@ -60,35 +60,37 @@ task TFinalize{
 task MainTask{
     wait(120);
     movement;
-    midasShot;
-    shotGrid;
-}
-
-task midasShot{
-    while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){
-        let playerAngle=GetAngleToPlayer(objBoss);
-        let angleT=0;
-        let secondShot = angleT + 60/3;
-        let thirdShot = angleT - 60/3;
-        let fourthShot= angleT + 60/5;
-        let fifthShot = angleT - 60/5;
-        CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 2, angleT + playerAngle, DS_BALL_BS_RED, 5);
-        CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 2, secondShot + playerAngle, DS_BALL_BS_RED, 5);
-        CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 2, thirdShot + playerAngle, DS_BALL_BS_RED, 5);
-        CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 2, fourthShot + playerAngle, DS_BALL_BS_RED, 5);
-        CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 2, fifthShot + playerAngle, DS_BALL_BS_RED, 5);
-        wait(30);
+    ascent(i in 0..6){
+        midasFamiliar(i, 6, 1, 48);
     }
 }
 
-task shotGrid{
-    let shotArray2 = [56, 112, 168, 220, 276, 332, 384, 436];
-    let shotArray3 = [28, 84, 140, 196, 248, 304, 360, 412];
+task midasFamiliar(ID, num, dir, rad){
+    let objcount =0;
+    let angleO = ID*360/num;
+    let graphic = GetCurrentScriptDirectory() ~ "./../stgenemy/enemy.png";
+    let obj = ObjPrim_Create(OBJ_SPRITE_2D);
+    ObjPrim_SetTexture(obj, graphic);
+    ObjSprite2D_SetSourceRect(obj, 0, 0, 64, 64);
+    ObjSprite2D_SetDestCenter(obj);
+    ObjRender_SetBlendType(obj, BLEND_ADD_ARGB);
     while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){
-        let crow2 = CreateShotA1(10, shotArray2[rand_int(0, 7)], 2, 0, 174, 5);
-        let crow3 = CreateShotA1(GetStgFrameWidth()-10, shotArray3[rand_int(0, 7)], 2, 180, 174, 5);
-        wait(30);
+        angleO = ID*360/num + objcount*dir;
+        ObjRender_SetPosition(obj, ObjMove_GetX(objBoss) + rad*cos(angleO), 
+                                   ObjMove_GetY(objBoss) + rad*sin(angleO), 1);
+        ObjMove_SetAngle(obj, angleO);
+
+        if(objcount % 12 == 0){
+            let currx = ObjRender_GetX(obj);
+            let curry = ObjRender_GetY(obj);
+            ascent(i in 0..3){
+                CreateShotA1(currx, curry, 1, angleO + 180 + i*120, 17, 0);
+            }
+        }
+        objcount++;
+        yield;
     }
+    Obj_Delete(obj);
 }
 
 task TDrawLoop{

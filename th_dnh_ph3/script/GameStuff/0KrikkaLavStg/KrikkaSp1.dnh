@@ -59,32 +59,32 @@ task TFinalize{
 
 task MainTask{
     wait(120);
-    snakeRad;
+    wiggle;
     singleShot;
 }
 
-task snakeRad{
+task wiggle{
     while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){
-        let dir = 1;
-        let wvel =1 * dir;
-        let angleT = rand(0, 360);
-        loop(12){
-            ascent(i in 0..12){
-                let obj = CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 3, angleT, 9, 5);
-                ObjMove_AddPatternA2(obj, i*5, NO_CHANGE, NO_CHANGE, NO_CHANGE, wvel, 7);
-                wvel *=-1;
+        let startAng = 45;
+        let endAng = 135;
+        let inc = 5;
+        loop{
+            let spinShot1 = CreateShotA2(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 0.05, startAng, 0.02, 5, 113, 0);
+            startAng += inc;
+            if(startAng >= endAng || startAng <=45){
+                inc *= -1;
             }
-            angleT += 360/12;
+            wait(5);
         }
-        wait(120);
+        wait(10);
     }
 }
 
 task singleShot{
     while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){
-        let home = CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 2, -1*rand(0, 180), 145, 5);
-        ObjMove_AddPatternA4(home, 30, NO_CHANGE, 0, NO_CHANGE, 0, 2, GetPlayerObjectID(), NO_CHANGE);
-        wait(80);
+        let home = CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 3, rand(0, 360), 145, 5);
+        ObjMove_AddPatternA4(home, 30, NO_CHANGE, 0, NO_CHANGE, 0, 3, GetPlayerObjectID(), NO_CHANGE);
+        wait(10);
     }
 }
 

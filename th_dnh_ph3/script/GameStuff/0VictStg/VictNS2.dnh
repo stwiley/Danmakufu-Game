@@ -67,14 +67,14 @@ task alternShot{
     while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){
         let i=0;
         let j=GetStgFrameWidth();
-        let inc = 10;
-        let ninc = -10;
+        let inc = 20;
+        let ninc = -20;
         let angleT=rand(0, 360);
         while(true){
-            loop(10){
+            loop(20){
                 let obj = CreateShotA1(i, ObjMove_GetY(objBoss), 2, angleT, 10, 5);
                 let obj2 = CreateShotA1(j, ObjMove_GetY(objBoss), 2, angleT, 10, 5);
-                angleT += 360/10;
+                angleT += 360/20;
                 ObjMove_SetAngularVelocity(obj, 0.3);
                 ObjMove_SetAngularVelocity(obj2, -0.3);
             }
