@@ -454,6 +454,9 @@ task RenderHitbox{
 	ObjSprite2D_SetDestRect(objHitbox2, -3, -3, 3, 3);
 	Obj_SetRenderPriority(objHitbox2, 0.31);
 
+	Obj_SetVisible(objHitbox, false);
+	Obj_SetVisible(objHitbox2, false);
+
 	loop{
 		if(visible && (playerdead || GetVirtualKeyState(VK_SLOWMOVE) != KEY_HOLD)){
 			visible = false;
