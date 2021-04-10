@@ -103,7 +103,7 @@ task TDrawLoop{
 
 task movement{
     while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) > 0){
-        ObjMove_SetDestAtFrame(objBoss, ObjMove_GetX(objBoss) + rand(-60, 60), ObjMove_GetY(objBoss)+rand(-30, 30), 60);
+        ObjMove_SetDestAtFrame(objBoss, rand(GetCenterX() + 90, GetCenterX()-90), 60, 60);
         wait(120);
     }
 }
