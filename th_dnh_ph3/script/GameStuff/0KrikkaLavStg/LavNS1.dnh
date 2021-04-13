@@ -59,32 +59,38 @@ task TFinalize{
 
 task MainTask{
     wait(120);
-	clawShot;
+	boneShot;
 	movement;
 }
 
-task clawShot{
+task boneShot{
 	while(ObjEnemy_GetInfo(objBoss, INFO_LIFE) >0){
-		let angleT= 0;
-		let playerAngle = GetAngleToPlayer(objBoss);
-        CreateShotA1(ObjMove_GetX(objBoss)+cos(angleT) + 20, ObjMove_GetY(objBoss)+sin(angleT), 4, angleT + playerAngle, DS_BALL_BS_GREEN, 5);
-		loop(2){
-        	angleT += 45/5;
-			CreateShotA1(ObjMove_GetX(objBoss)+cos(angleT) + 20, ObjMove_GetY(objBoss)+sin(angleT), 4, angleT + playerAngle, DS_BALL_BS_GREEN, 5);
-            CreateShotA1(ObjMove_GetX(objBoss)+cos(angleT) + 20, ObjMove_GetY(objBoss)+sin(angleT), 4, -angleT + playerAngle, DS_BALL_BS_GREEN, 5);
-		}
-		wait(10);
-        angleT=0;
-        CreateShotA1(ObjMove_GetX(objBoss)+cos(angleT) - 20, ObjMove_GetY(objBoss)+sin(angleT), 4, angleT + playerAngle, DS_BALL_BS_GREEN, 5);
-		loop(2){
-            angleT -= 45/5;
-			CreateShotA1(ObjMove_GetX(objBoss)+cos(angleT) - 20, ObjMove_GetY(objBoss)+sin(angleT), 4, angleT + playerAngle, DS_BALL_BS_GREEN, 5);
-            CreateShotA1(ObjMove_GetX(objBoss)+cos(angleT) - 20, ObjMove_GetY(objBoss)+sin(angleT), 4, -angleT + playerAngle, DS_BALL_BS_GREEN, 5);
-		}
-		wait(60);
+		let boneLead = CreateShotA1(ObjMove_GetX(objBoss), ObjMove_GetY(objBoss), 4, GetAngleToPlayer(objBoss), 72, 0);
+        bonePieces(boneLead);
+        wait(90);
 	}
 }
 
+task bonePieces(objBone){
+    while(objBone){
+        if(Obj_IsDeleted(objBone)){return;}
+        let piece = CreateShotA1(ObjMove_GetX(objBone), ObjMove_GetY(objBone), 0, 0, 96, 5);
+        explode(piece);
+        wait(10);
+    }
+}
+
+
+//TALON BOMB CODE. NEEDS CHANGE.
+task explode(piece){
+    wait(60);
+    let angleT = rand(0,360);
+    loop(4){
+        CreateShotA1(ObjMove_GetX(piece), ObjMove_GetY(piece), 1, angleT, 48, 0);
+        angleT += 360/4;
+    }
+    Obj_Delete(piece);
+}
 
 task TDrawLoop{
     let BossImage = GetCurrentScriptDirectory() ~ "./../img/u2l13spritesheet.png"; //assumes that image is in same directory
