@@ -81,7 +81,6 @@ task bonePieces(objBone){
 }
 
 
-//TALON BOMB CODE. NEEDS CHANGE.
 task explode(piece){
     wait(60);
     let angleT = rand(0,360);
