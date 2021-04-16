@@ -23,6 +23,9 @@
 task TPlural{
     let dir = GetCurrentScriptDirectory();
     let obj = ObjEnemyBossScene_Create();
+    let objMotherName = ObjPrim_Create(OBJ_SPRITE_2D);
+    let imgpath1 = GetCurrentScriptDirectory() ~ "./../system/img/mothername.png";
+
     ObjEnemyBossScene_Add(obj, 0 ,dir ~ "./MotherNS1.dnh");
     ObjEnemyBossScene_Add(obj, 1 ,dir ~ "./MotherNS2.dnh");
     ObjEnemyBossScene_Add(obj, 2 ,dir ~ "./MotherNS3.dnh");
@@ -37,8 +40,14 @@ task TPlural{
     ObjEnemyBossScene_LoadInThread(obj);
     ObjEnemyBossScene_Regist(obj);
     while(!Obj_IsDeleted(obj)){
+        ObjPrim_SetTexture(objMotherName, imgpath1);
+        ObjSprite2D_SetSourceRect(objMotherName, 0, 0, 232, 100);
+        ObjSprite2D_SetDestCenter(objMotherName);
+        ObjRender_SetPosition(objMotherName, 50, 40, 1);
+        ObjRender_SetScaleXYZ(objMotherName, 0.4, 0.4, 0.4);
         yield;
     }
+    Obj_Delete(objMotherName);
     CloseScript(GetOwnScriptID());
 }
 

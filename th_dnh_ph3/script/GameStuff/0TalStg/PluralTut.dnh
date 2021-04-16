@@ -3,8 +3,8 @@
 #Title["Plural Tutorial File"]
 #Text["Code by Cyvo[r]A script to hold experiments with plurals"]
 #include "./../lib/lib_general.dnh"
-#Background["./../../tutorial/system/Default_Background_IceMountain.txt"]
-#System["./../../tutorial/system/Default_System.txt"]
+#Background["./../system/Default_Background_IceMountain.txt"]
+#System["./../system/Default_System.txt"]
 
 @Event{
 }
@@ -14,8 +14,6 @@
     SetEndSceneScriptPath(GetCurrentScriptDirectory() ~ "./../system/Default_EndScene.txt");
     SetReplaySaveSceneScriptPath(GetCurrentScriptDirectory() ~ "./../system/Default_ReplaySaveScene.txt");
     TPlural;
-    CreateTrack();
-    BossName;
 }
 
 @MainLoop{
@@ -25,6 +23,10 @@
 task TPlural{
     let dir = GetCurrentScriptDirectory();
     let obj = ObjEnemyBossScene_Create();
+    let objTalonName = ObjPrim_Create(OBJ_SPRITE_2D);
+    let imgpath1 = GetCurrentScriptDirectory() ~ "./../system/img/talonname.png";
+
+
     ObjEnemyBossScene_Add(obj, 0 ,dir ~ "./Talonph1.dnh");
     ObjEnemyBossScene_Add(obj, 1, dir ~ "./Talonph3.dnh");
     ObjEnemyBossScene_Add(obj, 2, dir ~ "./Talonph2.dnh");
@@ -33,8 +35,14 @@ task TPlural{
     ObjEnemyBossScene_LoadInThread(obj);
     ObjEnemyBossScene_Regist(obj);
     while(!Obj_IsDeleted(obj)){
+        ObjPrim_SetTexture(objTalonName, imgpath1);
+        ObjSprite2D_SetSourceRect(objTalonName, 0, 0, 381, 100);
+        ObjSprite2D_SetDestCenter(objTalonName);
+        ObjRender_SetPosition(objTalonName, 70, 30, 1);
+        ObjRender_SetScaleXYZ(objTalonName, 0.35, 0.35, 0.35);
         yield;
     }
+    Obj_Delete(objTalonName);
     CloseScript(GetOwnScriptID());
 }
 
@@ -46,22 +54,4 @@ task RenderBG{
     ObjSprite2D_SetDestRect(obj, 0, 0, 384, 448);
     ObjRender_SetPosition(obj, 0, 0, 1);
     Obj_SetRenderPriorityI(obj, 20)
-}
-
-function CreateTrack{
-    let obj = ObjSound_Create();
-    ObjSound_Load(obj, GetCurrentScriptDirectory() ~ "./../img/metacrys.ogg");
-    ObjSound_SetSoundDivision(obj, SOUND_BGM);
-    ObjSound_SetLoopEnable(obj, true);
-    ObjSound_SetVolumeRate(obj, 40);
-    ObjSound_Play(obj);
-    return obj;
-}
-
-task BossName{
-    let objText = ObjText_Create();
-	ObjText_SetText(objText, "Talon");
-	ObjText_SetFontSize(objText, 16);
-	ObjText_SetMaxWidth(objText, 100);
-	ObjRender_SetY(objText,15);
 }

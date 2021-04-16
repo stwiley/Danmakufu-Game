@@ -23,6 +23,9 @@
 task TPlural{
     let dir = GetCurrentScriptDirectory();
     let obj = ObjEnemyBossScene_Create();
+    let objViennaName = ObjPrim_Create(OBJ_SPRITE_2D);
+    let imgpath1 = GetCurrentScriptDirectory() ~ "./../system/img/viennaname.png";
+
     ObjEnemyBossScene_Add(obj, 0 ,dir ~ "./ViennaNS1.dnh");
     ObjEnemyBossScene_Add(obj, 1 ,dir ~ "./ViennaNS2.dnh");
     ObjEnemyBossScene_Add(obj, 2 ,dir ~ "./ViennaNS3.dnh");
@@ -35,8 +38,14 @@ task TPlural{
     ObjEnemyBossScene_LoadInThread(obj);
     ObjEnemyBossScene_Regist(obj);
     while(!Obj_IsDeleted(obj)){
+        ObjPrim_SetTexture(objViennaName, imgpath1);
+        ObjSprite2D_SetSourceRect(objViennaName, 0, 0, 232, 100);
+        ObjSprite2D_SetDestCenter(objViennaName);
+        ObjRender_SetPosition(objViennaName, 50, 40, 1);
+        ObjRender_SetScaleXYZ(objViennaName, 0.4, 0.4, 0.4);
         yield;
     }
+    Obj_Delete(objViennaName);
     CloseScript(GetOwnScriptID());
 }
 
