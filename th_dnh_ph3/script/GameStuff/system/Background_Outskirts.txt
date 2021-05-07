@@ -1,0 +1,150 @@
+let bSpell = false;
+let current = GetCurrentScriptDirectory();
+
+@Initialize {
+    SetCameraElevationAngle(15);
+    SetCameraAzimuthAngle(-90);
+    SetCameraPerspectiveClip(0, 4000);
+    TNormalBackground();
+    TSpellBackground();
+}
+@MainLoop {
+    let objScene = GetEnemyBossSceneObjectID();
+    if(objScene != ID_INVALID && ObjEnemyBossScene_GetInfo(objScene, INFO_IS_SPELL)) {
+        bSpell = true;
+    } else {
+        bSpell = false;
+    }
+    yield;
+}
+task TNormalBackground() {
+    let frameInvisible = 0;
+    let cameracount = 0;
+    let scrollspeed = 8;
+
+    let treedistance = 128;
+
+    let path1 = GetCurrentScriptDirectory ~ "img/Street_asphalt_pxr128.jpg";
+
+    let obj1 = ObjPrim_Create(OBJ_SPRITE_3D); // Flooring
+    ObjRender_SetBlendType(obj1, BLEND_ALPHA);
+    Obj_SetRenderPriority(obj1, 0.21);
+    ObjPrim_SetTexture(obj1, path1);
+    ObjSprite3D_SetDestRect(obj1, -1024, -1024 * 4, 1024, 1024 * 4); // Output ratio is 1x4
+    ObjRender_SetAngleX(obj1, 90);
+
+	ascent(i in 0..5){
+		CreateTree(-treedistance, 2, 512 + i*512);
+		CreateTree(treedistance, 2, 512 + i*512);
+		CreateTree(-treedistance, 2, 256 + i*512);
+		CreateTree(treedistance, 2, 256 + i*512);
+	}
+
+
+    loop {
+        if(bSpell) {
+            frameInvisible++;
+            if(frameInvisible >= 60) {
+                Obj_SetVisible(obj1, false);
+
+            }
+        } else {
+            frameInvisible = 0;
+            Obj_SetVisible(obj1, true);
+
+        }
+
+        if(cameracount % 512 == 0){
+        	CreateTree(-treedistance, 2, 0);
+        	CreateTree(treedistance, 2, 0);
+        }
+        if(cameracount % 512 == 256){
+        	CreateTree(-treedistance, 2, 0);
+        	CreateTree(treedistance, 2, 0);
+        }
+
+
+        // Scroll by setting the source rects
+        ObjSprite3D_SetSourceRect(obj1, 0, 0 + cameracount*scrollspeed, 1024*8, 1024 * 32 + cameracount*scrollspeed);
+
+        cameracount++;
+        yield;
+    }
+}
+
+task TSpellBackground
+{
+	let path1 = current ~ "img/funnyface.png";
+    let path2 = current ~ "img/add.jpg";
+   
+    
+    let obj2 = ObjPrim_Create(OBJ_SPRITE_2D);
+	ObjRender_SetBlendType(obj2, BLEND_ALPHA);
+	Obj_SetRenderPriority(obj2, 0.21);
+	ObjPrim_SetTexture(obj2, path2);
+    ObjSprite2D_SetSourceRect(obj2, 0, 0, 604, 768);
+	ObjSprite2D_SetDestRect(obj2, -256, -256, 256, 256);
+    ObjRender_SetPosition(obj2, 384/2, 448/2, 1);
+    	
+    let obj1 = ObjPrim_Create(OBJ_SPRITE_2D);
+	ObjRender_SetBlendType(obj1, BLEND_ALPHA);
+	Obj_SetRenderPriority(obj1, 0.21);
+	ObjPrim_SetTexture(obj1, path1);
+    ObjSprite2D_SetSourceRect(obj1, 0, 0, 248, 248);
+	ObjSprite2D_SetDestRect(obj1, -256, -256, 256, 256);
+    ObjRender_SetPosition(obj1, 384/2, 448/2, 1);
+    
+	let alpha = 0;
+	let frame = 0;
+
+    
+	loop
+	{
+		if(bSpell)
+		{
+			alpha =255 ;
+		}
+		else
+		{
+			alpha = 0;
+		}
+
+		Obj_SetVisible(obj1, alpha > 0);
+        ObjRender_SetAngleZ(obj1, frame);
+        
+        Obj_SetVisible(obj2, alpha > 0);
+        ObjSprite2D_SetSourceRect(obj2, 0, 0 + (frame*2) % 768, 512, 512 + (frame*2) % 768);
+
+		frame++;
+		yield;
+	}
+
+}
+
+task CreateTree(x, movespeed, objcount){
+	let tree1 = current ~ "./../img/sampletree3.mqo";
+	let obj1 = ObjMesh_Create();
+	ObjMesh_Load(obj1, tree1);
+	Obj_SetRenderPriority(obj1, 0.22);
+
+	ObjRender_SetX(obj1, x);
+
+	ObjRender_SetAngleY(obj1, rand(0, 360));
+
+	ObjRender_SetZWrite(obj1, true);
+	ObjRender_SetScaleXYZ(obj1, 12, 12, 12);
+
+	loop {
+        if(bSpell) {
+            Obj_SetVisible(obj1, false);
+        } else {
+            Obj_SetVisible(obj1, true);
+        }
+        ObjRender_SetZ(obj1, 4096 - objcount*movespeed);
+        if (objcount > 4096) {
+            Obj_Delete(obj1);
+        }
+        objcount += 1;
+        yield;
+    }
+}
