@@ -5,6 +5,9 @@ let current = GetCurrentScriptDirectory();
     SetCameraElevationAngle(15);
     SetCameraAzimuthAngle(-90);
     SetCameraPerspectiveClip(0, 4000);
+
+	SetFogParam(0, 1000, 32, 32, 95);
+
     TNormalBackground();
     TSpellBackground();
 }
