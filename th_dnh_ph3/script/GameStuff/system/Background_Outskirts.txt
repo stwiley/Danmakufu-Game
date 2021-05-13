@@ -6,7 +6,7 @@ let current = GetCurrentScriptDirectory();
     SetCameraAzimuthAngle(-90);
     SetCameraPerspectiveClip(0, 4000);
 
-	SetFogParam(0, 1000, 32, 32, 95);
+	SetFogParam(350, 2000, 32, 32, 64);
 
     TNormalBackground();
     TSpellBackground();
@@ -26,6 +26,9 @@ task TNormalBackground() {
     let scrollspeed = 8;
 
     let treedistance = 128;
+    let treedistance2 = 256;
+    let treedistance3 = 384;
+    let treedistance4 = 512;
 
     let path1 = GetCurrentScriptDirectory ~ "img/Street_asphalt_pxr128.jpg";
 
@@ -33,14 +36,46 @@ task TNormalBackground() {
     ObjRender_SetBlendType(obj1, BLEND_ALPHA);
     Obj_SetRenderPriority(obj1, 0.21);
     ObjPrim_SetTexture(obj1, path1);
-    ObjSprite3D_SetDestRect(obj1, -1024, -1024 * 4, 1024, 1024 * 4); // Output ratio is 1x4
+    ObjSprite3D_SetDestRect(obj1, -1024, -1024*4, 1024, 1024*4); // Output ratio is 1x4
     ObjRender_SetAngleX(obj1, 90);
+    ObjRender_SetFogEnable(obj1, false);
+    ObjRender_SetColor(obj1, 200, 250, 250);
+
+
+    let path2 = GetCurrentScriptDirectory ~ "img/outskirtsskybox.png";
+
+    ascent(i in 0..4){
+    	let distance = 1360;
+    	let objSkybox = ObjPrim_Create(OBJ_SPRITE_3D);
+
+    	ObjRender_SetBlendType(objSkybox, BLEND_ALPHA);
+    	Obj_SetRenderPriority(objSkybox, 0.20);
+    	ObjPrim_SetTexture(objSkybox, path2);
+    	ObjSprite3D_SetSourceDestRect(objSkybox, 0, 0, 1400, 400);
+
+    	ObjRender_SetAngleY(objSkybox, 360/4*i);
+    	ObjRender_SetAngleX(objSkybox, 180);
+    	ObjRender_SetPosition(objSkybox, distance*cos(90 - 360/4*i), 225, distance*sin(90 - 360/4*i));
+
+    }
 
 	ascent(i in 0..5){
-		CreateTree(-treedistance, 2, 512 + i*512);
-		CreateTree(treedistance, 2, 512 + i*512);
-		CreateTree(-treedistance, 2, 256 + i*512);
-		CreateTree(treedistance, 2, 256 + i*512);
+		CreateTree(-treedistance, 2, 512 + i*512, 0.31);
+		CreateTree(treedistance, 2, 512 + i*512, 0.31);
+		CreateTree(-treedistance, 2, 256 + i*512, 0.31);
+		CreateTree(treedistance, 2, 256 + i*512, 0.31);
+		CreateTree(-treedistance2, 2, 512 + i*512, 0.30);
+		CreateTree(treedistance2, 2, 512 + i*512, 0.30);
+		CreateTree(-treedistance2, 2, 256 + i*512, 0.30);
+		CreateTree(treedistance2, 2, 256 + i*512, 0.30);
+		CreateTree(-treedistance3, 2, 512 + i*512, 0.29);
+		CreateTree(treedistance3, 2, 512 + i*512, 0.29);
+		CreateTree(-treedistance3, 2, 256 + i*512, 0.29);
+		CreateTree(treedistance3, 2, 256 + i*512, 0.29);
+		CreateTree(-treedistance4, 2, 512 + i*512, 0.28);
+		CreateTree(treedistance4, 2, 512 + i*512, 0.28);
+		CreateTree(-treedistance4, 2, 256 + i*512, 0.28);
+		CreateTree(treedistance4, 2, 256 + i*512, 0.28);
 	}
 
 
@@ -58,12 +93,24 @@ task TNormalBackground() {
         }
 
         if(cameracount % 512 == 0){
-        	CreateTree(-treedistance, 2, 0);
-        	CreateTree(treedistance, 2, 0);
+        	CreateTree(-treedistance, 2, 0, 0.31);
+        	CreateTree(treedistance, 2, 0, 0.31);
+        	CreateTree(-treedistance2, 2, 0, 0.30);
+        	CreateTree(treedistance2, 2, 0, 0.30);
+        	CreateTree(-treedistance3, 2, 0, 0.29);
+        	CreateTree(treedistance3, 2, 0, 0.29);
+        	CreateTree(-treedistance4, 2, 0, 0.28);
+        	CreateTree(treedistance4, 2, 0, 0.28);
         }
         if(cameracount % 512 == 256){
-        	CreateTree(-treedistance, 2, 0);
-        	CreateTree(treedistance, 2, 0);
+        	CreateTree(-treedistance, 2, 0, 0.31);
+        	CreateTree(treedistance, 2, 0, 0.31);
+        	CreateTree(-treedistance2, 2, 0, 0.30);
+        	CreateTree(treedistance2, 2, 0, 0.30);
+        	CreateTree(-treedistance3, 2, 0, 0.29);
+        	CreateTree(treedistance3, 2, 0, 0.29);
+        	CreateTree(-treedistance4, 2, 0, 0.28);
+        	CreateTree(treedistance4, 2, 0, 0.28);
         }
 
 
@@ -124,11 +171,11 @@ task TSpellBackground
 
 }
 
-task CreateTree(x, movespeed, objcount){
-	let tree1 = current ~ "./../img/sampletree3.mqo";
+task CreateTree(x, movespeed, objcount, rendPrio){
+	let tree1 = current ~ "./img/sampletree3.mqo";
 	let obj1 = ObjMesh_Create();
 	ObjMesh_Load(obj1, tree1);
-	Obj_SetRenderPriority(obj1, 0.22);
+	Obj_SetRenderPriority(obj1, rendPrio);
 
 	ObjRender_SetX(obj1, x);
 
