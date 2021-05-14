@@ -166,9 +166,14 @@ task TStageScene(let pathReplay)
 {
 	let dirCurrent = GetCurrentScriptDirectory();
 	let dirModule = GetModuleDirectory();
-	let pathMainScript = dirCurrent ~ "./0TalStg/TalStage.dnh";
+	
+	let stage1 = dirCurrent ~ "./0TalStg/TalStage.dnh";
 	let stage2 = dirCurrent ~ "./0KrikkaLavStg/KrikLavStg.dnh";
 	let stage3 = dirCurrent ~ "./0VictStg/VictStg.dnh";
+	let stage4 = dirCurrent ~ "./0ViennaStg/ViennaStg.dnh";
+	let stage5 = dirCurrent ~ "./0MidStg/MidasStg.dnh";
+	let stage6 = dirCurrent ~ "./0MothStg/MotherStg.dnh";
+	
 	let pathPlayer = dirModule ~ "script/player/default_player/NigmaPlayer";
 
 	//--------------------------------
@@ -188,7 +193,7 @@ task TStageScene(let pathReplay)
 	//初期ステージ設定
 	let indexStage = 1; //ステージインデックス
 	SetStageIndex(indexStage);
-	SetStageMainScript(pathMainScript);
+	SetStageMainScript(stage1);
 	SetStagePlayerScript(pathPlayer);
 	StartStageScene();
 
@@ -238,30 +243,42 @@ task TStageScene(let pathReplay)
 			alternative(stageResult)
 			case(STAGE_RESULT_CLEARED)
 			{
-				indexStage++;
 				//ステージクリア
-				if(indexStage == 2)
-				{
-					//ステージ2をクリアした場合は終了
-					SetStageIndex(indexStage);
-					SetStageMainScript(stage2);
-					SetStagePlayerScript(pathPlayer);
-					StartStageScene();
-					TTransition();
-					break;
-				}
-				else if(indexStage == 3){
-					SetStageIndex(indexStage);
-					SetStageMainScript(stage3);
-					SetStagePlayerScript(pathPlayer);
-					StartStageScene();
-					TTransition();
-				}
-				else
+				if(indexStage == 6)
 				{
 					//次のステージへ遷移
 					TTitleScene();
+					break;
+				
 				}
+				else
+				{
+
+					//ステージ2をクリアした場合は終了
+					indexStage++;
+					SetStageIndex(indexStage);
+					if(indexStage == 2){
+						SetStageMainScript(stage2);
+					}
+					else if (indexStage == 3){
+						SetStageMainScript(stage3);
+					}
+					else if (indexStage == 4){
+						SetStageMainScript(stage4);
+					}
+					else if (indexStage == 5){
+						SetStageMainScript(stage5);
+					}
+					else if (indexStage == 6){
+						SetStageMainScript(stage6);
+					}
+					
+					SetStagePlayerScript(pathPlayer);
+					StartStageScene();
+					TTransition();
+
+				}
+
 			}
 			case(STAGE_RESULT_PLAYER_DOWN)
 			{

@@ -95,6 +95,11 @@ task TStage{
     if(GetPlayerState() != STATE_END){
     	StageEvent();
     }else{
+
+        loop(240){
+            yield;
+        }
+
     	CloseStgScene();
     }    
     
@@ -112,6 +117,7 @@ task TStage{
     loop(240){
         yield;
     }
+    
     CloseStgScene();
 }
 

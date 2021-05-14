@@ -44,6 +44,8 @@ task TNormalBackground(pos)
 	Obj_SetRenderPriority(obj, 0.20);
 	ObjRender_SetColor(obj, 150, 32, 32);
 
+	let cameracount = 0;
+
 
 	let frameInvisible = 0;
 
@@ -81,6 +83,10 @@ task TNormalBackground(pos)
 		ObjRender_SetZ(obj, pz);
 		pz++;
 		if(pz > 1000){pz -= 3000;}
+
+		SetCameraRoll(-90 + cameracount/8);
+
+		cameracount++;
 
 		yield;
 	}

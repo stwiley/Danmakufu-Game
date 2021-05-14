@@ -43,9 +43,9 @@ let bgm2;
 }
 
 @Initialize{
-    SetPauseScriptPath(GetCurrentScriptDirectory() ~ "./system/Default_Pause.txt");
-    SetEndSceneScriptPath(GetCurrentScriptDirectory() ~ "./system/Default_EndScene.txt");
-    SetReplaySaveSceneScriptPath(GetCurrentScriptDirectory() ~ "./system/Default_ReplaySaveScene.txt");
+    SetPauseScriptPath(GetCurrentScriptDirectory() ~ "./../system/Default_Pause.txt");
+    SetEndSceneScriptPath(GetCurrentScriptDirectory() ~ "./../system/Default_EndScene.txt");
+    SetReplaySaveSceneScriptPath(GetCurrentScriptDirectory() ~ "./../system/Default_ReplaySaveScene.txt");
     TStage;
 }
 

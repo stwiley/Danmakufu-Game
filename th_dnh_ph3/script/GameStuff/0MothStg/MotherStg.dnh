@@ -59,10 +59,10 @@ task TStage{
     let path = dir ~ "MotherPlu.dnh";
     let idscript = LoadScriptInThread(path);
     
-    SetForbidPlayerSpell(true);
+    /*SetForbidPlayerSpell(true);
     SetForbidPlayerShot(true);
     SetPlayerSpeed(0,0);
-    SetStageDifficulty();
+    SetStageDifficulty();*/
     
     bgm2 = ObjSound_Create();
     ObjSound_Load(bgm2, dir ~ "./../img/metacrys.ogg");
@@ -112,7 +112,7 @@ function StageBGM(obj, ID){
     return obj;
 }
 
-function SetStageDifficulty{
+/*function SetStageDifficulty{
     let selection =0;
     let sdiff = 0;
     let TextObjects = [];
@@ -165,7 +165,7 @@ function SetStageDifficulty{
     }
     wait(60);
     SetForbidPlayerShot(false);
-}
+}*/
 
 function DrawSubMenuText(string){
     let objMText = ObjText_Create();
