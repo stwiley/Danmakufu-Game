@@ -3,10 +3,7 @@ let bSpell = false;
 let current = GetCurrentScriptDirectory();
 @Initialize
 {
-	SetCameraFocusX(0);
-	SetCameraFocusY(0);
-	SetCameraFocusZ(0);
-	SetCameraRadius(550);
+
 	SetCameraElevationAngle(0);
 	SetCameraAzimuthAngle(90);
 
@@ -44,11 +41,13 @@ task TNormalBackground(pos)
 	let skybox= current ~ "img/junksky.jpg";
 	let obj = ObjMesh_Create();
 	ObjMesh_Load(obj, path);
-	Obj_SetRenderPriorityI(obj, 20);
+	Obj_SetRenderPriority(obj, 0.20);
+	ObjRender_SetColor(obj, 150, 32, 32);
+
 
 	let frameInvisible = 0;
 
-	ascent(i in 0..12){
+	ascent(i in 0..4){
 		let distance = 1480;
 		let objBack = ObjPrim_Create(OBJ_SPRITE_3D);
 
@@ -57,9 +56,9 @@ task TNormalBackground(pos)
 		ObjPrim_SetTexture(objBack, skybox);
 		ObjSprite3D_SetSourceDestRect(objBack, 0, 0, 1500, 1000);
 
-		ObjRender_SetAngleY(objBack, 270/12*i);
+		ObjRender_SetAngleY(objBack, 360/4*i);
 		ObjRender_SetAngleX(objBack, 180);
-		ObjRender_SetPosition(objBack, distance*cos(90 - 360/12*i), 300, distance*sin(90-360/12*i));
+		ObjRender_SetPosition(objBack, distance*cos(90 - 360/4*i), 100, distance*sin(90-360/4*i));
 
 	}
 
