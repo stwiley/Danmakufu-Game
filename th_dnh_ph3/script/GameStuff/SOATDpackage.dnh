@@ -167,6 +167,8 @@ task TStageScene(let pathReplay)
 	let dirCurrent = GetCurrentScriptDirectory();
 	let dirModule = GetModuleDirectory();
 	let pathMainScript = dirCurrent ~ "./0TalStg/TalStage.dnh";
+	let stage2 = dirCurrent ~ "./0KrikkaLavStg/KrikLavStg.dnh";
+	let stage3 = dirCurrent ~ "./0VictStg/VictStg.dnh";
 	let pathPlayer = dirModule ~ "script/player/default_player/NigmaPlayer";
 
 	//--------------------------------
@@ -236,22 +238,29 @@ task TStageScene(let pathReplay)
 			alternative(stageResult)
 			case(STAGE_RESULT_CLEARED)
 			{
+				indexStage++;
 				//ステージクリア
 				if(indexStage == 2)
 				{
 					//ステージ2をクリアした場合は終了
-					TEndScene();
+					SetStageIndex(indexStage);
+					SetStageMainScript(stage2);
+					SetStagePlayerScript(pathPlayer);
+					StartStageScene();
+					TTransition();
 					break;
+				}
+				else if(indexStage == 3){
+					SetStageIndex(indexStage);
+					SetStageMainScript(stage3);
+					SetStagePlayerScript(pathPlayer);
+					StartStageScene();
+					TTransition();
 				}
 				else
 				{
 					//次のステージへ遷移
-					indexStage++;
-					SetStageIndex(indexStage);
-					SetStageMainScript(pathMainScript); //ひとまず同じステージ...
-					SetStagePlayerScript(pathPlayer);
-					StartStageScene();
-					TTransition();
+					TTitleScene();
 				}
 			}
 			case(STAGE_RESULT_PLAYER_DOWN)
