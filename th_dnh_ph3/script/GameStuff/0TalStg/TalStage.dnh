@@ -78,6 +78,8 @@ task TStage{
         yield;
     }
 
+    StageName();
+
     loop(24){
         CreateDroneEnemy(rand(10, GetStgFrameWidth()-10), 0, 2, 90);
         wait(30);
@@ -224,6 +226,15 @@ function StageEvent{
     DestroyDialogueEvent(dialogueobj);
     SetForbidPlayerSpell(false);
     SetForbidPlayerShot(false);
+}
+
+function StageName{
+    let num = CreateStageIntro();
+    ObjText_SetText(num, "Stage 1");
+
+    wait(120);
+
+    Obj_Delete(num);
 }
 
 task BossName{

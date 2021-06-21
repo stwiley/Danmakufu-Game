@@ -14,3 +14,61 @@ function rand_int(min, max){
 function NoEnemy(){
 	while(length(GetAllEnemyID()) > 0){yield;}
 }
+
+function CreateStageIntro{
+    let objStageNum = ObjText_Create();
+    ObjText_SetText(objStageNum, "Stage X");
+    ObjText_SetFontSize(objStageNum, 24);
+    ObjText_SetFontType(objStageNum, "Helvetica");
+    ObjText_SetFontBold(objStageNum, true);
+    ObjText_SetFontColorTop(objStageNum, 255, 255, 255);
+    ObjText_SetFontColorBottom(objStageNum, 255, 255, 255);
+    ObjText_SetFontBorderType(objStageNum, BORDER_FULL);
+    ObjText_SetFontBorderColor(objStageNum, 255, 0, 0);
+    ObjText_SetFontBorderWidth(objStageNum, 1);
+    ObjRender_SetY(objStageNum, 96);
+    ObjRender_SetX(objStageNum, 194-224);
+    ObjText_SetMaxWidth(objStageNum, 320);
+    ObjText_SetHorizontalAlignment(objStageNum, ALIGNMENT_CENTER);
+
+    let objStageName = ObjText_Create();
+    ObjText_SetText(objStageName, "A Place In Time");
+    ObjText_SetFontSize(objStageName, 24);
+    ObjText_SetFontType(objStageName, "Helvetica");
+    ObjText_SetFontBold(objStageName, true);
+    ObjText_SetFontColorTop(objStageName, 255, 255, 255);
+    ObjText_SetFontColorBottom(objStageName, 255, 255, 255);
+    ObjText_SetFontBorderType(objStageName, BORDER_FULL);
+    ObjText_SetFontBorderColor(objStageName, 255, 0, 0);
+    ObjText_SetFontBorderWidth(objStageName, 1);
+    ObjRender_SetY(objStageName, 96);
+    ObjRender_SetX(objStageName, 194-224);
+    ObjText_SetMaxWidth(objStageName, 320);
+    ObjText_SetHorizontalAlignment(objStageName, ALIGNMENT_CENTER);
+
+    let objFlavorText = ObjText_Create();
+    ObjText_SetText(objFlavorText, "Since the beginning of time, man has loved to race. [r] Spinning newspaper invented!");
+    ObjText_SetFontSize(objFlavorText, 24);
+    ObjText_SetFontType(objFlavorText, "Helvetica");
+    ObjText_SetFontBold(objFlavorText, true);
+    ObjText_SetFontColorTop(objFlavorText, 255, 255, 255);
+    ObjText_SetFontColorBottom(objFlavorText, 255, 255, 255);
+    ObjText_SetFontBorderType(objFlavorText, BORDER_FULL);
+    ObjText_SetFontBorderColor(objFlavorText, 255, 0, 0);
+    ObjText_SetFontBorderWidth(objFlavorText, 1);
+    ObjRender_SetY(objFlavorText, 96);
+    ObjRender_SetX(objFlavorText, 194-224);
+    ObjText_SetMaxWidth(objFlavorText, 320);
+    ObjText_SetHorizontalAlignment(objFlavorText, ALIGNMENT_CENTER);
+
+
+
+    return objStageNum;
+
+}
+
+function DestroyTitleEvent(objects){
+    ascent(i in 0..length(objects)){
+        Obj_Delete(objects[i]);
+    }
+}
