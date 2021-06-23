@@ -73,6 +73,8 @@ task TStage{
     StageBGM(bgm, 1);
     
     ObjSound_Play(bgm2);
+
+    StageName();
     
     loop(60){
         yield;
@@ -83,7 +85,6 @@ task TStage{
     loop(120){yield;}
     
     StartScript(idscript);
-    CreateStageEnemy1(-16, 128, 0.5, 0);
     
     while(!IsCloseScript(idscript) && GetPlayerState() != STATE_END){
         yield;
@@ -262,10 +263,19 @@ function StageEvent{
     SetForbidPlayerShot(false);
 }
 
-task BossName{
-    let objText = ObjText_Create();
-	ObjText_SetText(objText, "Victoria");
-	ObjText_SetFontSize(objText, 16);
-	ObjText_SetMaxWidth(objText, 100);
-	ObjRender_SetY(objText,15);
+function StageName{
+    let introObj = CreateStageIntro();
+    let numObj = introObj[0];
+    let nameObj = introObj[1];
+    let textObj = introObj[2];
+
+    ObjText_SetText(numObj, "Stage 3");
+    ObjText_SetText(nameObj, "Expanse- The City");
+    ObjText_SetText(textObj, "Cobbled together from debris, a [r] crude facsimile of urban [r] infrastructure");
+
+    wait(240);
+
+    Obj_Delete(numObj);
+    Obj_Delete(nameObj);
+    Obj_Delete(textObj);
 }

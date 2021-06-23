@@ -75,6 +75,8 @@ task TStage{
     
     ObjSound_Play(bgm);
 
+    StageName();
+
     loop (8){
 		CreateStageEnemy1(12, 12, 2, 45);
 		wait(30);
@@ -262,4 +264,21 @@ function StageEvent{
     DestroyDialogueEvent(dialogueobj);
     SetForbidPlayerSpell(false);
     SetForbidPlayerShot(false);
+}
+
+function StageName{
+    let introObj = CreateStageIntro();
+    let numObj = introObj[0];
+    let nameObj = introObj[1];
+    let textObj = introObj[2];
+
+    ObjText_SetText(numObj, "Stage 2");
+    ObjText_SetText(nameObj, "Expanse- The Junkyard");
+    ObjText_SetText(textObj, "An endless sea of detritus from [r] the multiverse stretches out [r] before you");
+
+    wait(240);
+
+    Obj_Delete(numObj);
+    Obj_Delete(nameObj);
+    Obj_Delete(textObj);
 }

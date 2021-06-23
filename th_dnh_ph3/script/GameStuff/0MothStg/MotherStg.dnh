@@ -73,6 +73,8 @@ task TStage{
     StageBGM(bgm, 1);
     
     ObjSound_Play(bgm2);
+
+    StageName();
     
     loop(60){
         yield;
@@ -262,10 +264,19 @@ function StageEvent{
     SetForbidPlayerShot(false);
 }
 
-task BossName{
-    let objText = ObjText_Create();
-	ObjText_SetText(objText, "Mother");
-	ObjText_SetFontSize(objText, 16);
-	ObjText_SetMaxWidth(objText, 100);
-	ObjRender_SetY(objText,15);
+function StageName{
+    let introObj = CreateStageIntro();
+    let numObj = introObj[0];
+    let nameObj = introObj[1];
+    let textObj = introObj[2];
+
+    ObjText_SetText(numObj, "Stage 6");
+    ObjText_SetText(nameObj, "The Mother Computer");
+    ObjText_SetText(textObj, "Arbiter of the multiverse. [r] Blight of the Crows. [r] Your ticket home.");
+
+    wait(240);
+
+    Obj_Delete(numObj);
+    Obj_Delete(nameObj);
+    Obj_Delete(textObj);
 }
