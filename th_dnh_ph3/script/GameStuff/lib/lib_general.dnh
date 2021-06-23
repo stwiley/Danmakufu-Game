@@ -41,7 +41,7 @@ function CreateStageIntro{
     ObjText_SetFontBorderType(objStageName, BORDER_FULL);
     ObjText_SetFontBorderColor(objStageName, 255, 0, 0);
     ObjText_SetFontBorderWidth(objStageName, 1);
-    ObjRender_SetY(objStageName, 96);
+    ObjRender_SetY(objStageName, 128);
     ObjRender_SetX(objStageName, 194-224);
     ObjText_SetMaxWidth(objStageName, 320);
     ObjText_SetHorizontalAlignment(objStageName, ALIGNMENT_CENTER);
@@ -56,14 +56,14 @@ function CreateStageIntro{
     ObjText_SetFontBorderType(objFlavorText, BORDER_FULL);
     ObjText_SetFontBorderColor(objFlavorText, 255, 0, 0);
     ObjText_SetFontBorderWidth(objFlavorText, 1);
-    ObjRender_SetY(objFlavorText, 96);
-    ObjRender_SetX(objFlavorText, 194-224);
-    ObjText_SetMaxWidth(objFlavorText, 320);
-    ObjText_SetHorizontalAlignment(objFlavorText, ALIGNMENT_CENTER);
+    ObjRender_SetY(objFlavorText, 160);
+    ObjRender_SetX(objFlavorText, 194-168);
+    ObjText_SetMaxWidth(objFlavorText, 355);
+    ObjText_SetHorizontalAlignment(objFlavorText, ALIGNMENT_LEFT);
 
 
 
-    return objStageNum;
+    return [objStageNum, objStageName, objFlavorText];
 
 }
 

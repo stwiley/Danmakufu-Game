@@ -229,12 +229,20 @@ function StageEvent{
 }
 
 function StageName{
-    let num = CreateStageIntro();
-    ObjText_SetText(num, "Stage 1");
+    let introObj = CreateStageIntro();
+    let numObj = introObj[0];
+    let nameObj = introObj[1];
+    let textObj = introObj[2];
+
+    ObjText_SetText(numObj, "Stage 1");
+    ObjText_SetText(nameObj, "The Lab");
+    ObjText_SetText(textObj, "The universe has a way of taking things at the most inopportune times...");
 
     wait(120);
 
-    Obj_Delete(num);
+    Obj_Delete(numObj);
+    Obj_Delete(nameObj);
+    Obj_Delete(textObj);
 }
 
 task BossName{
