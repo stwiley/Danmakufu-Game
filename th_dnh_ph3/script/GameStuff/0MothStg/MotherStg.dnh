@@ -14,7 +14,7 @@ let bgm2;
 
 @Event{
     alternative(GetEventType())
-    case(EV_PAUSE_ENTER){
+    /*case(EV_PAUSE_ENTER){
         if(stagepart == 0){
             ObjSound_Stop(bgm);
         }
@@ -29,7 +29,7 @@ let bgm2;
         if(stagepart == 1){
             ObjSound_Play(bgm2);
         }
-    }
+    }*/
     case(EV_USER_STAGE+1){
         let arg = GetEventArgument(0);
         CreateItemA1(ITEM_POINT, arg[0], arg[1], 15000);
@@ -64,7 +64,7 @@ task TStage{
     SetPlayerSpeed(0,0);
     SetStageDifficulty();*/
     
-    bgm2 = ObjSound_Create();
+    /*bgm2 = ObjSound_Create();
     ObjSound_Load(bgm2, dir ~ "./../img/metacrys.ogg");
     StageBGM(bgm2, 2);
     
@@ -72,7 +72,7 @@ task TStage{
     ObjSound_Load(bgm, dir~ "./../img/whatuneed.ogg");
     StageBGM(bgm, 1);
     
-    ObjSound_Play(bgm2);
+    ObjSound_Play(bgm2);*/
 
     StageName();
     
@@ -253,7 +253,7 @@ function StageEvent{
     SetPortraitToBackground(rightportrait);
     EventWaitA1(15);
 
-    ObjText_SetText(textobj, "LOADING COMBAT PROTOCOLS. GOODBYE, SPECK. I WILL NOT REMEMBER YOU.");
+    ObjText_SetText(textobj, "LOADING COMBAT PROTOCOLS. GOODBYE, SPECK.");
     ObjText_SetFontBorderColor(textobj, 255, 128, 128);
     SetPortraitToForeground(rightportrait);
     SetPortraitToBackground(leftportrait);

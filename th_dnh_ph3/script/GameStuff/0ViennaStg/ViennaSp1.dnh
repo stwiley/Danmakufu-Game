@@ -125,16 +125,16 @@ function moveShots(posX, posY, mvX, mvY){
 }
 
 task TDrawLoop{
-    let BossImage = GetCurrentScriptDirectory() ~ "./../img/u2l13spritesheet.png"; //assumes that image is in same directory
-    let animframe = 0;
+    let BossImage = GetCurrentScriptDirectory() ~ "./../img/viennaplace.png"; //assumes that image is in same directory
+    //let animframe = 0;
     ObjPrim_SetTexture(objBoss, BossImage);
     ObjRender_SetScaleXYZ(objBoss, 1, 1, 1);
     ObjSprite2D_SetSourceRect(objBoss, 0, 0, 64, 64);
     ObjSprite2D_SetDestCenter(objBoss);
-    while(!Obj_IsDeleted(objBoss)){
+    /*while(!Obj_IsDeleted(objBoss)){
         ObjSprite2D_SetSourceRect(objBoss, 0 + 64*floor(animframe/8), 0, 64 + 64*floor(animframe/8), 64);
         animframe++;
         if(animframe >= 32){animframe = 0;}//reset if too high
         yield;
-    }
+    }*/
 }

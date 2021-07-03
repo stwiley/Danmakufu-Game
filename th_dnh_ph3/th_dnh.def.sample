@@ -1,13 +1,13 @@
 //--------------------------------------------------------------
 //パッケージスクリプトパス
 //指定したパッケージスクリプト再生専用になります。
-package.script.main = script/ExRumia/ExRumia_Package_Main.txt
+package.script.main = script/GameStuff/SOATDpackage.dnh
 
 
 //--------------------------------------------------------------
 //ウィンドウタイトル
 //指定したウィンドウタイトルになります。
-window.title = test
+window.title = SOATDPreAlpha
 
 
 //--------------------------------------------------------------

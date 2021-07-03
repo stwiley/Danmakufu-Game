@@ -23,6 +23,7 @@ let count =0;
 	CreateOption(1);
 	MagicCircle;
 	RenderHitbox;
+	SetPlayerLife(98);
 
 }
 
@@ -91,18 +92,18 @@ task PlayerShot{
 	loop{
 		if(!playerdead && GetVirtualKeyState(VK_SHOT) != KEY_FREE){
 			if(count %6 == 0){
-				CreatePlayerShotA1(GetPlayerX() - 4, GetPlayerY() -8, 10, 270, 6, 1, 1);
-				CreatePlayerShotA1(GetPlayerX() + 4, GetPlayerY() -8, 10, 270, 6, 1, 1);
+				CreatePlayerShotA1(GetPlayerX() - 4, GetPlayerY() -8, 10, 270, 3, 1, 1);
+				CreatePlayerShotA1(GetPlayerX() + 4, GetPlayerY() -8, 10, 270, 3, 1, 1);
 				if(GetVirtualKeyState(VK_SLOWMOVE) != KEY_HOLD && GetVirtualKeyState(VK_SLOWMOVE) != KEY_PUSH){
-					CreatePlayerShotA1(GetPlayerX(), GetPlayerY() - 8, 12, 250, 3, 1, 1);
-                    CreatePlayerShotA1(GetPlayerX(), GetPlayerY() - 8, 12, 260, 3, 1, 1);
-                    CreatePlayerShotA1(GetPlayerX(), GetPlayerY() - 8, 12, 280, 3, 1, 1);
-                    CreatePlayerShotA1(GetPlayerX(), GetPlayerY() - 8, 12, 290, 3, 1, 1);
+					CreatePlayerShotA1(GetPlayerX(), GetPlayerY() - 8, 12, 250, 1, 1, 1);
+                    CreatePlayerShotA1(GetPlayerX(), GetPlayerY() - 8, 12, 260, 1, 1, 1);
+                    CreatePlayerShotA1(GetPlayerX(), GetPlayerY() - 8, 12, 280, 1, 1, 1);
+                    CreatePlayerShotA1(GetPlayerX(), GetPlayerY() - 8, 12, 290, 1, 1, 1);
 				}else{
-					CreatePlayerShotA1(GetPlayerX(), GetPlayerY() - 8, 12, 260, 3, 1, 1);
-                    CreatePlayerShotA1(GetPlayerX(), GetPlayerY() - 8, 12, 265, 3, 1, 1);
-                    CreatePlayerShotA1(GetPlayerX(), GetPlayerY() - 8, 12, 275, 3, 1, 1);
-                    CreatePlayerShotA1(GetPlayerX(), GetPlayerY() - 8, 12, 280, 3, 1, 1);
+					CreatePlayerShotA1(GetPlayerX(), GetPlayerY() - 8, 12, 260, 1, 1, 1);
+                    CreatePlayerShotA1(GetPlayerX(), GetPlayerY() - 8, 12, 265, 1, 1, 1);
+                    CreatePlayerShotA1(GetPlayerX(), GetPlayerY() - 8, 12, 275, 1, 1, 1);
+                    CreatePlayerShotA1(GetPlayerX(), GetPlayerY() - 8, 12, 280, 1, 1, 1);
 
 				}
 			}
