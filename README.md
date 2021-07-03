@@ -11,4 +11,4 @@ at a manageable level. I now realize that I am not ZUN developing Touhou 6, and 
 
 This story is still one that I want told, however, and so I will possibly be finding a different method through which to tell it.
 
-For now, this will be an archive for myself as well as a alerning experience.
+For now, this will be an archive for myself as well as a a learning experience.
